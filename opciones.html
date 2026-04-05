@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard STM - Panel Ágil</title>
-    <link rel="icon" type="image/png" href="logo_STM.png">
+    <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
@@ -61,11 +61,13 @@
             border-radius: 14px;
             padding: 6px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex; align-items: center; justify-content: center;
         }
 
         .logo-container img {
-            width: 100%;
-            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .welcome-msg h1 {
@@ -355,6 +357,43 @@
             display: none;
         }
 
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 5000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo {
+            width: 100px; height: auto;
+            object-fit: contain;
+            animation: logo-spin 2s linear infinite;
+        }
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loader-text {
+            margin-top: 20px; font-weight: 700; color: var(--stm-primary);
+            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* --- NEWS SHORTCUT --- */
+        .news-shortcut {
+            margin: 0 16px 20px;
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+            border-radius: 24px; padding: 20px;
+            color: white; display: flex; align-items: center; justify-content: space-between;
+            text-decoration: none; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+        }
+        .news-shortcut-info h4 { margin: 0; font-size: 0.75rem; text-transform: uppercase; opacity: 0.8; letter-spacing: 1px; }
+        .news-shortcut-info h2 { margin: 2px 0 0; font-size: 1.1rem; font-weight: 800; }
+        .news-shortcut-ico {
+            width: 45px; height: 45px; background: rgba(255,255,255,0.2);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -371,18 +410,35 @@
 
 <body>
 
+    <!-- PRELOADER FLOTANTE -->
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
+        <div class="loader-text">Procesando...</div>
+    </div>
+
     <header>
         <div class="header-box">
             <div class="logo-container animate__animated animate__fadeIn">
-                <img src="logo_STM.png" alt="STM"
+                <img src="logo nuevo.png" alt="STM"
                     onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
             </div>
             <div class="welcome-msg">
                 <h1 id="usrGreeting">General STM</h1>
-                <p>Bienvenido al Panel Ágil</p>
+                <p>Panel Ágil de Gestión</p>
             </div>
         </div>
     </header>
+
+    <!-- ATAJO A NOVEDADES -->
+    <a href="novedades.html" class="news-shortcut animate__animated animate__fadeIn">
+        <div class="news-shortcut-info">
+            <h4>¿Qué hay de nuevo?</h4>
+            <h2>Ver Novedades STM</h2>
+        </div>
+        <div class="news-shortcut-ico">
+            <i class="fa-solid fa-bolt"></i>
+        </div>
+    </a>
 
     <main class="main-grid" id="mainMenu">
         <a href="#" class="action-card">
@@ -466,7 +522,7 @@
     </div>
 
     <nav class="bottom-nav">
-        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
         <a href="#" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
         <a href="#" class="nav-btn"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn"><i class="fa-solid fa-gear"></i></a>
@@ -513,6 +569,15 @@
         // Saludo dinámico
         const h = new Date().getHours();
         document.getElementById('usrGreeting').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+
+        // Loader control
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 800);
+        });
     </script>
 </body>
 

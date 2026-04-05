@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Novedades STM - Noticias de Interés</title>
+    <link rel="icon" type="image/png" href="logo_STM.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #f59e0b;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box {
+            width: 50px; height: 50px; background: white; border-radius: 14px;
+            padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .welcome-msg h1 { margin: 0; font-size: 1.25rem; font-weight: 800; }
+        .welcome-msg p { margin: 0; font-size: 0.8rem; opacity: 0.5; }
+
+        .container { padding: 20px 16px 120px; max-width: 600px; margin: 0 auto; }
+
+        /* --- NEWS FEED --- */
+        .news-hero {
+            background: white; border-radius: 26px; overflow: hidden;
+            margin-bottom: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        .hero-tag {
+            display: inline-block;
+            margin: 20px 20px 0;
+            background: var(--stm-primary); color: white;
+            padding: 8px 14px; border-radius: 12px; font-weight: 800;
+            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+            animation: blink 1.5s infinite ease-in-out;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
+        .hero-content { padding: 20px 25px 30px; }
+        .hero-content h2 { margin: 10px 0; font-size: 1.45rem; font-weight: 800; color: #1e1b4b; line-height: 1.2; }
+        .hero-date { font-size: 0.75rem; color: #6366f1; font-weight: 700; margin-bottom: 10px; display: block; }
+        .hero-desc { font-size: 0.95rem; color: #64748b; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- FEED ITEM --- */
+        .feed-card {
+            background: white; border-radius: 22px; padding: 20px;
+            margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            display: flex; flex-direction: column; gap: 8px; transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        .feed-card:active { transform: scale(0.98); background: #f8fafc; }
+        .feed-date { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+        .feed-title { font-size: 1.05rem; font-weight: 800; color: #334155; margin: 0; }
+        .feed-desc { font-size: 0.88rem; color: #64748b; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* --- FAB BOT --- */
+        .fab-bot {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 60px; height: 60px; background: var(--stm-primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            z-index: 1001; animation: bounceBot 3s infinite;
+        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 400px;
+            height: 70px; background: var(--nav-bg); border-radius: 35px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+        }
+        .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
+        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+
+        /* MODAL BOT */
+        .bot-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; visibility: hidden; opacity: 0; transition: 0.3s;
+        }
+        .bot-modal.active { visibility: visible; opacity: 1; }
+        .bot-content {
+            position: absolute; bottom: 0; width: 100%; background: white;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 30px 20px; transform: translateY(100%); transition: 0.4s;
+        }
+        .bot-modal.active .bot-content { transform: translateY(0); }
+        .bot-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 15px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: inherit; }
+        .bot-search-box { position: relative; }
+        .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-primary); }
+
+        .loader { text-align:center; padding: 50px; color: var(--stm-primary); display: flex; flex-direction: column; gap:10px; align-items:center; }
+
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 5000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo {
+            width: 100px; height: auto;
+            object-fit: contain;
+            animation: logo-spin 2s linear infinite;
+        }
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loader-text {
+            margin-top: 20px; font-weight: 700; color: var(--stm-primary);
+            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER FLOTANTE -->
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
+        <div class="loader-text">Novedades STM...</div>
+    </div>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box">
+                <img src="logo nuevo.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+            </div>
+            <div class="welcome-msg">
+                <h1 id="greetH">¡Buen día!</h1>
+                <p>Novedades STM</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="newsFeed">
+        <div class="loader">
+            <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+            <p style="font-weight: 700; margin:0">Cargando noticias...</p>
+        </div>
+    </div>
+
+    <!-- FAB BOT -->
+    <div class="fab-bot" onclick="toggleBot(true)">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <div class="bot-search-box">
+                <i class="fa-solid fa-robot"></i>
+                <input type="text" class="bot-input" placeholder="Buscar noticia..." id="botInput">
+            </div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="opciones.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <script>
+        const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4";
+        const GID = "195669740";
+        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+        let allNews = [];
+
+        async function loadNews() {
+            try {
+                const res = await fetch(URL);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                const rows = json.table.rows;
+                
+                allNews = rows.map(r => {
+                    const c = r.c;
+                    return {
+                        titulo: c[1]?.v || "",
+                        desc: c[2]?.v || "",
+                        fecha: c[3]?.f || c[3]?.v || "",
+                        activo: (c[4]?.v || "").toString().toUpperCase() === "SI"
+                    };
+                }).filter(n => n.activo).reverse(); // Lo último primero
+
+                renderFeed(allNews);
+            } catch (e) {
+                document.getElementById('newsFeed').innerHTML = "<p>Error al cargar novedades.</p>";
+            }
+        }
+
+        function renderFeed(news) {
+            const feed = document.getElementById('newsFeed');
+            feed.innerHTML = "";
+
+            if(news.length === 0) {
+                feed.innerHTML = "<p>No hay novedades disponibles hoy.</p>";
+                return;
+            }
+
+            // Hero (Latest)
+            const latest = news[0];
+            const hero = document.createElement('div');
+            hero.className = "news-hero animate__animated animate__fadeIn";
+            hero.innerHTML = `
+                <div class="hero-tag">Última noticia</div>
+                <div class="hero-content">
+                    <span class="hero-date">${latest.fecha}</span>
+                    <h2>${latest.titulo}</h2>
+                    <p class="hero-desc">${latest.desc}</p>
+                </div>
+            `;
+            feed.appendChild(hero);
+
+            // Rest
+            news.slice(1).forEach(n => {
+                const card = document.createElement('div');
+                card.className = "feed-card animate__animated animate__fadeInUp";
+                card.innerHTML = `
+                    <span class="feed-date">${n.fecha}</span>
+                    <h3 class="feed-title">${n.titulo}</h3>
+                    <p class="feed-desc">${n.desc}</p>
+                `;
+                card.onclick = () => alertDetail(n);
+                feed.appendChild(card);
+            });
+        }
+
+        function alertDetail(n) {
+            // Un simple modal o detalle nativo
+            const res = document.getElementById('botRes');
+            res.innerHTML = `
+                <div style="padding:15px">
+                    <span style="font-size:0.7rem; color:#6366f1; font-weight:800">${n.fecha}</span>
+                    <h3 style="margin:5px 0 10px; font-weight:800">${n.titulo}</h3>
+                    <p style="font-size:0.92rem; color:#475569; line-height:1.6">${n.desc}</p>
+                </div>
+            `;
+            toggleBot(true);
+        }
+
+        function toggleBot(show) {
+            document.getElementById('modalBot').classList.toggle('active', show);
+            if(show) document.getElementById('botInput').focus();
+        }
+
+        document.getElementById('botInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const res = document.getElementById('botRes');
+            res.innerHTML = "";
+            if(val.length > 2) {
+                const found = allNews.filter(n => n.titulo.toLowerCase().includes(val) || n.desc.toLowerCase().includes(val));
+                found.forEach(f => {
+                    res.innerHTML += `
+                        <div class="feed-card" style="margin-bottom:10px" onclick="alertDetail(${JSON.stringify(f).replace(/"/g, '&quot;')})">
+                            <span class="feed-date">${f.fecha}</span>
+                            <h3 class="feed-title" style="font-size:0.9rem">${f.titulo}</h3>
+                        </div>
+                    `;
+                });
+            }
+        });
+
+        loadNews();
+
+        const h = new Date().getHours();
+        document.getElementById('greetH').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 600);
+        });
+    </script>
+</body>
+</html>

@@ -43,8 +43,9 @@
         .logo-container {
             width: 50px; height: 50px; background: white; border-radius: 14px;
             padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex; align-items: center; justify-content: center;
         }
-        .logo-container img { width: 100%; height: auto; }
+        .logo-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .welcome-msg h1 { margin: 0; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; }
         .welcome-msg p { margin: 0; font-size: 0.8rem; opacity: 0.5; font-weight: 500; }
 
@@ -135,14 +136,41 @@
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 5000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo {
+            width: 100px; height: auto;
+            object-fit: contain;
+            animation: logo-spin 2s linear infinite;
+        }
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loader-text {
+            margin-top: 20px; font-weight: 700; color: var(--stm-primary);
+            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
+    <!-- PRELOADER FLOTANTE -->
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
+        <div class="loader-text">Cargando Directorio...</div>
+    </div>
+
     <header>
         <div class="header-box">
             <div class="logo-container">
-                <img src="logo_STM.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+                <img src="logo nuevo.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
             </div>
             <div class="welcome-msg">
                 <h1 id="greetH">Contacto STM</h1>
@@ -180,7 +208,7 @@
     </div>
 
     <nav class="nav-footer">
-        <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-link"><i class="fa-solid fa-house"></i></a>
         <a href="opciones.html" class="nav-link"><i class="fa-solid fa-compass"></i></a>
         <a href="#" class="nav-link active"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i></a>
@@ -243,6 +271,14 @@
         render(contacts, 'list');
         const h = new Date().getHours();
         document.getElementById('greetH').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 600);
+        });
     </script>
 </body>
 </html>

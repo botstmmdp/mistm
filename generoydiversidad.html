@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Género y Diversidad - STM</title>
+    <link rel="icon" type="image/png" href="logo_STM.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <style>
+        :root {
+            --stm-primary: #6366f1;
+            --stm-secondary: #4f46e5;
+            --stm-accent: #f43f5e; /* Un tono rosado/rojo para género */
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #fef2f2 0%, #f1f5f9 100%);
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box {
+            width: 50px; height: 50px; background: white; border-radius: 14px;
+            padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .welcome-msg h1 { margin: 0; font-size: 1.15rem; font-weight: 800; color: #5a377b; }
+        .welcome-msg p { margin: 0; font-size: 0.8rem; opacity: 0.6; font-weight: 500; }
+
+        .container { padding: 20px 16px 120px; max-width: 600px; margin: 0 auto; }
+
+        /* --- HERO SECTION --- */
+        .hero-banner {
+            background: linear-gradient(135deg, #5a377b, #8e44ad);
+            border-radius: 24px; padding: 30px 20px; color: white;
+            margin-bottom: 25px; box-shadow: 0 10px 25px rgba(90, 55, 123, 0.2);
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .hero-banner::after {
+            content: ''; position: absolute; top: -50px; right: -50px;
+            width: 150px; height: 150px; background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .hero-banner h2 { margin: 0 0 10px; font-size: 1.4rem; font-weight: 800; }
+        .hero-banner p { margin: 0; font-size: 0.9rem; opacity: 0.9; line-height: 1.4; }
+
+        /* --- INFO CARDS --- */
+        .section-card {
+            background: white; border-radius: 22px; padding: 25px;
+            margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        .section-title {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 1.1rem; font-weight: 800; color: #5a377b;
+            margin-bottom: 15px;
+        }
+        .section-title i { color: var(--stm-accent); }
+        .section-card p { margin: 0; font-size: 0.95rem; line-height: 1.6; color: #475569; text-align: justify; }
+
+        /* --- CONTACT BOX --- */
+        .contact-box {
+            background: #fdf2f8; border-radius: 20px; padding: 20px;
+            border: 2px dashed #f9a8d4; margin-top: 15px; text-align: center;
+        }
+        .contact-box span { display: block; font-size: 0.75rem; font-weight: 700; color: #db2777; text-transform: uppercase; margin-bottom: 5px; }
+        .contact-box strong { font-size: 1.25rem; font-weight: 800; color: #5a377b; }
+        .contact-box small { display: block; margin-top: 5px; font-style: italic; opacity: 0.7; }
+
+        .btn-action {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; background: #5a377b; color: white;
+            border-radius: 16px; font-weight: 700; text-decoration: none;
+            margin-top: 15px; transition: 0.3s; box-shadow: 0 4px 12px rgba(90, 55, 123, 0.3);
+        }
+        .btn-action:active { transform: scale(0.97); }
+
+        /* --- FAB BOT --- */
+        .fab-bot {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 60px; height: 60px; background: var(--stm-secondary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            z-index: 1001; animation: bounceBot 3s infinite;
+        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 400px;
+            height: 70px; background: var(--nav-bg); border-radius: 35px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+        }
+        .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
+        .nav-btn.active { color: white; background: var(--stm-secondary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+
+        /* MODAL BOT */
+        .bot-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; visibility: hidden; opacity: 0; transition: 0.3s;
+        }
+        .bot-modal.active { visibility: visible; opacity: 1; }
+        .bot-content {
+            position: absolute; bottom: 0; width: 100%; background: white;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 30px 20px; transform: translateY(100%); transition: 0.4s;
+        }
+        .bot-modal.active .bot-content { transform: translateY(0); }
+        .bot-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 15px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: inherit; }
+        .bot-search-box { position: relative; }
+        .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-secondary); }
+
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 5000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .loader-logo {
+            width: 100px; height: auto;
+            object-fit: contain;
+            animation: logo-spin 2s linear infinite;
+        }
+        @keyframes logo-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .loader-text {
+            margin-top: 20px; font-weight: 700; color: #5a377b;
+            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER FLOTANTE -->
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
+        <div class="loader-text">Género y Diversidad...</div>
+    </div>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box">
+                <img src="logo nuevo.png" alt="STM" onerror="this.src='https://placehold.co/100x100/5a377b/ffffff?text=STM'">
+            </div>
+            <div class="welcome-msg">
+                <h1 id="greetH">¡Hola!</h1>
+                <p>Género y Diversidad STM</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container animate__animated animate__fadeIn">
+        <div class="hero-banner">
+            <h2>Secretaría de Género</h2>
+            <p>Tu salud y equilibrio son nuestra prioridad constante en el sindicato.</p>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fa-solid fa-shield-halved"></i>
+                Bienestar Integral
+            </div>
+            <p>
+                Consideramos el Bienestar Integral como un derecho fundamental y una conquista colectiva. Este espacio está diseñado para garantizar que cada compañero desarrolle sus tareas en un entorno laboral <strong>digno, seguro y satisfactorio</strong>.
+            </p>
+            <p style="margin-top:10px">
+                Promovemos el equilibrio personal y ofrecemos herramientas concretas para el crecimiento físico y psicoemocional, asegurando confidencialidad absoluta.
+            </p>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">
+                <i class="fa-solid fa-comments"></i>
+                Canales de Atención
+            </div>
+            <p>Accedé a nuestros recursos de apoyo confidencial o a las guías de bienestar laboral.</p>
+            
+            <div class="contact-box">
+                <span>Línea de Asistencia</span>
+                <strong>📞 (223) 472 3756</strong>
+                <small>* Servicio 100% Confidencial</small>
+            </div>
+
+            <a href="tel:2234723756" class="btn-action">
+                <i class="fa-solid fa-phone"></i> Llamar ahora
+            </a>
+            
+            <a href="https://wa.me/5492231234567" target="_blank" class="btn-action" style="background:#25d366; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);">
+                <i class="fa-brands fa-whatsapp"></i> Chat por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <!-- FAB BOT -->
+    <div class="fab-bot" onclick="toggleBot(true)">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <div class="bot-search-box">
+                <i class="fa-solid fa-robot"></i>
+                <input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botInput">
+            </div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;">
+                <p style="font-size: 0.85rem; color: #64748b; padding: 10px;">Probá buscando: "Asistencia", "Salud", "Género"...</p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="opciones.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <script>
+        function toggleBot(show) {
+            document.getElementById('modalBot').classList.toggle('active', show);
+            if(show) document.getElementById('botInput').focus();
+        }
+
+        const h = new Date().getHours();
+        const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+        document.getElementById('greetH').innerText = greet;
+
+        document.getElementById('botInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const res = document.getElementById('botRes');
+            if(val.length > 2) {
+                if(val.includes('salud') || val.includes('genero') || val.includes('asistencia')) {
+                    res.innerHTML = `
+                        <div style="padding:15px; background:#f8fafc; border-radius:12px; border-left:4px solid #5a377b">
+                            <p style="margin:0; font-size:0.9rem"><strong>Sist. Asistencia:</strong> Podés llamar al (223) 472 3756 para hablar con un profesional de forma confidencial.</p>
+                        </div>
+                    `;
+                } else {
+                    res.innerHTML = '<p style="padding:10px; font-size:0.85rem">No encontré resultados exactos, pero podés llamarnos directamente.</p>';
+                }
+            }
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 600);
+        });
+    </script>
+</body>
+</html>
