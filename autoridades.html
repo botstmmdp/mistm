@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Novedades STM - Noticias de Interés</title>
-    <link rel="icon" type="image/png" href="logo_STM.png">
+    <title>Autoridades STM - Cuerpo Directivo</title>
+    <link rel="icon" type="image/png" href="logo nuevo.png">
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -26,12 +26,10 @@
             --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         }
 
-        body.dark-mode .news-hero, body.dark-mode .feed-card, body.dark-mode header, body.dark-mode .bot-content { background: #1e293b; color: white; border-color: #334155; }
+        body.dark-mode .auth-card, body.dark-mode header, body.dark-mode .bot-content { background: #1e293b; color: white; border-color: #334155; }
         body.dark-mode p { color: #94a3b8; }
-        body.dark-mode .hero-content h2 { color: #818cf8; }
         .hidden { display: none !important; }
         .nav-bar { background: #111827 !important; }
-        .fab-bot i { color: white !important; }
 
         .nav-home-pulse i {
             animation: home-blink 2s infinite ease-in-out;
@@ -70,41 +68,31 @@
 
         .container { padding: 20px 16px 120px; max-width: 600px; margin: 0 auto; }
 
-        /* --- NEWS FEED --- */
-        .news-hero {
-            background: white; border-radius: 26px; overflow: hidden;
-            margin-bottom: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255,255,255,0.8);
+        /* --- AUTHORITIES LIST --- */
+        .section-title {
+            font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 1.5px; color: var(--stm-primary); margin: 0 0 15px 5px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .hero-tag {
-            display: inline-block;
-            margin: 20px 20px 0;
-            background: var(--stm-primary); color: white;
-            padding: 8px 14px; border-radius: 12px; font-weight: 800;
-            font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-            animation: blink 1.5s infinite ease-in-out;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.98); }
-        }
-        .hero-content { padding: 20px 25px 30px; }
-        .hero-content h2 { margin: 10px 0; font-size: 1.45rem; font-weight: 800; color: #1e1b4b; line-height: 1.2; }
-        .hero-date { font-size: 0.75rem; color: #6366f1; font-weight: 700; margin-bottom: 10px; display: block; }
-        .hero-desc { font-size: 0.95rem; color: #64748b; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--stm-primary); opacity: 0.2; }
 
-        /* --- FEED ITEM --- */
-        .feed-card {
-            background: white; border-radius: 22px; padding: 20px;
-            margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            display: flex; flex-direction: column; gap: 8px; transition: 0.3s;
+        .auth-card {
+            background: white; border-radius: 22px; padding: 18px 20px;
+            margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            display: flex; align-items: center; gap: 15px; transition: 0.3s;
             border: 1px solid rgba(255,255,255,0.8);
         }
-        .feed-card:active { transform: scale(0.98); background: #f8fafc; }
-        .feed-date { font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
-        .feed-title { font-size: 1.05rem; font-weight: 800; color: #334155; margin: 0; }
-        .feed-desc { font-size: 0.88rem; color: #64748b; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .auth-card:active { transform: scale(0.98); background: #f8fafc; }
+        
+        .auth-ico {
+            width: 45px; height: 45px; border-radius: 14px;
+            background: #f1f5f9; color: var(--stm-primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+        .auth-info { flex: 1; }
+        .auth-pos { font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 2px; }
+        .auth-name { font-size: 1.05rem; font-weight: 800; color: #334155; margin: 0; }
 
         /* --- FAB BOT --- */
         .fab-bot {
@@ -159,15 +147,6 @@
         .bot-search-box { position: relative; }
         .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-primary); }
 
-        .loader { text-align:center; padding: 50px; color: var(--stm-primary); display: flex; flex-direction: column; gap:10px; align-items:center; }
-
-        /* --- PRELOADER --- */
-        #loader-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; z-index: 5000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.5s ease;
-        }
         /* --- PRELOADER --- */
         #loader-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -194,7 +173,7 @@
     <!-- PRELOADER FLOTANTE -->
     <div id="loader-wrapper">
         <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div class="loader-text">Novedades STM...</div>
+        <div class="loader-text">Autoridades STM...</div>
     </div>
 
     <header>
@@ -203,16 +182,135 @@
                 <img src="logo nuevo.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
             </div>
             <div class="welcome-msg">
-                <h1 id="usrGreeting">¡Cargando!</h1>
-                <p id="usrDisplayName">Buscando usuario...</p>
+                <h1 id="usrGreeting">Autoridades</h1>
+                <p id="usrDisplayName">Cuerpo Directivo</p>
             </div>
         </div>
     </header>
 
-    <div class="container" id="newsFeed">
-        <div class="loader">
-            <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
-            <p style="font-weight: 700; margin:0">Cargando noticias...</p>
+    <div class="container animate__animated animate__fadeIn">
+        <h2 class="section-title">Secretariado General</h2>
+        
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Secretario General</div>
+                <h3 class="auth-name">Daniel Alberto ZACARIAS</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Secretario Adjunto</div>
+                <h3 class="auth-name">Cristian Gabriel MILASINCIC</h3>
+            </div>
+        </div>
+
+        <h2 class="section-title" style="margin-top: 30px;">Secretarías</h2>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Finanzas</div>
+                <h3 class="auth-name">Gaston Ignacio ARMENDARIZ</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Organización</div>
+                <h3 class="auth-name">Luis A. MARCHESANI</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Gremial</div>
+                <h3 class="auth-name">Soledad LEIVA</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Administrativa y de Actas</div>
+                <h3 class="auth-name">María de los Angeles IRAZABAL</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.7s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Acción Social y Obras</div>
+                <h3 class="auth-name">Fernando N. SALOME</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.8s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Previsión Social</div>
+                <h3 class="auth-name">Sebastián G. MENDEZ</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.9s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Prensa y Difusión</div>
+                <h3 class="auth-name">Nicolas A. ALVAREZ LOZZI</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.0s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Relac. Públicas y Sindicales</div>
+                <h3 class="auth-name">Ricardo A. PIGNATARO</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.1s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Mujer</div>
+                <h3 class="auth-name">Cecilia M. GAUDIOSO</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.2s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Docente</div>
+                <h3 class="auth-name">Alejandra S. AYEK</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.3s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Personal Jerárquico</div>
+                <h3 class="auth-name">Claudio J. CAMBARERI</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.4s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Higiene y Seguridad</div>
+                <h3 class="auth-name">María V. MAIO</h3>
+            </div>
+        </div>
+
+        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.5s">
+            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
+            <div class="auth-info">
+                <div class="auth-pos">Personal Profesional</div>
+                <h3 class="auth-name">María Laura VILLALBA</h3>
+            </div>
         </div>
     </div>
 
@@ -226,7 +324,7 @@
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
             <div class="bot-search-box">
                 <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" placeholder="Buscar noticia..." id="botInput">
+                <input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botInput">
             </div>
             <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
         </div>
@@ -260,111 +358,29 @@
             <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 25px 5px;">Gestiona tu seguridad y contraseña</p>
 
             <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
-                    <i class="fa-solid fa-lock" style="color: var(--stm-primary);"></i>
-                    <input type="password" class="search-field" id="newPass" placeholder="Nueva Contraseña" style="background: transparent;">
+                <div style="background: #f8fafc; border: 2px solid #e2e8f0; position:relative; padding:15px; border-radius:18px;">
+                    <i class="fa-solid fa-lock" style="color: var(--stm-primary); position:absolute; left:20px; top:50%; transform:translateY(-50%)"></i>
+                    <input type="password" id="newPass" placeholder="Nueva Contraseña" style="width:100%; border:none; background:transparent; padding-left:35px; outline:none; font-family:inherit">
                 </div>
-                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
-                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary);"></i>
-                    <input type="password" class="search-field" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="background: transparent;">
+                <div style="background: #f8fafc; border: 2px solid #e2e8f0; position:relative; padding:15px; border-radius:18px;">
+                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary); position:absolute; left:20px; top:50%; transform:translateY(-50%)"></i>
+                    <input type="password" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="width:100%; border:none; background:transparent; padding-left:35px; outline:none; font-family:inherit">
                 </div>
                 
-                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;">
                     Actualizar Contraseña
                 </button>
             </div>
-            
             <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: transparent; font-weight: 600; color: #64748b; font-family: inherit; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
     <script>
-        const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4";
-        const GID = "195669740";
-        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
-        let allNews = [];
-
-        async function loadNews() {
-            try {
-                const res = await fetch(URL);
-                const text = await res.text();
-                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
-                const rows = json.table.rows;
-                
-                allNews = rows.map(r => {
-                    const c = r.c;
-                    return {
-                        titulo: c[1]?.v || "",
-                        desc: c[2]?.v || "",
-                        fecha: c[3]?.f || c[3]?.v || "",
-                        activo: (c[4]?.v || "").toString().toUpperCase() === "SI"
-                    };
-                }).filter(n => n.activo).reverse(); // Lo último primero
-
-                renderFeed(allNews);
-            } catch (e) {
-                document.getElementById('newsFeed').innerHTML = "<p>Error al cargar novedades.</p>";
-            }
-        }
-
-        function renderFeed(news) {
-            const feed = document.getElementById('newsFeed');
-            feed.innerHTML = "";
-
-            if(news.length === 0) {
-                feed.innerHTML = "<p>No hay novedades disponibles hoy.</p>";
-                return;
-            }
-
-            // Hero (Latest)
-            const latest = news[0];
-            const hero = document.createElement('div');
-            hero.className = "news-hero animate__animated animate__fadeIn";
-            hero.style.cursor = "pointer";
-            hero.onclick = () => alertDetail(latest);
-            hero.innerHTML = `
-                <div class="hero-tag">Última noticia</div>
-                <div class="hero-content">
-                    <span class="hero-date">${latest.fecha}</span>
-                    <h2>${latest.titulo}</h2>
-                    <p class="hero-desc">${latest.desc}</p>
-                </div>
-            `;
-            feed.appendChild(hero);
-
-            // Rest
-            news.slice(1).forEach(n => {
-                const card = document.createElement('div');
-                card.className = "feed-card animate__animated animate__fadeInUp";
-                card.style.cursor = "pointer";
-                card.onclick = () => alertDetail(n);
-                card.innerHTML = `
-                    <span class="feed-date">${n.fecha}</span>
-                    <h3 class="feed-title">${n.titulo}</h3>
-                    <p class="feed-desc">${n.desc}</p>
-                `;
-                feed.appendChild(card);
-            });
-        }
-
-        function alertDetail(n) {
-            // Un simple modal o detalle nativo
-            const res = document.getElementById('botRes');
-            res.innerHTML = `
-                <div style="padding:15px">
-                    <span style="font-size:0.7rem; color:#6366f1; font-weight:800">${n.fecha}</span>
-                    <h3 style="margin:5px 0 10px; font-weight:800">${n.titulo}</h3>
-                    <p style="font-size:0.92rem; color:#475569; line-height:1.6">${n.desc}</p>
-                </div>
-            `;
-            toggleBot(true);
-        }
-
         const sitePages = [
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
-            { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
@@ -384,19 +400,15 @@
             const p1 = document.getElementById('newPass').value;
             const p2 = document.getElementById('confirmPass').value;
             const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
-            
             if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
             if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            
             localStorage.setItem('usrPass', p1);
             showNotify("¡Contraseña actualizada con éxito!", "success");
-            
             const originalText = btn.innerText;
             btn.innerText = "¡Actualizado! ✓";
             btn.style.background = "#10b981";
             btn.style.color = "white";
             btn.style.pointerEvents = "none";
-            
             setTimeout(() => {
                 toggleUser(false);
                 btn.innerText = originalText;
@@ -431,20 +443,13 @@
             res.innerHTML = "";
             if (val.length > 2) {
                 const words = val.split(" ").filter(w => w.length > 2);
-
                 const filtered = sitePages.filter(p => {
                     const target = normalize(p.t + " " + p.tags);
                     return words.some(w => target.includes(w)) || target.includes(val);
                 });
 
-                const filteredNews = allNews.filter(n => {
-                    const target = normalize(n.titulo + " " + n.desc);
-                    return words.some(w => target.includes(w)) || target.includes(val);
-                }).slice(0, 7);
-
-                if (filtered.length > 0 || filteredNews.length > 0) {
+                if (filtered.length > 0) {
                     res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
-                    
                     filtered.forEach(p => {
                         res.innerHTML += `
                             <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
@@ -454,33 +459,16 @@
                                 </div>
                             </a>`;
                     });
-
-                    filteredNews.forEach(n => {
-                        res.innerHTML += `
-                            <div onclick="alertDetail(${JSON.stringify(n).replace(/"/g, '&quot;')}); toggleBot(false);" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; border:1px solid #e2e8f0; border-left: 4px solid #6366f1; cursor:pointer">
-                                <div style="display:flex; align-items:center; gap:10px; width:100%">
-                                    <div style="width:30px; height:30px; border-radius:8px; background:#6366f1; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-bolt"></i></div>
-                                    <div style="flex:1">
-                                        <h4 style="margin:0; font-size:0.65rem; color:#6366f1; text-transform:uppercase">NOTICIA</h4>
-                                        <h4 style="margin:0; font-size:0.85rem">${n.titulo}</h4>
-                                    </div>
-                                    <i class="fa-solid fa-eye" style="color:#94a3b8; font-size:0.8rem"></i>
-                                </div>
-                            </div>`;
-                    });
                 } else {
                     res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
                 }
             }
         });
 
-        loadNews();
-
         // Saludo y Usuario
         const h = new Date().getHours();
         const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
         document.getElementById('usrGreeting').innerText = greet;
-        
         const savedNames = localStorage.getItem('usrName') || "Afiliado STM";
         document.getElementById('usrDisplayName').innerText = savedNames;
 
