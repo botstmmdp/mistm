@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Convenios STM - Beneficios Exclusivos</title>
+    <link rel="icon" type="image/png" href="logo_STM.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #10b981;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box {
+            width: 50px; height: 50px; background: white; border-radius: 14px;
+            padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        .logo-box img { width: 100%; height: auto; }
+        .welcome-msg h1 { margin: 0; font-size: 1.25rem; font-weight: 800; }
+        .welcome-msg p { margin: 0; font-size: 0.8rem; opacity: 0.5; }
+
+        /* --- SCREEN VIEWS --- */
+        .screen { display: none; padding: 20px 16px 120px; animation: fadeIn 0.4s ease; }
+        .screen.active { display: block; }
+
+        /* --- RUBROS GRID --- */
+        .rubro-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .rubro-card {
+            background: white; border-radius: 20px; padding: 20px;
+            text-align: center; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+        .rubro-card:active { transform: scale(0.96); background: #f8fafc; }
+        .rubro-ico {
+            width: 50px; height: 50px; border-radius: 15px; margin: 0 auto 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; color: white;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+        .rubro-card h3 { margin: 0; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; }
+
+        /* --- CONVENIOS LIST --- */
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 18px; background: white; border-radius: 12px;
+            font-size: 0.85rem; font-weight: 700; color: var(--stm-primary);
+            margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .convenio-card {
+            background: white; border-radius: 22px; padding: 18px; margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
+        .convenio-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .convenio-header h3 { margin: 0; font-size: 1.05rem; font-weight: 800; color: var(--text-dark); }
+        .convenio-tag { font-size: 0.65rem; font-weight: 800; color: var(--stm-primary); background: #eef2ff; padding: 4px 8px; border-radius: 6px; }
+        .convenio-detail { max-height: 0; overflow: hidden; transition: 0.4s; padding: 0; font-size: 0.9rem; line-height: 1.5; color: #64748b; white-space: pre-wrap; }
+        .convenio-card.open .convenio-detail { max-height: 1000px; padding-top: 15px; }
+
+        /* --- FAB BOT --- */
+        .fab-bot {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 60px; height: 60px; background: var(--stm-primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            z-index: 1001; animation: bounceBot 3s infinite;
+        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        .bot-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; visibility: hidden; opacity: 0; transition: 0.3s;
+        }
+        .bot-modal.active { visibility: visible; opacity: 1; }
+        .bot-content {
+            position: absolute; bottom: 0; width: 100%; background: white;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 30px 20px; transform: translateY(100%); transition: 0.4s;
+        }
+        .bot-modal.active .bot-content { transform: translateY(0); }
+        .bot-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 15px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: inherit; }
+        .bot-search-box { position: relative; }
+        .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-primary); }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 400px;
+            height: 70px; background: var(--nav-bg); border-radius: 35px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+        }
+        .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
+        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+
+        /* UTIL */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .loader { text-align: center; padding: 40px; color: var(--stm-primary); font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box">
+                <img src="logo_STM.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+            </div>
+            <div class="welcome-msg">
+                <h1 id="greetH">Convenios STM</h1>
+                <p>Tus beneficios exclusivos</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- PANTALLA 1: RUBROS -->
+    <div id="screenRubros" class="screen active">
+        <h2 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 20px;">Explora por categorías</h2>
+        <div id="rubroGrid" class="rubro-grid">
+            <div class="loader">Cargando beneficios...</div>
+        </div>
+    </div>
+
+    <!-- PANTALLA 2: CONVENIOS -->
+    <div id="screenConvenios" class="screen">
+        <div class="back-btn" onclick="showScreen('screenRubros')"><i class="fa-solid fa-arrow-left"></i> Volver</div>
+        <h2 id="currentRubroTitle" style="font-size: 1.2rem; font-weight: 800; margin-bottom: 20px;">Beneficios</h2>
+        <div id="conveniosList"></div>
+    </div>
+
+    <!-- FAB BOT -->
+    <div class="fab-bot" onclick="toggleBot(true)">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <!-- MODAL BOT -->
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <div class="bot-search-box">
+                <i class="fa-solid fa-robot"></i>
+                <input type="text" class="bot-input" placeholder="¿Qué beneficio buscas?" id="botInput">
+            </div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <script>
+        const APP_URL = 'https://script.google.com/macros/s/AKfycbwFF-ZTptmhjFBItUzfh2CCkjycg485z2amS-girpV5hRF3JLZwWgD1yhgl63uABPwskA/exec';
+        let allData = [];
+
+        async function init() {
+            try {
+                const res = await fetch(APP_URL + '?action=READ_ALL');
+                const data = await res.json();
+                allData = (data.convenios || data.novedades).filter(c => (c.ACTIVO || '').toUpperCase() === 'SI');
+                renderRubros();
+            } catch (err) {
+                document.getElementById('rubroGrid').innerHTML = '<p>Error al cargar. Reintenta pronto.</p>';
+            }
+        }
+
+        function renderRubros() {
+            const rubros = [...new Set(allData.map(c => c.rubro.toUpperCase().trim()))].sort();
+            const grid = document.getElementById('rubroGrid');
+            grid.innerHTML = "";
+            
+            rubros.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "rubro-card";
+                card.onclick = () => showConvenios(r);
+                card.innerHTML = `
+                    <div class="rubro-ico">${getIco(r)}</div>
+                    <h3>${r}</h3>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function showConvenios(rubro) {
+            const filtered = allData.filter(c => c.rubro.toUpperCase().trim() === rubro);
+            document.getElementById('currentRubroTitle').innerText = rubro;
+            const list = document.getElementById('conveniosList');
+            list.innerHTML = "";
+            
+            filtered.forEach(c => {
+                const card = document.createElement('div');
+                card.className = "convenio-card";
+                card.innerHTML = `
+                    <div class="convenio-header" onclick="this.parentElement.classList.toggle('open')">
+                        <div style="flex:1">
+                            <span class="convenio-tag">${c.rubro}</span>
+                            <h3>${c.titulo}</h3>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="convenio-detail">${c.detalle}</div>
+                `;
+                list.appendChild(card);
+            });
+            showScreen('screenConvenios');
+        }
+
+        function getIco(r) {
+            if(r.includes('SALUD') || r.includes('MEDICINA')) return '<i class="fa-solid fa-stethoscope"></i>';
+            if(r.includes('TURISMO') || r.includes('BALNEARIO')) return '<i class="fa-solid fa-umbrella-beach"></i>';
+            if(r.includes('COMERCIO') || r.includes('TIENDA')) return '<i class="fa-solid fa-cart-shopping"></i>';
+            if(r.includes('DEPORTES') || r.includes('FITNESS')) return '<i class="fa-solid fa-tennis-ball"></i>';
+            if(r.includes('GASTRONOMIA') || r.includes('COMIDA')) return '<i class="fa-solid fa-utensils"></i>';
+            if(r.includes('EDUCACION')) return '<i class="fa-solid fa-graduation-cap"></i>';
+            if(r.includes('AUTO') || r.includes('VEHICULO')) return '<i class="fa-solid fa-car"></i>';
+            if(r.includes('BENEFICIO')) return '<i class="fa-solid fa-gift"></i>';
+            return '<i class="fa-solid fa-tags"></i>';
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function toggleBot(show) {
+            document.getElementById('modalBot').classList.toggle('active', show);
+            if(show) document.getElementById('botInput').focus();
+        }
+
+        document.getElementById('botInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const res = document.getElementById('botRes');
+            res.innerHTML = "";
+            if(val.length > 2) {
+                const found = allData.filter(c => c.titulo.toLowerCase().includes(val) || c.detalle.toLowerCase().includes(val));
+                found.forEach(f => {
+                    res.innerHTML += `
+                        <div class="convenio-card" style="padding:10px" onclick="toggleBot(false); showConvenios('${f.rubro.toUpperCase()}')">
+                            <span class="convenio-tag">${f.rubro}</span>
+                            <h3 style="font-size:0.9rem">${f.titulo}</h3>
+                        </div>
+                    `;
+                });
+            }
+        });
+
+        init();
+        const h = new Date().getHours();
+        document.getElementById('greetH').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+    </script>
+</body>
+</html>

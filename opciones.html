@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dashboard STM - Panel Ágil</title>
+    <link rel="icon" type="image/png" href="logo_STM.png">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #10b981;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+            --glass: rgba(255, 255, 255, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER (LOGO RESTAURADO) --- */
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .welcome-msg h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-msg p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            font-weight: 500;
+        }
+
+        /* --- BOTONERA PRINCIPAL --- */
+        .main-grid {
+            padding: 20px 16px 120px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 22px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.5s ease-out forwards;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .action-card:active {
+            transform: scale(0.97);
+            background: #fdfdfd;
+        }
+
+        .ico-box {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            flex-shrink: 0;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-info h3 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .card-info p {
+            margin: 2px 0 0;
+            font-size: 0.78rem;
+            color: #64748b;
+        }
+
+        /* COLORS */
+        .g-1 {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .g-2 {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+
+        .g-3 {
+            background: linear-gradient(135deg, #64748b, #475569);
+        }
+
+        .g-4 {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .g-5 {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        .g-6 {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .g-7 {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .g-8 {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+        }
+
+        /* --- FLOATING ASISTENTE (FAB) --- */
+        .fab-assistant {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 65px;
+            height: 65px;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.7rem;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            cursor: pointer;
+            z-index: 1001;
+            transition: 0.3s;
+            animation: bounceBot 3s infinite;
+        }
+
+        @keyframes bounceBot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* --- ASISTENTE OVERLAY --- */
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .search-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .search-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
+            padding: 30px 20px 40px;
+            box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .search-modal.active .search-content {
+            transform: translateY(0);
+        }
+
+        .search-bar-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border-radius: 20px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--stm-primary);
+            background: white;
+        }
+
+        .search-bar-box i {
+            position: absolute;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--stm-primary);
+            font-size: 1.2rem;
+        }
+
+        .results-list {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .res-section {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--stm-primary);
+            text-transform: uppercase;
+            margin: 10px 0;
+        }
+
+        .res-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.2s;
+        }
+
+        .res-item:active {
+            background: #f1f5f9;
+        }
+
+        .res-ico {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--stm-primary);
+        }
+
+        /* --- NAVIGATION --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 400px;
+            height: 70px;
+            background: var(--nav-bg);
+            border-radius: 35px;
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #4b5563;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-container animate__animated animate__fadeIn">
+                <img src="logo_STM.png" alt="STM"
+                    onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+            </div>
+            <div class="welcome-msg">
+                <h1 id="usrGreeting">General STM</h1>
+                <p>Bienvenido al Panel Ágil</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-grid" id="mainMenu">
+        <a href="#" class="action-card">
+            <div class="ico-box g-1"><i class="fa-solid fa-users-gear"></i></div>
+            <div class="card-info">
+                <h3>Autoridades</h3>
+                <p>Gestión directiva</p>
+            </div>
+        </a>
+        <a href="contactos.html" class="action-card">
+            <div class="ico-box g-2"><i class="fa-solid fa-phone-volume"></i></div>
+            <div class="card-info">
+                <h3>Contacto</h3>
+                <p>Ayuda 24/7</p>
+            </div>
+        </a>
+        <a href="#" class="action-card">
+            <div class="ico-box g-3"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+            <div class="card-info">
+                <h3>Servicios</h3>
+                <p>Trámites online</p>
+            </div>
+        </a>
+        <a href="#" class="action-card">
+            <div class="ico-box g-4"><i class="fa-solid fa-bullhorn"></i></div>
+            <div class="card-info">
+                <h3>Reclamos GANANCIAS</h3>
+                <p>Asesoría fiscal</p>
+            </div>
+        </a>
+        <a href="#" class="action-card">
+            <div class="ico-box g-5"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="card-info">
+                <h3>Reclamos ANTIGÜEDAD</h3>
+                <p>Gestión laboral</p>
+            </div>
+        </a>
+        <a href="convenios.html" class="action-card">
+            <div class="ico-box g-6"><i class="fa-solid fa-handshake-angle"></i></div>
+            <div class="card-info">
+                <h3>Convenios</h3>
+                <p>Beneficios socios</p>
+            </div>
+        </a>
+        <a href="#" class="action-card">
+            <div class="ico-box g-7"><i class="fa-solid fa-user-graduate"></i></div>
+            <div class="card-info">
+                <h3>Capacitación</h3>
+                <p>Cursos y formación</p>
+            </div>
+        </a>
+        <a href="#" class="action-card">
+            <div class="ico-box g-8"><i class="fa-solid fa-map-location-dot"></i></div>
+            <div class="card-info">
+                <h3>Mini-Turismo</h3>
+                <p>Recreación familiar</p>
+            </div>
+        </a>
+    </main>
+
+    <!-- FAB ASISTENTE -->
+    <div class="fab-assistant" id="openAsist" onclick="toggleModal(true)">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <!-- MODAL ASISTENTE -->
+    <div class="search-modal" id="modalAsist" onclick="if(event.target == this) toggleModal(false)">
+        <div class="search-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <div class="search-bar-box">
+                <i class="fa-solid fa-robot"></i>
+                <input type="text" class="search-input" placeholder="¿En qué puedo ayudarte?" id="searchInput">
+            </div>
+
+            <div class="results-list" id="results">
+                <div class="res-section" id="titleA" style="display:none">Resultados destacados</div>
+                <div id="resList"></div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="#" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
+        <a href="#" class="nav-btn"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="nav-btn"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <script>
+        const sitePages = [
+            { t: "Afiliaciones", d: "Alta de afiliado", f: "afiliacion.html", tags: "socios alta" },
+            { t: "Estado de Trámite", d: "Seguimiento online", f: "consulta.html", tags: "ver estado" },
+            { t: "Credencial QR", d: "Carnet digital", f: "credencial_qr.html", tags: "identificacion" },
+            { t: "Género y Diversidad", d: "Políticas STM", f: "generoydiversidad.html", tags: "derechos" },
+            { t: "Novedades", d: "Noticias y avisos", f: "novedades.html", tags: "boletin" }
+        ];
+
+        function toggleModal(show) {
+            document.getElementById('modalAsist').classList.toggle('active', show);
+            if (show) document.getElementById('searchInput').focus();
+            if (window.navigator.vibrate) window.navigator.vibrate(15);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            const val = e.target.value.toLowerCase();
+            const resList = document.getElementById('resList');
+            const titleA = document.getElementById('titleA');
+            resList.innerHTML = "";
+
+            if (val.length > 1) {
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.includes(val));
+                titleA.style.display = filtered.length > 0 ? "block" : "none";
+                filtered.forEach(p => {
+                    resList.innerHTML += `
+                        <a href="${p.f}" class="res-item">
+                            <div class="res-ico"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div class="card-info">
+                                <h3 style="font-size:0.95rem">${p.t}</h3>
+                                <p style="font-size:0.75rem">${p.d}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else { titleA.style.display = "none"; }
+        });
+
+        // Saludo dinámico
+        const h = new Date().getHours();
+        document.getElementById('usrGreeting').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+    </script>
+</body>
+
+</html>
