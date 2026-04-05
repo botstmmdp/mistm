@@ -27,9 +27,18 @@
         }
 
         body.dark-mode .rubro-card, body.dark-mode .convenio-card, body.dark-mode header, body.dark-mode .bot-content { background: #1e293b; color: white; border-color: #334155; }
-        body.dark-mode .nav-bar { background: #020617; }
         body.dark-mode p { color: #94a3b8; }
         .hidden { display: none !important; }
+        .nav-bar { background: #111827 !important; }
+        .fab-bot i { color: white !important; }
+
+        .nav-home-pulse i {
+            animation: home-blink 2s infinite ease-in-out;
+        }
+        @keyframes home-blink {
+            0%, 100% { color: #4b5563; transform: scale(1); }
+            50% { color: white; transform: scale(1.2); }
+        }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -99,11 +108,14 @@
         /* --- FAB BOT --- */
         .fab-bot {
             position: fixed; bottom: 100px; right: 20px;
-            width: 60px; height: 60px; background: var(--stm-primary);
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
-            z-index: 1001; animation: bounceBot 3s infinite;
+            font-size: 1.5rem; cursor: pointer; z-index: 1001; 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            transition: 0.3s; animation: bounceBot 3s infinite;
         }
+        .fab-bot i { color: white !important; }
         @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .bot-modal {
@@ -148,6 +160,7 @@
             width: 100px; height: auto;
             object-fit: contain;
             animation: logo-spin 2s linear infinite;
+            margin-bottom: 20px;
         }
         @keyframes logo-spin {
             from { transform: rotate(0deg); }
@@ -164,7 +177,7 @@
     <!-- PRELOADER FLOTANTE -->
     <div id="loader-wrapper">
         <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div class="loader-text">Cargando Beneficios...</div>
+        <div class="loader-text">Cargando beneficios...</div>
     </div>
 
     <header>
@@ -212,7 +225,7 @@
     </div>
 
     <nav class="nav-bar">
-        <a href="opciones.html" class="nav-btn"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>

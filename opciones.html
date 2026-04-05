@@ -187,26 +187,16 @@
         }
 
         /* --- FLOATING ASISTENTE (FAB) --- */
-        .fab-assistant {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 65px;
-            height: 65px;
-            background: var(--stm-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white !important;
-            font-size: 1.7rem;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
-            cursor: pointer;
-            z-index: 1001;
-            transition: 0.3s;
-            animation: bounceBot 3s infinite;
+        .fab-bot {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1001; 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            transition: 0.3s; animation: bounceBot 3s infinite;
         }
-        .fab-assistant i { color: white !important; }
+        .fab-bot i { color: white !important; }
 
         @keyframes bounceBot {
 
@@ -536,7 +526,7 @@
     </main>
 
     <!-- FAB BOT -->
-    <div class="fab-assistant" id="fabBotIcon" onclick="toggleModal(true)">
+    <div class="fab-bot" id="fabBotIcon" onclick="toggleModal(true)">
         <i class="fa-solid fa-robot"></i>
     </div>
 
