@@ -315,7 +315,7 @@
 
     <script>
         const sitePages = [
-            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta", ico: "fa-calendar-check" },
+            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
@@ -355,9 +355,21 @@
             localStorage.setItem('usrPass', p1); showNotify("¡Actualizada!", "success"); setTimeout(() => toggleUser(false), 1000);
         }
 
+        let searchTimer = null;
         document.getElementById('botSearch').addEventListener('input', (e) => {
-            const val = normalize(e.target.value); const res = document.getElementById('botRes'); res.innerHTML = "";
-            if (val.length > 2) {
+            const val = normalize(e.target.value).trim();
+            const res = document.getElementById('botRes');
+            if (searchTimer) clearTimeout(searchTimer);
+            
+            if (val.length <= 2) {
+                res.innerHTML = "";
+                return;
+            }
+
+            res.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;" class="animate__animated animate__pulse animate__infinite">Buscando en el STM...</div>`;
+
+            searchTimer = setTimeout(() => {
+                res.innerHTML = "";
                 sitePages.filter(p => normalize(p.t + " " + p.tags).includes(val)).forEach(p => {
                     res.innerHTML += `<a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
                         <div style="display:flex; align-items:center; gap:10px">
@@ -366,7 +378,7 @@
                         </div>
                     </a>`;
                 });
-            }
+            }, 500);
         });
 
         window.addEventListener('load', () => {

@@ -769,7 +769,7 @@
 
     <script>
         const sitePages = [
-            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta", ico: "fa-calendar-check" },
+            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
@@ -871,13 +871,27 @@
             return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
+        let searchTimer = null;
         document.getElementById('searchInput').addEventListener('input', function (e) {
-            const val = normalize(e.target.value);
+            const val = normalize(e.target.value).trim();
             const resList = document.getElementById('resList');
             const titleA = document.getElementById('titleA');
-            resList.innerHTML = "";
 
-            if (val.length > 2) {
+            if (searchTimer) clearTimeout(searchTimer);
+
+            if (val.length <= 2) {
+                resList.innerHTML = "";
+                titleA.innerHTML = "¿En qué puedo ayudarte hoy?";
+                titleA.style.display = "block";
+                return;
+            }
+
+            // Efecto de búsqueda
+            titleA.innerHTML = `Buscando respuestas... <i class="fa-solid fa-circle-notch fa-spin"></i>`;
+            resList.innerHTML = `<div style="padding:40px 20px; text-align:center; color:#94a3b8; font-size:0.9rem" class="animate__animated animate__pulse animate__infinite">Analizando información del STM...</div>`;
+
+            searchTimer = setTimeout(() => {
+                resList.innerHTML = "";
                 const words = val.split(" ").filter(w => w.length > 2 && !["donde", "como", "quien", "pero", "esta", "para", "estos", "estas"].includes(w));
 
                 const filtered = sitePages.filter(p => {
@@ -941,10 +955,7 @@
                     titleA.style.display = "block";
                     titleA.innerHTML = `Mmm... no encontré nada exacto, ¿probamos con otro término? <i class="fa-solid fa-face-thinking" style="margin-left:5px"></i>`;
                 }
-            } else {
-                titleA.style.display = "block";
-                titleA.innerHTML = "¿En qué puedo ayudarte hoy?";
-            }
+            }, 600);
         });
 
         // Saludo dinámico y Nombre del Usuario
