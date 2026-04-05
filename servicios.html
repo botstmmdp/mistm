@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Servicios STM - Beneficios para el Afiliado</title>
+    <link rel="icon" type="image/png" href="logo nuevo.png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #f59e0b;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+            --bg-body: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        body.dark-mode {
+            --stm-primary: #818cf8;
+            --text-dark: #f1f5f9;
+            --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        body.dark-mode .service-card, body.dark-mode header, body.dark-mode .bot-content { background: #1e293b; color: white; border-color: #334155; }
+        body.dark-mode p { color: #94a3b8; }
+        .hidden { display: none !important; }
+        .nav-bar { background: #111827 !important; }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-body);
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box {
+            width: 50px; height: 50px; background: white; border-radius: 14px;
+            padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .welcome-msg h1 { margin: 0; font-size: 1.25rem; font-weight: 800; }
+        .welcome-msg p { margin: 0; font-size: 0.8rem; opacity: 0.5; }
+
+        .container { padding: 20px 16px 120px; max-width: 600px; margin: 0 auto; }
+
+        /* --- SERVICE CARDS --- */
+        .service-card {
+            background: white; border-radius: 26px; padding: 0;
+            margin-bottom: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: 0.3s; border: 1px solid rgba(255,255,255,0.8);
+            overflow: hidden;
+        }
+        
+        .service-header {
+            padding: 20px; display: flex; align-items: center; gap: 15px; cursor: pointer;
+        }
+        
+        .service-ico {
+            width: 50px; height: 50px; border-radius: 16px;
+            background: #f1f5f9; color: var(--stm-primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0; transition: 0.3s;
+        }
+        .service-card.open .service-ico { background: var(--stm-primary); color: white; }
+
+        .service-info { flex: 1; }
+        .service-title { font-size: 1.1rem; font-weight: 800; color: #334155; margin: 0; }
+        .service-subtitle { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; }
+
+        .service-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out;
+            background: rgba(248, 250, 252, 0.5);
+        }
+        .service-card.open .service-content { max-height: 1000px; padding: 0 20px 25px; }
+
+        .detail-item { display: flex; gap: 12px; margin-top: 15px; font-size: 0.9rem; line-height: 1.5; }
+        .detail-item i { color: var(--stm-primary); margin-top: 4px; font-size: 0.85rem; }
+        
+        .badge-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+        .badge { padding: 5px 12px; border-radius: 10px; background: #e2e8f0; font-size: 0.7rem; font-weight: 700; color: #64748b; }
+
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        body.dark-mode #loader-wrapper { background: #0f172a; }
+        .loader-logo { width: 100px; height: auto; animation: logo-spin 2s linear infinite; margin-bottom: 20px; }
+        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .loader-text { font-weight: 700; color: var(--stm-primary); letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; }
+
+        /* --- NAVIGATION --- */
+        .nav-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 400px;
+            height: 70px; background: var(--nav-bg); border-radius: 35px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+        }
+        .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
+        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+
+        .fab-bot {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; cursor: pointer; z-index: 1001; 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            animation: bounceBot 3s infinite;
+        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        .bot-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+            z-index: 2000; visibility: hidden; opacity: 0; transition: 0.3s;
+        }
+        .bot-modal.active { visibility: visible; opacity: 1; }
+        .bot-content {
+            position: absolute; bottom: 0; width: 100%; background: white;
+            border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 30px 20px; transform: translateY(100%); transition: 0.4s;
+        }
+        .bot-modal.active .bot-content { transform: translateY(0); }
+        .bot-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 15px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: inherit; }
+        .bot-search-box { position: relative; }
+        .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-primary); }
+
+        .stm-notify {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: white; padding: 15px 25px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
+            z-index: 10000; display: flex; align-items: center; gap: 12px;
+            transition: 0.5s; opacity: 0; pointer-events: none;
+        }
+        .stm-notify.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .stm-notify i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--stm-primary); color: white; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
+        <div class="loader-text">Cargando Servicios...</div>
+    </div>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
+            <div class="welcome-msg">
+                <h1>Servicios STM</h1>
+                <p>Beneficios para el afiliado</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container animate__animated animate__fadeIn">
+        
+        <!-- COMPLEJO SOCIAL -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-umbrella-beach"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Recreación</div>
+                    <h3 class="service-title">Complejo Social y Deportivo</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-location-dot"></i> <span>Calle 473 y 10 de Febrero</span></div>
+                <div class="detail-item"><i class="fa-solid fa-bus"></i> <span>Líneas 555 y 593 (Rodín salida Cementerio Parque)</span></div>
+                <div class="detail-item"><i class="fa-solid fa-clock"></i> <span>Complejo: 09:00 a 19:00 hs</span></div>
+                <div class="detail-item"><i class="fa-solid fa-person-swimming"></i> <span>Piscinas: Mar a Dom (10-19h) | Lun (14-19h)</span></div>
+                <p style="font-size:0.85rem; margin-top:15px; font-weight:600">Obras recientes: Nueva piscina, vestuarios, solárium y fogones acondicionados.</p>
+                <div class="badge-list">
+                    <span class="badge">Gratis Grupo Familiar</span>
+                    <span class="badge">Apertura 1/Dic</span>
+                    <span class="badge">Máx 4 Invitados</span>
+                </div>
+                <p style="font-size:0.75rem; color:#ef4444; margin-top:15px; font-weight:700">🚫 Prohibido: Mascotas, equipos de audio alto volumen, invitados sin el afiliado presencial.</p>
+            </div>
+        </div>
+
+        <!-- PRESTAMOS -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Ayuda Económica</div>
+                    <h3 class="service-title">Préstamos</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-percent"></i> <span>Sin ningún tipo de interés</span></div>
+                <div class="detail-item"><i class="fa-solid fa-calendar-check"></i> <span>Financiación en 10 cuotas</span></div>
+                <div class="detail-item"><i class="fa-solid fa-user-clock"></i> <span>Activos: Últimos 2 días hábiles del mes</span></div>
+                <div class="detail-item"><i class="fa-solid fa-user-tie"></i> <span>Jubilados: Del 13 al 16 de cada mes</span></div>
+                <div class="detail-item"><i class="fa-solid fa-clock"></i> <span>Horario: 10:00-12:00 y 17:00-19:00 hs</span></div>
+            </div>
+        </div>
+
+        <!-- PROVEEDURIA -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-cart-shopping"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Compras</div>
+                    <h3 class="service-title">Proveeduría</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <p style="font-size:0.9rem; line-height:1.6">Sistema de órdenes de compra solicitadas en nuestra sede para adquirir productos en una amplia gama de comercios adheridos.</p>
+            </div>
+        </div>
+
+        <!-- SUBSIDIO NACIMIENTO -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-baby"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Subsidios</div>
+                    <h3 class="service-title">Por Nacimiento</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-file-invoice"></i> <span>Requisito: Certificado de constatación de parto o nacimiento</span></div>
+                <div class="detail-item"><i class="fa-solid fa-gift"></i> <span>Beneficio: Ajuar completo para el recién nacido</span></div>
+                <div class="detail-item"><i class="fa-solid fa-circle-info"></i> <span>Informes: Sec. Acción Social y Obras</span></div>
+            </div>
+        </div>
+
+        <!-- SUBSIDIO CASAMIENTO -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-heart"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Subsidios</div>
+                    <h3 class="service-title">Por Casamiento</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <p style="font-size:0.85rem; font-weight:700">Beneficio a elección:</p>
+                <div class="detail-item"><i class="fa-solid fa-plane"></i> <span>Viaje para 2 a Carlos Paz (Pasajes + Estadía + Media Pensión)</span></div>
+                <div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> <span>Suma fija de dinero</span></div>
+                <p style="font-size:0.8rem; margin-top:15px; opacity:0.7">Requisitos: Credencial, recibo de haberes, DNI de cónyuges. Plazo máx: 180 días.</p>
+            </div>
+        </div>
+
+        <!-- PASAJES -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-bus-simple"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Transporte</div>
+                    <h3 class="service-title">Descuentos en Pasajes</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-tag"></i> <span>20% de descuento en transporte terrestre</span></div>
+                <div class="detail-item"><i class="fa-solid fa-users"></i> <span>Válido para el afiliado e hijos menores de 18 años</span></div>
+                <div class="detail-item"><i class="fa-solid fa-earth-americas"></i> <span>Destinos: Bs As, Córdoba, Entre Ríos y Norte del país.</span></div>
+            </div>
+        </div>
+
+        <!-- QUINCHOS -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-house-chimney-window"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Eventos</div>
+                    <h3 class="service-title">Alquiler de Quinchos</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div style="margin-bottom:20px">
+                    <p style="font-weight:800; font-size:0.9rem; color:var(--stm-primary)">Sede Social</p>
+                    <span style="font-size:0.85rem">Vajilla (60 pers), cocina, freezer, parrilla y servicios de limpieza.</span>
+                </div>
+                <div>
+                    <p style="font-weight:800; font-size:0.9rem; color:var(--stm-primary)">Camping Deportivo</p>
+                    <span style="font-size:0.85rem">Cocina industrial, vajilla, freezer, asador y limpieza.</span>
+                </div>
+                <div class="detail-item"><i class="fa-solid fa-calendar-days"></i> <span>Disponibilidad: Sáb, Dom y Feriados (10-18 hs)</span></div>
+            </div>
+        </div>
+
+        <!-- UTILES -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-pencil"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Educación</div>
+                    <h3 class="service-title">Útiles y Guardapolvos</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <p style="font-size:0.9rem">Entrega anual de mochilas con útiles para preescolar, primaria y secundaria.</p>
+                <div class="detail-item"><i class="fa-solid fa-check-double"></i> <span>Requisitos: Recibo, credencial, certificados de escuela y DNI.</span></div>
+            </div>
+        </div>
+
+        <!-- BOLSA LIBRO -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-book"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Educación</div>
+                    <h3 class="service-title">Bolsa del Libro</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <p style="font-size:0.9rem">Acceso a libros nuevos con importante descuento a través del sistema de proveeduría.</p>
+            </div>
+        </div>
+
+        <!-- ASESORIA LEGAL -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-scale-balanced"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Asistencia</div>
+                    <h3 class="service-title">Asesoría Legal</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-gavel"></i> <span>Asesoramiento laboral gratuito por el cuerpo de abogados del STM.</span></div>
+            </div>
+        </div>
+
+        <!-- FARMACIA -->
+        <div class="service-card" onclick="toggleDetail(this)">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-mortar-pestle"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Salud</div>
+                    <h3 class="service-title">Farmacia Gremial</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="service-content">
+                <div class="detail-item"><i class="fa-solid fa-location-dot"></i> <span>Moreno 4359</span></div>
+                <div class="detail-item"><i class="fa-solid fa-phone"></i> <span>0223 474-9678</span></div>
+                <div class="detail-item"><i class="fa-solid fa-clock"></i> <span>Lun-Vie: 8-12 / 16-19:30 | Sáb: 8:30-12:30 hs</span></div>
+            </div>
+        </div>
+
+        <!-- PANTEON -->
+        <div class="service-card">
+            <div class="service-header">
+                <div class="service-ico"><i class="fa-solid fa-landmark-dome"></i></div>
+                <div class="service-info">
+                    <div class="service-subtitle">Previsión</div>
+                    <h3 class="service-title">Panteón Municipal</h3>
+                </div>
+            </div>
+            <div class="service-content" style="max-height:100px; padding:20px">
+                <p style="font-style:italic">Por el momento sin información.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOT & NAV -->
+    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <div class="bot-search-box"><i class="fa-solid fa-robot"></i><input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botInput"></div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <!-- MODALS AND SCRIPTS (Simplified for efficiency) -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="password" id="newPass" placeholder="Nueva Contraseña" style="padding:15px; border-radius:15px; border:2px solid #f1f5f9; outline:none">
+                <input type="password" id="confirmPass" placeholder="Repetir Contraseña" style="padding:15px; border-radius:15px; border:2px solid #f1f5f9; outline:none">
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetail(el) { el.classList.toggle('open'); if(window.navigator.vibrate) window.navigator.vibrate(10); }
+        function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if(show) document.getElementById('botInput').focus(); }
+        function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); }
+        function showNotify(msg) { /* Simple notify logic */ alert(msg); }
+        
+        function changePassword() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            if(!p1 || p1 !== p2) { alert("Error en contraseñas"); return; }
+            localStorage.setItem('usrPass', p1);
+            alert("¡Actualizado!");
+            toggleUser(false);
+        }
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }, 600);
+            
+            const savedNames = localStorage.getItem('usrName') || "Afiliado STM";
+            // Check for dark mode etc
+            if(localStorage.getItem('cfg_dark') === 'true') document.body.classList.add('dark-mode');
+        });
+
+        // Search logic for bot
+        const sitePages = [
+            { t: "Servicios y Beneficios", d: "Quinchos, subsidios y más", f: "servicios.html", tags: "camping piletas préstamos proveeduría casamiento útiles libros farmacia", ico: "fa-screwdriver-wrench" },
+            { t: "Autoridades", d: "Cuerpo directivo", f: "autoridades.html", tags: "quien mando jefe secretario", ico: "fa-users-gear" },
+            { t: "Novedades", d: "Últimas noticias", f: "novedades.html", tags: "aviso sorteo noticia", ico: "fa-newspaper" }
+        ];
+
+        document.getElementById('botInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const res = document.getElementById('botRes');
+            res.innerHTML = "";
+            if(val.length > 2) {
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
+                filtered.forEach(p => {
+                    res.innerHTML += `<a href="${p.f}" style="display:block; padding:15px; background:#f8fafc; border-radius:15px; margin-bottom:10px; text-decoration:none; color:inherit; font-weight:700">
+                        <i class="fa-solid ${p.ico}" style="margin-right:10px; color:var(--stm-primary)"></i> ${p.t}</a>`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
