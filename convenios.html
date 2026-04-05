@@ -261,25 +261,13 @@
     <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 10px 5px; color: var(--stm-primary);">Mi Cuenta</h2>
-            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 25px 5px;">Gestiona tu seguridad y contraseña</p>
-
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
-                    <i class="fa-solid fa-lock" style="color: var(--stm-primary);"></i>
-                    <input type="password" class="search-field" id="newPass" placeholder="Nueva Contraseña" style="background: transparent;">
-                </div>
-                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
-                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary);"></i>
-                    <input type="password" class="search-field" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="background: transparent;">
-                </div>
-                
-                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
-                    Actualizar Contraseña
-                </button>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña" style="padding-left:20px">
+                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña" style="padding-left:20px">
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar Contraseña</button>
             </div>
-            
-            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: transparent; font-weight: 600; color: #64748b; font-family: inherit; cursor: pointer;">Cancelar</button>
+            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
