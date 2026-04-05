@@ -143,7 +143,20 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
         }
         .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
-        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; padding: 10px; }
+
+        /* Custom Notification */
+        .stm-notify {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: white; padding: 15px 25px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
+            z-index: 10000; display: flex; align-items: center; gap: 12px;
+            transition: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28); opacity: 0;
+            pointer-events: none;
+        }
+        .stm-notify.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .stm-notify i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--stm-primary); color: white; font-size: 0.8rem; }
+        .nav-btn.active { transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
 
         /* UTIL */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -227,6 +240,7 @@
     <nav class="nav-bar">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
@@ -239,19 +253,67 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
             </div>
-            <button onclick="toggleSettings(false)" style="margin-top: 30px; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; width: 100%;">Cerrar</button>
+            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; cursor: pointer;">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL/CONTRASEÑA -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 10px 5px; color: var(--stm-primary);">Mi Cuenta</h2>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 25px 5px;">Gestiona tu seguridad y contraseña</p>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
+                    <i class="fa-solid fa-lock" style="color: var(--stm-primary);"></i>
+                    <input type="password" class="search-field" id="newPass" placeholder="Nueva Contraseña" style="background: transparent;">
+                </div>
+                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
+                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary);"></i>
+                    <input type="password" class="search-field" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="background: transparent;">
+                </div>
+                
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
+                    Actualizar Contraseña
+                </button>
+            </div>
+            
+            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: transparent; font-weight: 600; color: #64748b; font-family: inherit; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
     <script>
-        const APP_URL = 'https://script.google.com/macros/s/AKfycbwFF-ZTptmhjFBItUzfh2CCkjycg485z2amS-girpV5hRF3JLZwWgD1yhgl63uABPwskA/exec';
-        let allData = [];
+        let allData = [], allNews = [];
+        const CONVENIOS_URL = 'https://script.google.com/macros/s/AKfycbwFF-ZTptmhjFBItUzfh2CCkjycg485z2amS-girpV5hRF3JLZwWgD1yhgl63uABPwskA/exec?action=READ_ALL';
+        const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4", GID = "195669740";
+        const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+
+        async function fetchConvenios() {
+            if (allData.length > 0) return;
+            try {
+                const res = await fetch(CONVENIOS_URL);
+                const data = await res.json();
+                allData = (data.convenios || []).filter(c => (c.ACTIVO || '').toUpperCase() === 'SI');
+            } catch (e) { console.error("Bot fail", e); }
+        }
+
+        async function fetchNews() {
+            if (allNews.length > 0) return;
+            try {
+                const res = await fetch(URL_NEWS);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                allNews = json.table.rows.map(r => ({
+                    titulo: r.c[1]?.v || "",
+                    desc: r.c[2]?.v || ""
+                }));
+            } catch (e) { console.error("News load fail", e); }
+        }
 
         async function init() {
             try {
-                const res = await fetch(APP_URL + '?action=READ_ALL');
-                const data = await res.json();
-                allData = (data.convenios || data.novedades).filter(c => (c.ACTIVO || '').toUpperCase() === 'SI');
+                await fetchConvenios();
                 renderRubros();
             } catch (err) {
                 document.getElementById('rubroGrid').innerHTML = '<p>Error al cargar. Reintenta pronto.</p>';
@@ -326,9 +388,59 @@
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
 
-        function toggleBot(show) { 
+        function toggleBot(show) {
             document.getElementById('modalBot').classList.toggle('active', show);
-            if(show) document.getElementById('botInput').focus();
+            if (show) {
+                document.getElementById('botInput').focus();
+                fetchConvenios();
+                fetchNews();
+            }
+        }
+
+        function toggleUser(show) {
+            document.getElementById('modalUser').classList.toggle('active', show);
+            if (show) document.getElementById('newPass').focus();
+        }
+
+        function changePassword() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            
+            if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
+            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            
+            localStorage.setItem('usrPass', p1);
+            showNotify("¡Contraseña actualizada con éxito!", "success");
+            
+            const originalText = btn.innerText;
+            btn.innerText = "¡Actualizado! ✓";
+            btn.style.background = "#10b981";
+            btn.style.color = "white";
+            btn.style.pointerEvents = "none";
+            
+            setTimeout(() => {
+                toggleUser(false);
+                btn.innerText = originalText;
+                btn.style.background = "var(--stm-primary)";
+                btn.style.pointerEvents = "auto";
+                document.getElementById('newPass').value = "";
+                document.getElementById('confirmPass').value = "";
+            }, 1500);
+        }
+
+        function showNotify(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'stm-notify';
+            const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
+            const bg = type === 'error' ? '#ef4444' : '#10b981';
+            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span style="font-weight:700; font-size:0.9rem">${msg}</span>`;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.add('show'), 10);
+            setTimeout(() => {
+                div.classList.remove('show');
+                setTimeout(() => div.remove(), 500);
+            }, 3000);
         }
 
         function normalize(str) {
@@ -350,9 +462,14 @@
                 const filteredConv = allData.filter(c => {
                     const target = normalize(c.titulo + " " + c.rubro + " " + c.detalle);
                     return words.some(w => target.includes(w)) || target.includes(val);
-                }).slice(0, 7);
+                }).slice(0, 5);
 
-                if (filtered.length > 0 || filteredConv.length > 0) {
+                const filteredNews = allNews.filter(n => {
+                    const target = normalize(n.titulo + " " + n.desc);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                }).slice(0, 5);
+
+                if (filtered.length > 0 || filteredConv.length > 0 || filteredNews.length > 0) {
                     res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
                     
                     filtered.forEach(p => {
@@ -378,6 +495,20 @@
                                     <button onclick="showConvenios('${c.rubro.toUpperCase().trim()}'); toggleBot(false);" style="border:none; background:none; color:var(--stm-primary); font-size:1.2rem; cursor:pointer"><i class="fa-solid fa-circle-chevron-right"></i></button>
                                 </div>
                             </div>`;
+                    });
+
+                    filteredNews.forEach(n => {
+                        res.innerHTML += `
+                            <a href="novedades.html" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block; border-left: 4px solid #6366f1;">
+                                <div style="display:flex; align-items:center; gap:10px; width:100%">
+                                    <div style="width:30px; height:30px; border-radius:8px; background:#6366f1; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-bolt"></i></div>
+                                    <div style="flex:1">
+                                        <h4 style="margin:0; font-size:0.65rem; color:#6366f1; text-transform:uppercase">NOTICIA</h4>
+                                        <h4 style="margin:0; font-size:0.85rem">${n.titulo}</h4>
+                                    </div>
+                                    <i class="fa-solid fa-eye" style="color:#94a3b8; font-size:0.8rem"></i>
+                                </div>
+                            </a>`;
                     });
                 } else {
                     res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;

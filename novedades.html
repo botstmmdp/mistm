@@ -130,6 +130,18 @@
         .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
         .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
 
+        /* Custom Notification */
+        .stm-notify {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: white; padding: 15px 25px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
+            z-index: 10000; display: flex; align-items: center; gap: 12px;
+            transition: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28); opacity: 0;
+            pointer-events: none;
+        }
+        .stm-notify.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .stm-notify i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--stm-primary); color: white; font-size: 0.8rem; }
+
         /* MODAL BOT */
         .bot-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -223,6 +235,7 @@
     <nav class="nav-bar">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
@@ -235,7 +248,33 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
             </div>
-            <button onclick="toggleSettings(false)" style="margin-top: 30px; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; width: 100%;">Cerrar</button>
+            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; cursor: pointer;">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL/CONTRASEÑA -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 10px 5px; color: var(--stm-primary);">Mi Cuenta</h2>
+            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 25px 5px;">Gestiona tu seguridad y contraseña</p>
+
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
+                    <i class="fa-solid fa-lock" style="color: var(--stm-primary);"></i>
+                    <input type="password" class="search-field" id="newPass" placeholder="Nueva Contraseña" style="background: transparent;">
+                </div>
+                <div class="search-relative" style="background: #f8fafc; border: 2px solid #e2e8f0;">
+                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary);"></i>
+                    <input type="password" class="search-field" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="background: transparent;">
+                </div>
+                
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'">
+                    Actualizar Contraseña
+                </button>
+            </div>
+            
+            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: transparent; font-weight: 600; color: #64748b; font-family: inherit; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
@@ -333,6 +372,52 @@
         function toggleBot(show) { 
             document.getElementById('modalBot').classList.toggle('active', show);
             if(show) document.getElementById('botInput').focus();
+        }
+
+        function toggleUser(show) {
+            document.getElementById('modalUser').classList.toggle('active', show);
+            if (show) document.getElementById('newPass').focus();
+        }
+
+        function changePassword() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            
+            if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
+            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            
+            localStorage.setItem('usrPass', p1);
+            showNotify("¡Contraseña actualizada con éxito!", "success");
+            
+            const originalText = btn.innerText;
+            btn.innerText = "¡Actualizado! ✓";
+            btn.style.background = "#10b981";
+            btn.style.color = "white";
+            btn.style.pointerEvents = "none";
+            
+            setTimeout(() => {
+                toggleUser(false);
+                btn.innerText = originalText;
+                btn.style.background = "var(--stm-primary)";
+                btn.style.pointerEvents = "auto";
+                document.getElementById('newPass').value = "";
+                document.getElementById('confirmPass').value = "";
+            }, 1500);
+        }
+
+        function showNotify(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'stm-notify';
+            const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
+            const bg = type === 'error' ? '#ef4444' : '#10b981';
+            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span style="font-weight:700; font-size:0.9rem">${msg}</span>`;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.add('show'), 10);
+            setTimeout(() => {
+                div.classList.remove('show');
+                setTimeout(() => div.remove(), 500);
+            }, 3000);
         }
 
         function normalize(str) {
