@@ -409,6 +409,13 @@
             50% { transform: scale(1.15); opacity: 0.8; }
         }
 
+        @keyframes blink-soft {
+            0% { transform: scale(1); box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2); }
+            50% { transform: scale(1.03); box-shadow: 0 15px 30px rgba(79, 70, 229, 0.5); }
+            100% { transform: scale(1); box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2); }
+        }
+        .blink-act { animation: blink-soft 2s infinite ease-in-out; }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -443,6 +450,17 @@
             </div>
         </div>
     </header>
+    
+    <!-- ATAJO A ACTIVIDADES -->
+    <a href="#" id="shortcutAct" class="news-shortcut animate__animated animate__fadeIn blink-act" style="background: linear-gradient(135deg, #10b981, #059669); margin-bottom: 12px;">
+        <div class="news-shortcut-info">
+            <h4>¡Sumate ahora!</h4>
+            <h2>📢 Actividades STM</h2>
+        </div>
+        <div class="news-shortcut-ico pulse-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+    </a>
 
     <!-- ATAJO A NOVEDADES -->
     <a href="novedades.html" class="news-shortcut animate__animated animate__fadeIn">
@@ -576,6 +594,11 @@
                     <span style="font-weight: 600;">Ver Género y Diversidad</span>
                     <input type="checkbox" id="checkGen" onchange="applyConfig('gen', this.checked)" checked style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
+                <!-- ACTIVIDADES -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver Actividades</span>
+                    <input type="checkbox" id="checkAct" onchange="applyConfig('act', this.checked)" checked style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
             </div>
             
             <button onclick="toggleSettings(false)" style="margin-top: 30px; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; cursor: pointer;">Cerrar</button>
@@ -584,11 +607,12 @@
 
     <script>
         const sitePages = [
-            { t: "Afiliaciones", d: "Alta de afiliado", f: "afiliacion.html", tags: "socios alta" },
-            { t: "Estado de Trámite", d: "Seguimiento online", f: "consulta.html", tags: "ver estado" },
-            { t: "Credencial QR", d: "Carnet digital", f: "credencial_qr.html", tags: "identificacion" },
-            { t: "Género y Diversidad", d: "Políticas STM", f: "generoydiversidad.html", tags: "derechos" },
-            { t: "Novedades", d: "Noticias y avisos", f: "novedades.html", tags: "boletin" }
+            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
+            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
+            { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo", ico: "fa-tags" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
 
         function toggleModal(show) {
@@ -604,20 +628,31 @@
             resList.innerHTML = "";
 
             if (val.length > 1) {
-                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.includes(val));
-                titleA.style.display = filtered.length > 0 ? "block" : "none";
-                filtered.forEach(p => {
-                    resList.innerHTML += `
-                        <a href="${p.f}" class="res-item">
-                            <div class="res-ico"><i class="fa-solid fa-magnifying-glass"></i></div>
-                            <div class="card-info">
-                                <h3 style="font-size:0.95rem">${p.t}</h3>
-                                <p style="font-size:0.75rem">${p.d}</p>
-                            </div>
-                        </a>
-                    `;
-                });
-            } else { titleA.style.display = "none"; }
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
+                
+                if (filtered.length > 0) {
+                    titleA.style.display = "block";
+                    titleA.innerHTML = `¡Hola! Encontré esto para vos... <i class="fa-solid fa-face-smile" style="margin-left:5px; color:var(--stm-accent)"></i>`;
+                    filtered.forEach(p => {
+                        resList.innerHTML += `
+                            <a href="${p.f}" class="res-item animate__animated animate__fadeInUp">
+                                <div class="res-ico" style="background: var(--stm-primary); color:white"><i class="fa-solid ${p.ico}"></i></div>
+                                <div class="card-info" style="flex:1">
+                                    <h3 style="font-size:0.95rem; margin-bottom:2px">${p.t}</h3>
+                                    <p style="font-size:0.75rem; opacity:0.8">${p.d}</p>
+                                </div>
+                                <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; opacity:0.3"></i>
+                            </a>
+                        `;
+                    });
+                } else {
+                    titleA.style.display = "block";
+                    titleA.innerHTML = `Mmm... no encontré nada exacto, ¿probamos con otro término? <i class="fa-solid fa-face-thinking" style="margin-left:5px"></i>`;
+                }
+            } else { 
+                titleA.style.display = "block";
+                titleA.innerHTML = "¿En qué puedo ayudarte hoy?" ;
+            }
         });
 
         // Saludo dinámico y Nombre del Usuario
@@ -641,6 +676,10 @@
                 const gen = document.getElementById('shortcutGen');
                 if(gen) gen.classList.toggle('hidden', !value);
             }
+            if (type === 'act') {
+                const act = document.getElementById('shortcutAct');
+                if(act) act.classList.toggle('hidden', !value);
+            }
         }
 
         // Carga inicial de configuración
@@ -648,7 +687,8 @@
             const cfg = {
                 dark: localStorage.getItem('cfg_dark') === 'true',
                 bot: localStorage.getItem('cfg_bot') !== 'false',
-                gen: localStorage.getItem('cfg_gen') !== 'false'
+                gen: localStorage.getItem('cfg_gen') !== 'false',
+                act: localStorage.getItem('cfg_act') !== 'false'
             };
             
             document.body.classList.toggle('dark-mode', cfg.dark);
@@ -662,6 +702,12 @@
             if(gen) {
                 gen.classList.toggle('hidden', !cfg.gen);
                 if(document.getElementById('checkGen')) document.getElementById('checkGen').checked = cfg.gen;
+            }
+
+            const act = document.getElementById('shortcutAct');
+            if(act) {
+                act.classList.toggle('hidden', !cfg.act);
+                if(document.getElementById('checkAct')) document.getElementById('checkAct').checked = cfg.act;
             }
         }
 

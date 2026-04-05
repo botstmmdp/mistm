@@ -28,10 +28,17 @@
             --glass: rgba(30, 41, 59, 0.85);
         }
 
-        body.dark-mode p { color: #94a3b8; }
         .hidden { display: none !important; }
         .nav-footer, .nav-bar, .bottom-nav { background: #111827 !important; }
         .fab-bot i { color: white !important; }
+
+        .nav-home-pulse i {
+            animation: home-blink 2s infinite ease-in-out;
+        }
+        @keyframes home-blink {
+            0%, 100% { color: #4b5563; transform: scale(1); }
+            50% { color: white; transform: scale(1.2); }
+        }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
@@ -111,11 +118,14 @@
         /* --- FAB ASISTENTE (BOT) --- */
         .fab-bot {
             position: fixed; bottom: 100px; right: 20px;
-            width: 60px; height: 60px; background: var(--stm-primary);
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
-            cursor: pointer; z-index: 1001; animation: bounceBot 3s infinite;
+            font-size: 1.5rem; cursor: pointer; z-index: 1001; 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            transition: 0.3s; animation: bounceBot 3s infinite;
         }
+        .fab-bot i { color: white !important; }
         @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         /* --- ASISTENTE OVERLAY --- */
@@ -157,19 +167,25 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             transition: opacity 0.5s ease;
         }
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        body.dark-mode #loader-wrapper { background: #0f172a; }
         .loader-logo {
             width: 100px; height: auto;
             object-fit: contain;
             animation: logo-spin 2s linear infinite;
+            margin-bottom: 20px;
         }
         @keyframes logo-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .loader-text {
-            margin-top: 20px; font-weight: 700; color: var(--stm-primary);
-            font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
-        }
+        .loader-text { font-weight: 700; color: var(--stm-primary); letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -221,7 +237,7 @@
     </div>
 
     <nav class="nav-footer">
-        <a href="opciones.html" class="nav-link"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-link nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="opciones.html" class="nav-link"><i class="fa-solid fa-compass"></i></a>
         <a href="#" class="nav-link active"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-link" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
@@ -284,8 +300,23 @@
 
         document.getElementById('botSearch').addEventListener('input', (e) => {
             const val = e.target.value.toLowerCase();
-            const filtered = contacts.filter(c => c.name.toLowerCase().includes(val) || c.ref.toLowerCase().includes(val));
-            render(filtered, 'botRes', true);
+            const res = document.getElementById('botRes');
+            res.innerHTML = "";
+            if (val.length > 1) {
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
+                if(filtered.length > 0) {
+                    res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
+                    filtered.forEach(p => {
+                        res.innerHTML += `
+                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0;">
+                                <div style="width:35px; height:35px; border-radius:10px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.9rem"><i class="fa-solid ${p.ico}"></i></div>
+                                <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                            </a>`;
+                    });
+                } else {
+                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
+                }
+            }
         });
 
         function toggleBot(show) {

@@ -7,12 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Afiliación - STM 2025</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         :root {
-            --stm-purple: #5A377B;
-            --stm-teal: #34B3C5;
+            --stm-primary: #4f46e5;
+            --stm-secondary: #5a377b;
+            --stm-accent: #10b981;
         }
 
         body {
@@ -60,10 +62,85 @@
             background-color: #492a63;
             border-color: #492a63;
         }
+
+        /* --- FAB BOT --- */
+        .fab-bot {
+            position: fixed; bottom: 30px; right: 20px;
+            width: 60px; height: 60px; background: #6366f1 !important;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white !important; font-size: 1.5rem; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            cursor: pointer; z-index: 2000; animation: bounceBot 3s infinite;
+        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .hidden { display: none !important; }
+
+        /* --- BOT MODAL --- */
+        .bot-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 2001;
+            display: none; align-items: flex-end; backdrop-filter: blur(5px);
+        }
+        .bot-modal.active { display: flex; }
+        .bot-content {
+            background: white; width: 100%; border-radius: 30px 30px 0 0;
+            padding: 30px 20px; animation: slideUp 0.4s ease-out;
+            max-height: 80vh; overflow-y: auto;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .bot-search-box {
+            position: relative; margin-bottom: 20px;
+        }
+        .bot-search-box i { position: absolute; left: 15px; top: 15px; color: #64748b; }
+        .bot-field {
+            width: 100%; padding: 12px 12px 12px 45px; border-radius: 12px;
+            border: 1px solid #e2e8f0; font-family: inherit;
+        }
+
+        /* --- PRELOADER --- */
+        .loader-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; display: flex; align-items: center; justify-content: center;
+            z-index: 9999; flex-direction: column; gap: 20px; transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        .logo-spin {
+            width: 80px; height: 80px; border-radius: 50%;
+            animation: logo-spin 2s linear infinite;
+        }
+        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .loader-wrapper.hidden { opacity: 0; visibility: hidden; }
+
+        /* --- NAV BAR --- */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: #111827 !important; display: flex;
+            justify-content: space-around; align-items: center;
+            padding: 15px 0; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+        }
+        .nav-item {
+            color: #64748b; text-decoration: none; font-size: 1.2rem;
+            transition: 0.3s; width: 45px; height: 45px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+        }
+        .nav-item.active { color: white; background: rgba(255,255,255,0.1); }
+        .nav-home-pulse i { animation: home-blink 2s infinite ease-in-out; }
+        @keyframes home-blink {
+            0%, 100% { color: #4b5563; transform: scale(1); }
+            50% { color: white; transform: scale(1.2); }
+        }
+        body { padding-bottom: 80px; }
     </style>
 </head>
 
 <body>
+    <!-- PRELOADER -->
+    <div class="loader-wrapper" id="loader">
+        <img src="logo_STM.png" class="logo-spin" alt="Loading...">
+        <p style="font-weight: 800; color: var(--stm-primary); letter-spacing: 1px;">STM BOT</p>
+    </div>
 
     <div class="container">
         <div class="form-container">
@@ -375,6 +452,79 @@
 
         })()
     </script>
+    <!-- FAB BOT -->
+    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)">
+        <i class="fa-solid fa-robot"></i>
+    </div>
+
+    <!-- MODAL BOT -->
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <div class="bot-search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="bot-field" placeholder="¿En qué puedo ayudarte?" id="botInput">
+            </div>
+            <div id="botRes"></div>
+        </div>
+    </div>
+
+    <script>
+        const sitePages = [
+            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
+            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
+            { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo", ico: "fa-tags" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
+        ];
+
+        function toggleBot(show) {
+            document.getElementById('modalBot').classList.toggle('active', show);
+            if(show) document.getElementById('botInput').focus();
+        }
+
+        document.getElementById('botInput').addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            const res = document.getElementById('botRes');
+            res.innerHTML = "";
+            if (val.length > 1) {
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
+                if(filtered.length > 0) {
+                    res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
+                    filtered.forEach(p => {
+                        res.innerHTML += `
+                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block;">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
+                                    <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                                </div>
+                            </a>`;
+                    });
+                } else {
+                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados exactos...</p>`;
+                }
+            }
+        });
+        
+        // Carga inicial (Bot visible por defecto si no hay config)
+        const cfg_bot = localStorage.getItem('cfg_bot') !== 'false';
+        if(!cfg_bot) document.getElementById('fabBotIcon').classList.add('hidden');
+
+        // Preloader
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 600);
+        };
+    </script>
+    <!-- NAV BAR -->
+    <nav class="nav-bar">
+        <a href="opciones.html" class="nav-item nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="contactos.html" class="nav-item"><i class="fa-solid fa-address-book"></i></a>
+        <a href="novedades.html" class="nav-item"><i class="fa-solid fa-newspaper"></i></a>
+        <a href="convenios.html" class="nav-item"><i class="fa-solid fa-tags"></i></a>
+    </nav>
 </body>
 
 </html>

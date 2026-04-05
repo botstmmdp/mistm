@@ -318,7 +318,16 @@
             window.scrollTo(0,0);
         }
 
-        function toggleBot(show) {
+        const sitePages = [
+            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
+            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
+            { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo", ico: "fa-tags" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
+        ];
+
+        function toggleBot(show) { 
             document.getElementById('modalBot').classList.toggle('active', show);
             if(show) document.getElementById('botInput').focus();
         }
@@ -327,16 +336,20 @@
             const val = e.target.value.toLowerCase();
             const res = document.getElementById('botRes');
             res.innerHTML = "";
-            if(val.length > 2) {
-                const found = allData.filter(c => c.titulo.toLowerCase().includes(val) || c.detalle.toLowerCase().includes(val));
-                found.forEach(f => {
-                    res.innerHTML += `
-                        <div class="convenio-card" style="padding:10px" onclick="toggleBot(false); showConvenios('${f.rubro.toUpperCase()}')">
-                            <span class="convenio-tag">${f.rubro}</span>
-                            <h3 style="font-size:0.9rem">${f.titulo}</h3>
-                        </div>
-                    `;
-                });
+            if (val.length > 1) {
+                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
+                if(filtered.length > 0) {
+                    res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
+                    filtered.forEach(p => {
+                        res.innerHTML += `
+                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0;">
+                                <div style="width:35px; height:35px; border-radius:10px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.9rem"><i class="fa-solid ${p.ico}"></i></div>
+                                <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                            </a>`;
+                    });
+                } else {
+                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
+                }
             }
         });
 
