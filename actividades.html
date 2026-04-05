@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Servicios STM - Beneficios para el Afiliado</title>
+    <title>Actividades STM - Beneficios Escolares</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
     
     <!-- Fonts & Icons -->
@@ -67,46 +67,56 @@
 
         .container { padding: 20px 16px 120px; max-width: 600px; margin: 0 auto; }
 
-        /* --- SERVICE CARDS --- */
-        .service-card {
-            background: white; border-radius: 26px; padding: 0;
-            margin-bottom: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            transition: 0.3s; border: 1px solid rgba(255,255,255,0.8);
-            overflow: hidden; animation: fadeIn 0.5s ease-out forwards;
+        /* --- ACCORDEON CARDS --- */
+        .activity-card {
+            background: white; border-radius: 26px; padding: 20px;
+            margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: 0.3s; cursor: pointer; overflow: hidden;
+            animation: fadeIn 0.5s ease-out forwards;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        body.dark-mode .service-card { background: #1e293b; border-color: #334155; }
-
-        .service-header { padding: 20px; display: flex; align-items: center; gap: 15px; cursor: pointer; }
+        body.dark-mode .activity-card { background: #1e293b; border-color: #334155; }
         
-        .service-ico {
-            width: 50px; height: 50px; border-radius: 16px;
+        .activity-header { display: flex; align-items: center; gap: 15px; }
+        .activity-ico {
+            width: 45px; height: 45px; border-radius: 12px;
             background: #f1f5f9; color: var(--stm-primary);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; flex-shrink: 0; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
         }
-        body.dark-mode .service-ico { background: #334155; }
-        .service-card.open .service-ico { background: var(--stm-primary); color: white; }
-
-        .service-info { flex: 1; }
-        .service-title { font-size: 1.1rem; font-weight: 800; color: #334155; margin: 0; }
-        body.dark-mode .service-title { color: white; }
-        .service-subtitle { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; }
-
-        .service-content {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(248, 250, 252, 0.5);
-        }
-        body.dark-mode .service-content { background: rgba(15, 23, 42, 0.3); }
-        .service-card.open .service-content { max-height: 1000px; padding: 0 20px 25px; }
-
-        .detail-item { display: flex; gap: 12px; margin-top: 15px; font-size: 0.9rem; line-height: 1.5; }
-        .detail-item i { color: var(--stm-primary); margin-top: 4px; font-size: 0.85rem; }
+        body.dark-mode .activity-ico { background: #334155; }
         
-        .badge-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .badge { padding: 5px 12px; border-radius: 10px; background: #e2e8f0; font-size: 0.7rem; font-weight: 700; color: #64748b; }
-        body.dark-mode .badge { background: #334155; color: #cbd5e1; }
+        .activity-info { flex: 1; }
+        .activity-subtitle { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--stm-primary); opacity: 0.8; }
+        .activity-title { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-dark); }
+        body.dark-mode .activity-title { color: white; }
+
+        .activity-content {
+            max-height: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); padding-top: 0;
+            font-size: 0.9rem; line-height: 1.6;
+        }
+        .activity-card.open .activity-content { max-height: 1000px; opacity: 1; padding-top: 20px; }
+        .activity-card.open .fa-chevron-down { transform: rotate(180deg); transition: 0.3s; }
+
+        .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; color: #475569; }
+        body.dark-mode .tag { background: #334155; color: #cbd5e1; }
+
+        .form-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--stm-primary); color: white; padding: 12px 20px;
+            border-radius: 15px; text-decoration: none; font-weight: 700; font-size: 0.85rem;
+            margin-top: 10px; box-shadow: 0 5px 15px rgba(79,70,229,0.3);
+        }
+
+        .cron-box {
+            background: #f8fafc; border-radius: 18px; padding: 15px; margin-top: 15px;
+            border: 1px solid #e2e8f0;
+        }
+        body.dark-mode .cron-box { background: #0f172a; border-color: #334155; }
+        .cron-item { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 8px; }
+        .cron-item:last-child { margin-bottom: 0; border: none; }
 
         /* --- BOT STYLES --- */
         .fab-bot {
@@ -179,96 +189,82 @@
 
     <div id="loader-wrapper">
         <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">SERVICIOS STM</div>
+        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">ACTIVIDADES STM</div>
     </div>
 
     <header>
         <div class="header-box">
             <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
             <div class="welcome-msg">
-                <h1 id="usrGreeting">Servicios</h1>
-                <p id="usrDisplayName">Beneficios para el afiliado</p>
+                <h1 id="usrGreeting">Actividades</h1>
+                <p id="usrDisplayName">Beneficios 2026</p>
             </div>
         </div>
     </header>
 
-    <div class="container">
+    <div class="container animate__animated animate__fadeIn">
         
-        <!-- COMPLEJO SOCIAL -->
-        <div class="service-card" onclick="toggleDetail(this)">
-            <div class="service-header">
-                <div class="service-ico"><i class="fa-solid fa-umbrella-beach"></i></div>
-                <div class="service-info">
-                    <div class="service-subtitle">Recreación</div>
-                    <h3 class="service-title">Complejo Social y Deportivo</h3>
+        <!-- BOLSA DEL LIBRO -->
+        <div class="activity-card" onclick="toggleCard(this)">
+            <div class="activity-header">
+                <div class="activity-ico"><i class="fa-solid fa-book-open"></i></div>
+                <div class="activity-info">
+                    <div class="activity-subtitle">Educación</div>
+                    <h3 class="activity-title">Bolsa del libro 2026</h3>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
             </div>
-            <div class="service-content">
-                <div class="detail-item"><i class="fa-solid fa-location-dot"></i> <span>Calle 473 y 10 de Febrero</span></div>
-                <div class="detail-item"><i class="fa-solid fa-bus"></i> <span>Líneas 555 y 593 (Rodín - Cementerio Parque)</span></div>
-                <div class="detail-item"><i class="fa-solid fa-clock"></i> <span>Complejo: 09:00 a 19:00 hs</span></div>
-                <div class="detail-item"><i class="fa-solid fa-person-swimming"></i> <span>Piletas: Mar a Dom 10-19h | Lun 14-19h</span></div>
-                <p style="font-size:0.85rem; margin-top:15px; font-weight:600">Nueva piscina, vestuarios, solárium y fogones.</p>
-                <div class="badge-list">
-                    <span class="badge">Gratis Grupo Familiar</span>
-                    <span class="badge">Máx 4 Invitados</span>
+            <div class="activity-content">
+                <div class="tag-row">
+                    <div class="tag">65% Descuento</div>
+                    <div class="tag">5 Cuotas</div>
+                    <div class="tag">Digital</div>
                 </div>
+                <p>Ya podés encargar los libros para este año con beneficios exclusivos. Los pedidos son únicamente mediante formulario online.</p>
+                <div style="background:#eef2ff; padding:15px; border-radius:15px; margin-bottom:15px">
+                    <p style="margin:0; font-size:0.85rem; color:#1e293b"><strong>Vence:</strong> 10/04/2026</p>
+                    <p style="margin:0; font-size:0.85rem; color:#1e293b"><strong>Entrega:</strong> Inicia 09/03/2026</p>
+                    <p style="margin:0; font-size:0.85rem; color:#1e293b"><strong>Retiro:</strong> Lun-Mié-Vie (16:30-19:00 hs)</p>
+                </div>
+                <p style="font-size:0.8rem; border-left:3px solid var(--stm-primary); padding-left:10px">Requisito: Presentar certificado de escolaridad actualizado.</p>
+                <a href="https://forms.gle/nRU1JVk6fvu2VgzFA" class="form-btn" target="_blank"><i class="fa-solid fa-file-signature"></i> Completar Formulario</a>
             </div>
         </div>
 
-        <!-- PRESTAMOS -->
-        <div class="service-card" onclick="toggleDetail(this)">
-            <div class="service-header">
-                <div class="service-ico"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                <div class="service-info">
-                    <div class="service-subtitle">Ayuda Económica</div>
-                    <h3 class="service-title">Préstamos</h3>
+        <!-- UTILES Y GUARDAPOLVOS -->
+        <div class="activity-card" onclick="toggleCard(this)">
+            <div class="activity-header">
+                <div class="activity-ico"><i class="fa-solid fa-shirt"></i></div>
+                <div class="activity-info">
+                    <div class="activity-subtitle">Secretaría Acción Social</div>
+                    <h3 class="activity-title">Útiles y Guardapolvos</h3>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
             </div>
-            <div class="service-content">
-                <div class="detail-item"><i class="fa-solid fa-percent"></i> <span>Sin interés. Hasta 10 cuotas.</span></div>
-                <div class="detail-item"><i class="fa-solid fa-user-clock"></i> <span>Activos: Últimos 2 días hábiles del mes.</span></div>
-                <div class="detail-item"><i class="fa-solid fa-user-tie"></i> <span>Jubilados: Del 13 al 16 de cada mes.</span></div>
-                <p style="font-size:0.8rem; margin-top:10px; opacity:0.7">Horario: 10-12 y 17-19 hs en sede central.</p>
-            </div>
-        </div>
+            <div class="activity-content">
+                <div class="tag-row">
+                    <div class="tag">Sala de 5</div>
+                    <div class="tag">Primaria</div>
+                    <div class="tag">Secundaria</div>
+                </div>
+                <p>Entrega anual para hijos de afiliados. Horario: <strong>09 a 12 hs</strong> y <strong>16 a 19 hs</strong> en sede central.</p>
+                
+                <div class="cron-box">
+                    <div style="font-weight:800; font-size:0.75rem; color:var(--stm-primary); margin-bottom:10px; text-transform:uppercase">Cronograma por Legajo</div>
+                    <div class="cron-item"><span>23 Feb</span> <strong>Jubilados / < 28.000</strong></div>
+                    <div class="cron-item"><span>24 Feb</span> <strong>28.001 - 31.000</strong></div>
+                    <div class="cron-item"><span>25 Feb</span> <strong>31.001 - 34.000</strong></div>
+                    <div class="cron-item"><span>26 Feb</span> <strong>> 34.001</strong></div>
+                </div>
 
-        <!-- SUBSIDIOS -->
-        <div class="service-card" onclick="toggleDetail(this)">
-            <div class="service-header">
-                <div class="service-ico"><i class="fa-solid fa-gift"></i></div>
-                <div class="service-info">
-                    <div class="service-subtitle">Asistencias Especiales</div>
-                    <h3 class="service-title">Nacimiento y Casamiento</h3>
+                <div style="margin-top:20px">
+                    <p style="font-weight:700; font-size:0.85rem; margin-bottom:10px"><i class="fa-solid fa-id-card"></i> Doc. Obligatoria:</p>
+                    <ul style="padding-left:20px; font-size:0.85rem; margin:0">
+                        <li>Carnet de afiliado o último recibo</li>
+                        <li>DNI de los hijos/as</li>
+                        <li>Certificado de escolaridad 2025/2026</li>
+                    </ul>
                 </div>
-                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
-            </div>
-            <div class="service-content">
-                <div style="margin-bottom:15px">
-                    <strong>Nacimiento:</strong> Ajuar completo (ajuar, bolso y mantilla).
-                </div>
-                <div>
-                    <strong>Casamiento:</strong> Luna de miel en Carlos Paz (Pasajes + Estadía + Media Pensión) o suma fija.
-                </div>
-                <p style="font-size:0.75rem; margin-top:15px; opacity:0.6">Requisitos: Credencial, recibo y certificado correspondiente.</p>
-            </div>
-        </div>
-
-        <!-- ASESORIA Y SALUD -->
-        <div class="service-card" onclick="toggleDetail(this)">
-            <div class="service-header">
-                <div class="service-ico"><i class="fa-solid fa-briefcase-medical"></i></div>
-                <div class="service-info">
-                    <div class="service-subtitle">Asistencia Integral</div>
-                    <h3 class="service-title">Legal y Farmacia</h3>
-                </div>
-                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
-            </div>
-            <div class="service-content">
-                <div class="detail-item"><i class="fa-solid fa-gavel"></i> <span>Asesoría legal laboral gratuita.</span></div>
-                <div class="detail-item"><i class="fa-solid fa-prescription-bottle-medical"></i> <span>Farmacia Gremial: Moreno 4359 | 0223 474-9678.</span></div>
             </div>
         </div>
 
@@ -332,20 +328,18 @@
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
 
-        function toggleDetail(el) { el.classList.toggle('open'); }
+        function toggleCard(card) { card.classList.toggle('open'); }
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
         function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if(show) document.getElementById('botSearch').focus(); }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
         function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if(show) document.getElementById('newPass').focus(); }
 
         function showNotify(msg, type = 'info') {
-            const div = document.createElement('div');
-            div.className = 'stm-notify';
+            const div = document.createElement('div'); div.className = 'stm-notify';
             const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
             const bg = type === 'error' ? '#ef4444' : '#10b981';
             div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span>${msg}</span>`;
-            document.body.appendChild(div);
-            setTimeout(() => div.classList.add('show'), 10);
+            document.body.appendChild(div); setTimeout(() => div.classList.add('show'), 10);
             setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
         }
 
@@ -356,18 +350,13 @@
         }
 
         function changePassword() {
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            if(!p1 || p1 !== p2) { showNotify("Contraseñas incorrectas", "error"); return; }
-            localStorage.setItem('usrPass', p1);
-            showNotify("¡Contraseña actualizada!", "success");
-            setTimeout(() => toggleUser(false), 1000);
+            const p1 = document.getElementById('newPass').value; const p2 = document.getElementById('confirmPass').value;
+            if(!p1 || p1 !== p2) { showNotify("Contraseñas no coinciden", "error"); return; }
+            localStorage.setItem('usrPass', p1); showNotify("¡Actualizada!", "success"); setTimeout(() => toggleUser(false), 1000);
         }
 
         document.getElementById('botSearch').addEventListener('input', (e) => {
-            const val = normalize(e.target.value);
-            const res = document.getElementById('botRes');
-            res.innerHTML = "";
+            const val = normalize(e.target.value); const res = document.getElementById('botRes'); res.innerHTML = "";
             if (val.length > 2) {
                 sitePages.filter(p => normalize(p.t + " " + p.tags).includes(val)).forEach(p => {
                     res.innerHTML += `<a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">

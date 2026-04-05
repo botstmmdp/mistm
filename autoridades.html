@@ -17,6 +17,7 @@
             --stm-accent: #f59e0b;
             --nav-bg: #111827;
             --text-dark: #1e293b;
+            --glass: rgba(255, 255, 255, 0.85);
             --bg-body: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
@@ -24,12 +25,11 @@
             --stm-primary: #818cf8;
             --text-dark: #f1f5f9;
             --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass: rgba(30, 41, 59, 0.85);
         }
 
-        body.dark-mode .auth-card, body.dark-mode header, body.dark-mode .bot-content { background: #1e293b; color: white; border-color: #334155; }
-        body.dark-mode p { color: #94a3b8; }
         .hidden { display: none !important; }
-        .nav-bar { background: #111827 !important; }
+        .nav-footer, .nav-bar, .bottom-nav { background: #111827 !important; }
 
         .nav-home-pulse i {
             animation: home-blink 2s infinite ease-in-out;
@@ -48,7 +48,6 @@
             color: var(--text-dark); overflow-x: hidden;
         }
 
-        /* --- HEADER --- */
         header {
             padding: 40px 20px 20px;
             background: rgba(255, 255, 255, 0.4);
@@ -71,7 +70,7 @@
         /* --- AUTHORITIES LIST --- */
         .section-title {
             font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
-            letter-spacing: 1.5px; color: var(--stm-primary); margin: 0 0 15px 5px;
+            letter-spacing: 1.5px; color: var(--stm-primary); margin: 30px 0 15px 5px;
             display: flex; align-items: center; gap: 8px;
         }
         .section-title::after { content: ''; flex: 1; height: 1px; background: var(--stm-primary); opacity: 0.2; }
@@ -80,9 +79,10 @@
             background: white; border-radius: 22px; padding: 18px 20px;
             margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02);
             display: flex; align-items: center; gap: 15px; transition: 0.3s;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.8); animation: fadeIn 0.5s ease-out forwards;
         }
-        .auth-card:active { transform: scale(0.98); background: #f8fafc; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body.dark-mode .auth-card { background: #1e293b; border-color: #334155; }
         
         .auth-ico {
             width: 45px; height: 45px; border-radius: 14px;
@@ -90,11 +90,13 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 1.1rem; flex-shrink: 0;
         }
+        body.dark-mode .auth-ico { background: #334155; }
         .auth-info { flex: 1; }
         .auth-pos { font-size: 0.72rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 2px; }
         .auth-name { font-size: 1.05rem; font-weight: 800; color: #334155; margin: 0; }
+        body.dark-mode .auth-name { color: white; }
 
-        /* --- FAB BOT --- */
+        /* --- BOT STYLES --- */
         .fab-bot {
             position: fixed; bottom: 100px; right: 20px;
             width: 60px; height: 60px;
@@ -102,35 +104,11 @@
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; cursor: pointer; z-index: 1001; 
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            transition: 0.3s; animation: bounceBot 3s infinite;
+            animation: bounceBot 3s infinite;
         }
         .fab-bot i { color: white !important; }
         @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        /* --- NAVIGATION --- */
-        .nav-bar {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: calc(100% - 40px); max-width: 400px;
-            height: 70px; background: var(--nav-bg); border-radius: 35px;
-            display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
-        }
-        .nav-btn { color: #4b5563; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s; }
-        .nav-btn.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
-
-        /* Custom Notification */
-        .stm-notify {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
-            background: white; padding: 15px 25px; border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
-            z-index: 10000; display: flex; align-items: center; gap: 12px;
-            transition: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28); opacity: 0;
-            pointer-events: none;
-        }
-        .stm-notify.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .stm-notify i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--stm-primary); color: white; font-size: 0.8rem; }
-
-        /* MODAL BOT */
         .bot-modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
@@ -142,45 +120,59 @@
             border-top-left-radius: 30px; border-top-right-radius: 30px;
             padding: 30px 20px; transform: translateY(100%); transition: 0.4s;
         }
+        body.dark-mode .bot-content { background: #1e293b; color: white; }
         .bot-modal.active .bot-content { transform: translateY(0); }
         .bot-input { width: 100%; padding: 15px 20px 15px 50px; border-radius: 15px; border: 2px solid #f1f5f9; background: #f8fafc; font-family: inherit; }
+        body.dark-mode .bot-input { background: #0f172a; border-color: #334155; color: white; }
         .bot-search-box { position: relative; }
         .bot-search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--stm-primary); }
 
-        /* --- PRELOADER --- */
+        /* --- NAVIGATION --- */
+        .nav-footer {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 40px); max-width: 400px;
+            height: 70px; background: var(--nav-bg);
+            border-radius: 35px; padding: 0 10px;
+            display: flex; justify-content: space-around; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
+        }
+        .nav-link {
+            text-decoration: none; color: #4b5563; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: 0.3s;
+        }
+        .nav-link.active { color: white; background: var(--stm-primary); border-radius: 50%; transform: translateY(-12px); box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4); }
+
+        /* --- NOTIFICATION & UTILS --- */
+        .stm-notify {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: white; padding: 15px 25px; border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #e2e8f0;
+            z-index: 10000; display: flex; align-items: center; gap: 12px;
+            transition: 0.5s; opacity: 0; pointer-events: none;
+        }
+        .stm-notify.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .stm-notify i { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--stm-primary); color: white; font-size: 0.8rem; }
+
         #loader-wrapper {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: white; display: flex; flex-direction: column;
             align-items: center; justify-content: center; z-index: 9999;
-            transition: opacity 0.5s ease;
         }
         body.dark-mode #loader-wrapper { background: #0f172a; }
-        .loader-logo {
-            width: 100px; height: auto;
-            object-fit: contain;
-            animation: logo-spin 2s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes logo-spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .loader-text { font-weight: 700; color: var(--stm-primary); letter-spacing: 1px; text-transform: uppercase; font-size: 0.8rem; }
+        .loader-logo { width: 100px; height: auto; animation: logo-spin 2s linear infinite; }
+        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- PRELOADER FLOTANTE -->
     <div id="loader-wrapper">
         <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div class="loader-text">Autoridades STM...</div>
+        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">AUTORIDADES STM</div>
     </div>
 
     <header>
         <div class="header-box">
-            <div class="logo-box">
-                <img src="logo nuevo.png" alt="STM" onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
-            </div>
+            <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
             <div class="welcome-msg">
                 <h1 id="usrGreeting">Autoridades</h1>
                 <p id="usrDisplayName">Cuerpo Directivo</p>
@@ -191,7 +183,7 @@
     <div class="container animate__animated animate__fadeIn">
         <h2 class="section-title">Secretariado General</h2>
         
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+        <div class="auth-card" style="animation-delay: 0.1s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Secretario General</div>
@@ -199,7 +191,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+        <div class="auth-card" style="animation-delay: 0.2s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Secretario Adjunto</div>
@@ -207,9 +199,9 @@
             </div>
         </div>
 
-        <h2 class="section-title" style="margin-top: 30px;">Secretarías</h2>
+        <h2 class="section-title">Secretarías</h2>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+        <div class="auth-card" style="animation-delay: 0.3s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Finanzas</div>
@@ -217,7 +209,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+        <div class="auth-card" style="animation-delay: 0.4s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Organización</div>
@@ -225,7 +217,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+        <div class="auth-card" style="animation-delay: 0.5s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Gremial</div>
@@ -233,7 +225,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s">
+        <div class="auth-card" style="animation-delay: 0.6s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Administrativa y de Actas</div>
@@ -241,7 +233,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.7s">
+        <div class="auth-card" style="animation-delay: 0.7s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Acción Social y Obras</div>
@@ -249,7 +241,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.8s">
+        <div class="auth-card" style="animation-delay: 0.8s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Previsión Social</div>
@@ -257,7 +249,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 0.9s">
+        <div class="auth-card" style="animation-delay: 0.9s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Prensa y Difusión</div>
@@ -265,7 +257,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.0s">
+        <div class="auth-card" style="animation-delay: 1.0s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Relac. Públicas y Sindicales</div>
@@ -273,7 +265,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.1s">
+        <div class="auth-card" style="animation-delay: 1.1s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Mujer</div>
@@ -281,7 +273,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.2s">
+        <div class="auth-card" style="animation-delay: 1.2s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Docente</div>
@@ -289,7 +281,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.3s">
+        <div class="auth-card" style="animation-delay: 1.3s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Personal Jerárquico</div>
@@ -297,7 +289,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.4s">
+        <div class="auth-card" style="animation-delay: 1.4s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Higiene y Seguridad</div>
@@ -305,7 +297,7 @@
             </div>
         </div>
 
-        <div class="auth-card animate__animated animate__fadeInUp" style="animation-delay: 1.5s">
+        <div class="auth-card" style="animation-delay: 1.5s">
             <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
             <div class="auth-info">
                 <div class="auth-pos">Personal Profesional</div>
@@ -314,186 +306,111 @@
         </div>
     </div>
 
-    <!-- FAB BOT -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)">
-        <i class="fa-solid fa-robot"></i>
-    </div>
-
+    <!-- BOT & NAV -->
+    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <div class="bot-search-box">
-                <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botInput">
-            </div>
+            <div class="bot-search-box"><i class="fa-solid fa-robot"></i><input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botSearch"></div>
             <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
         </div>
     </div>
 
-    <nav class="nav-bar">
-        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
-        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
+    <nav class="nav-footer">
+        <a href="opciones.html" class="nav-link nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="contactos.html" class="nav-link"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-link" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="nav-link" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
-    <!-- MODAL CONFIGURACIÓN -->
+    <!-- MODALS CONFIG & USER -->
     <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 20px 5px; color: var(--stm-primary);">Configuración</h2>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">Configuración</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px; accent-color: var(--stm-primary);"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
             </div>
-            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; cursor: pointer;">Cerrar</button>
+            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
         </div>
     </div>
 
-    <!-- MODAL PERFIL/CONTRASEÑA -->
     <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 10px 5px; color: var(--stm-primary);">Mi Cuenta</h2>
-            <p style="font-size: 0.85rem; opacity: 0.7; margin: 0 0 25px 5px;">Gestiona tu seguridad y contraseña</p>
-
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
             <div style="display: flex; flex-direction: column; gap: 20px;">
-                <div style="background: #f8fafc; border: 2px solid #e2e8f0; position:relative; padding:15px; border-radius:18px;">
-                    <i class="fa-solid fa-lock" style="color: var(--stm-primary); position:absolute; left:20px; top:50%; transform:translateY(-50%)"></i>
-                    <input type="password" id="newPass" placeholder="Nueva Contraseña" style="width:100%; border:none; background:transparent; padding-left:35px; outline:none; font-family:inherit">
-                </div>
-                <div style="background: #f8fafc; border: 2px solid #e2e8f0; position:relative; padding:15px; border-radius:18px;">
-                    <i class="fa-solid fa-shield-check" style="color: var(--stm-primary); position:absolute; left:20px; top:50%; transform:translateY(-50%)"></i>
-                    <input type="password" id="confirmPass" placeholder="Confirmar Nueva Contraseña" style="width:100%; border:none; background:transparent; padding-left:35px; outline:none; font-family:inherit">
-                </div>
-                
-                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; cursor: pointer; box-shadow: 0 10px 20px rgba(0,72,132,0.2); transition: transform 0.2s;">
-                    Actualizar Contraseña
-                </button>
+                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña" style="padding-left:20px">
+                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña" style="padding-left:20px">
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar Contraseña</button>
             </div>
-            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: transparent; font-weight: 600; color: #64748b; font-family: inherit; cursor: pointer;">Cancelar</button>
+            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
     <script>
         const sitePages = [
+            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta", ico: "fa-calendar-check" },
+            { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
+            { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
+            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
-            { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
 
-        function toggleBot(show) { 
-            document.getElementById('modalBot').classList.toggle('active', show);
-            if(show) document.getElementById('botInput').focus();
-        }
-
-        function toggleUser(show) {
-            document.getElementById('modalUser').classList.toggle('active', show);
-            if (show) document.getElementById('newPass').focus();
-        }
-
-        function changePassword() {
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
-            if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
-            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            localStorage.setItem('usrPass', p1);
-            showNotify("¡Contraseña actualizada con éxito!", "success");
-            const originalText = btn.innerText;
-            btn.innerText = "¡Actualizado! ✓";
-            btn.style.background = "#10b981";
-            btn.style.color = "white";
-            btn.style.pointerEvents = "none";
-            setTimeout(() => {
-                toggleUser(false);
-                btn.innerText = originalText;
-                btn.style.background = "var(--stm-primary)";
-                btn.style.pointerEvents = "auto";
-                document.getElementById('newPass').value = "";
-                document.getElementById('confirmPass').value = "";
-            }, 1500);
-        }
+        function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+        function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if(show) document.getElementById('botSearch').focus(); }
+        function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
+        function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if(show) document.getElementById('newPass').focus(); }
 
         function showNotify(msg, type = 'info') {
-            const div = document.createElement('div');
-            div.className = 'stm-notify';
+            const div = document.createElement('div'); div.className = 'stm-notify';
             const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
             const bg = type === 'error' ? '#ef4444' : '#10b981';
-            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span style="font-weight:700; font-size:0.9rem">${msg}</span>`;
-            document.body.appendChild(div);
-            setTimeout(() => div.classList.add('show'), 10);
-            setTimeout(() => {
-                div.classList.remove('show');
-                setTimeout(() => div.remove(), 500);
-            }, 3000);
+            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span>${msg}</span>`;
+            document.body.appendChild(div); setTimeout(() => div.classList.add('show'), 10);
+            setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
         }
 
-        function normalize(str) {
-            return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-        }
-
-        document.getElementById('botInput').addEventListener('input', (e) => {
-            const val = normalize(e.target.value);
-            const res = document.getElementById('botRes');
-            res.innerHTML = "";
-            if (val.length > 2) {
-                const words = val.split(" ").filter(w => w.length > 2);
-                const filtered = sitePages.filter(p => {
-                    const target = normalize(p.t + " " + p.tags);
-                    return words.some(w => target.includes(w)) || target.includes(val);
-                });
-
-                if (filtered.length > 0) {
-                    res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
-                    filtered.forEach(p => {
-                        res.innerHTML += `
-                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
-                                <div style="display:flex; align-items:center; gap:10px">
-                                    <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
-                                    <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
-                                </div>
-                            </a>`;
-                    });
-                } else {
-                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
-                }
-            }
-        });
-
-        // Saludo y Usuario
-        const h = new Date().getHours();
-        const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
-        document.getElementById('usrGreeting').innerText = greet;
-        const savedNames = localStorage.getItem('usrName') || "Afiliado STM";
-        document.getElementById('usrDisplayName').innerText = savedNames;
-
-        function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
         function applyConfig(type, value) {
             localStorage.setItem('cfg_' + type, value);
             if (type === 'dark') document.body.classList.toggle('dark-mode', value);
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
         }
-        function loadSettings() {
-            const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
-            document.body.classList.toggle('dark-mode', cfg.dark);
-            if(document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
-            const fab = document.getElementById('fabBotIcon');
-            if(fab) fab.classList.toggle('hidden', !cfg.bot);
-            if(document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+
+        function changePassword() {
+            const p1 = document.getElementById('newPass').value; const p2 = document.getElementById('confirmPass').value;
+            if(!p1 || p1 !== p2) { showNotify("Contraseñas no coinciden", "error"); return; }
+            localStorage.setItem('usrPass', p1); showNotify("¡Actualizada!", "success"); setTimeout(() => toggleUser(false), 1000);
         }
 
+        document.getElementById('botSearch').addEventListener('input', (e) => {
+            const val = normalize(e.target.value); const res = document.getElementById('botRes'); res.innerHTML = "";
+            if (val.length > 2) {
+                sitePages.filter(p => normalize(p.t + " " + p.tags).includes(val)).forEach(p => {
+                    res.innerHTML += `<a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
+                        <div style="display:flex; align-items:center; gap:10px">
+                            <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
+                            <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                        </div>
+                    </a>`;
+                });
+            }
+        });
+
         window.addEventListener('load', () => {
-            loadSettings();
-            const loader = document.getElementById('loader-wrapper');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 500);
-            }, 600);
+            const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
+            document.body.classList.toggle('dark-mode', cfg.dark);
+            document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            const savedName = localStorage.getItem('usrName') || "Afiliado STM";
+            document.getElementById('usrDisplayName').innerText = savedName;
+            setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
     </script>
 </body>
