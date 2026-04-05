@@ -479,18 +479,28 @@
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
 
+        function normalize(str) {
+            return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         function toggleBot(show) {
             document.getElementById('modalBot').classList.toggle('active', show);
             if(show) document.getElementById('botInput').focus();
         }
 
         document.getElementById('botInput').addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
+            const val = normalize(e.target.value);
             const res = document.getElementById('botRes');
             res.innerHTML = "";
-            if (val.length > 1) {
-                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
-                if(filtered.length > 0) {
+            if (val.length > 2) {
+                const words = val.split(" ").filter(w => w.length > 2);
+                
+                const filtered = sitePages.filter(p => {
+                    const target = normalize(p.t + " " + p.tags);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                });
+
+                if (filtered.length > 0) {
                     res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
                     filtered.forEach(p => {
                         res.innerHTML += `
@@ -502,7 +512,7 @@
                             </a>`;
                     });
                 } else {
-                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados exactos...</p>`;
+                    res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso...</p>`;
                 }
             }
         });

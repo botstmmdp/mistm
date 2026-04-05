@@ -266,7 +266,6 @@
 
     <nav class="nav-bar">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
-        <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-compass"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
@@ -321,19 +320,31 @@
             if(document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
         }
 
+        function normalize(str) {
+            return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         document.getElementById('botInput').addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
+            const val = normalize(e.target.value);
             const res = document.getElementById('botRes');
             res.innerHTML = "";
-            if (val.length > 1) {
-                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
-                if(filtered.length > 0) {
+            if (val.length > 2) {
+                const words = val.split(" ").filter(w => w.length > 2);
+                
+                const filtered = sitePages.filter(p => {
+                    const target = normalize(p.t + " " + p.tags);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                });
+
+                if (filtered.length > 0) {
                     res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
                     filtered.forEach(p => {
                         res.innerHTML += `
-                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0;">
-                                <div style="width:35px; height:35px; border-radius:10px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.9rem"><i class="fa-solid ${p.ico}"></i></div>
-                                <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
+                                    <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                                </div>
                             </a>`;
                     });
                 } else {
