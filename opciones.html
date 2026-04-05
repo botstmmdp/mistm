@@ -394,6 +394,14 @@
             font-size: 1.2rem;
         }
 
+        .pulse-icon {
+            animation: pulse-ico 2s infinite ease-in-out;
+        }
+        @keyframes pulse-ico {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -423,8 +431,8 @@
                     onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
             </div>
             <div class="welcome-msg">
-                <h1 id="usrGreeting">General STM</h1>
-                <p>Panel Ágil de Gestión</p>
+                <h1 id="usrGreeting">¡Cargando...!</h1>
+                <p id="usrDisplayName">Procesando usuario...</p>
             </div>
         </div>
     </header>
@@ -435,8 +443,19 @@
             <h4>¿Qué hay de nuevo?</h4>
             <h2>Ver Novedades STM</h2>
         </div>
-        <div class="news-shortcut-ico">
+        <div class="news-shortcut-ico pulse-icon">
             <i class="fa-solid fa-bolt"></i>
+        </div>
+    </a>
+
+    <!-- ATAJO A GÉNERO Y DIVERSIDAD -->
+    <a href="generoydiversidad.html" class="news-shortcut animate__animated animate__fadeIn" style="background: linear-gradient(135deg, #db2777, #9d174d); margin-top: -10px;">
+        <div class="news-shortcut-info">
+            <h4>Bienestar Integral</h4>
+            <h2>Género y Diversidad</h2>
+        </div>
+        <div class="news-shortcut-ico pulse-icon" style="background: rgba(255,255,255,0.3); box-shadow: 0 0 15px rgba(255,255,255,0.4);">
+            <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
     </a>
 
@@ -566,9 +585,13 @@
             } else { titleA.style.display = "none"; }
         });
 
-        // Saludo dinámico
+        // Saludo dinámico y Nombre del Usuario
         const h = new Date().getHours();
-        document.getElementById('usrGreeting').innerText = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+        const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+        document.getElementById('usrGreeting').innerText = greet;
+        
+        const savedName = localStorage.getItem('usrName') || "Afiliado STM";
+        document.getElementById('usrDisplayName').innerText = savedName;
 
         // Loader control
         window.addEventListener('load', () => {
