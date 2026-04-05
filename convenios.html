@@ -322,7 +322,7 @@
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Autoridades y Contactos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo", ico: "fa-tags" },
+            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
         ];
@@ -332,20 +332,53 @@
             if(show) document.getElementById('botInput').focus();
         }
 
+        function normalize(str) {
+            return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
         document.getElementById('botInput').addEventListener('input', (e) => {
-            const val = e.target.value.toLowerCase();
+            const val = normalize(e.target.value);
             const res = document.getElementById('botRes');
             res.innerHTML = "";
-            if (val.length > 1) {
-                const filtered = sitePages.filter(p => p.t.toLowerCase().includes(val) || p.tags.toLowerCase().includes(val));
-                if(filtered.length > 0) {
+            if (val.length > 2) {
+                const words = val.split(" ").filter(w => w.length > 2);
+                
+                const filtered = sitePages.filter(p => {
+                    const target = normalize(p.t + " " + p.tags);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                });
+
+                const filteredConv = allData.filter(c => {
+                    const target = normalize(c.titulo + " " + c.rubro + " " + c.detalle);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                }).slice(0, 7);
+
+                if (filtered.length > 0 || filteredConv.length > 0) {
                     res.innerHTML = `<p style="font-size:0.8rem; font-weight:800; color:var(--stm-primary); margin-bottom:10px">¡Hola! Encontré esto para vos...</p>`;
+                    
                     filtered.forEach(p => {
                         res.innerHTML += `
-                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0;">
-                                <div style="width:35px; height:35px; border-radius:10px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.9rem"><i class="fa-solid ${p.ico}"></i></div>
-                                <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                            <a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
+                                    <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                                </div>
                             </a>`;
+                    });
+
+                    filteredConv.forEach(c => {
+                        res.innerHTML += `
+                            <div style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; border:1px solid #e2e8f0; border-left: 4px solid #10b981;">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div style="width:30px; height:30px; border-radius:8px; background:#10b981; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-gift"></i></div>
+                                    <div style="flex:1">
+                                        <h4 style="margin:0; font-size:0.65rem; color:#10b981; text-transform:uppercase">${c.rubro}</h4>
+                                        <h4 style="margin:0; font-size:0.85rem">${c.titulo}</h4>
+                                        <p style="margin:0; font-size:0.75rem; opacity:0.8">${c.detalle.substring(0, 50)}...</p>
+                                    </div>
+                                    <button onclick="showConvenios('${c.rubro.toUpperCase().trim()}'); toggleBot(false);" style="border:none; background:none; color:var(--stm-primary); font-size:1.2rem; cursor:pointer"><i class="fa-solid fa-circle-chevron-right"></i></button>
+                                </div>
+                            </div>`;
                     });
                 } else {
                     res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
