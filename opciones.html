@@ -584,8 +584,17 @@
       });
 
       function pedirPermisoPush() {
+          alert("1. Iniciando solicitud a OneSignal...");
+          if(window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+              alert("ATENCIÓN: Estás en una red local (" + window.location.hostname + ") sin HTTPS. Los móviles bloquean las notificaciones en conexiones no seguras.");
+          }
           window.OneSignalDeferred.push(async function(OneSignal) {
-              await OneSignal.Slidedown.promptPush();
+              try {
+                  await OneSignal.Slidedown.promptPush();
+                  alert("2. Solicitud enviada (si no ves nada, el navegador la bloqueó silenciosamente).");
+              } catch (e) {
+                  alert("3. Error en OneSignal: " + e);
+              }
           });
       }
     </script>
