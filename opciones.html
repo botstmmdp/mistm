@@ -49,6 +49,9 @@
 
         body.dark-mode .bot-content { background: #1e293b; color: white; }
         body.dark-mode .bot-input { background: #0f172a; border-color: #334155; color: white; }
+        .res-item { background: #f8fafc; border: 1px solid #f1f5f9; transition: 0.3s; }
+        body.dark-mode .res-item { background: #0f172a !important; border-color: #334155 !important; color: white !important; }
+        body.dark-mode .res-item p { color: #94a3b8 !important; }
 
         .bottom-nav {
             background: #111827 !important;
@@ -918,25 +921,29 @@
 
                     filtered.forEach(p => {
                         resList.innerHTML += `
-                            <a href="${p.f}" class="res-item animate__animated animate__fadeInUp">
-                                <div class="res-ico" style="background: var(--stm-primary); color:white"><i class="fa-solid ${p.ico}"></i></div>
-                                <div class="card-info" style="flex:1">
-                                    <h3 style="font-size:0.95rem; margin-bottom:2px">${p.t}</h3>
-                                    <p style="font-size:0.75rem; opacity:0.8">${p.d}</p>
+                            <a href="${p.f}" class="res-item animate__animated animate__fadeInUp" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; text-decoration:none; color:inherit; display:block">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div class="res-ico" style="background: var(--stm-primary); color:white"><i class="fa-solid ${p.ico}"></i></div>
+                                    <div class="card-info" style="flex:1">
+                                        <h3 style="font-size:0.95rem; margin-bottom:2px">${p.t}</h3>
+                                        <p style="font-size:0.75rem; opacity:0.8">${p.d}</p>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; opacity:0.3"></i>
                                 </div>
-                                <i class="fa-solid fa-chevron-right" style="font-size:0.8rem; opacity:0.3"></i>
                             </a>
                         `;
                     });
 
                     filteredConv.forEach(c => {
                         resList.innerHTML += `
-                            <a href="convenios.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid var(--stm-accent);">
-                                <div class="res-ico" style="background: var(--stm-accent); color:white"><i class="fa-solid fa-gift"></i></div>
-                                <div class="card-info" style="flex:1">
-                                    <h4 style="margin:0; font-size:0.7rem; color:var(--stm-accent); font-weight:800; text-transform:uppercase">${c.rubro}</h4>
-                                    <h3 style="font-size:0.9rem; margin-bottom:2px">${c.titulo}</h3>
-                                    <p style="font-size:0.75rem; opacity:0.8">${c.detalle.substring(0, 60)}...</p>
+                            <a href="convenios.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid var(--stm-accent); display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; text-decoration:none; color:inherit; display:block">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div class="res-ico" style="background: var(--stm-accent); color:white"><i class="fa-solid fa-gift"></i></div>
+                                    <div class="card-info" style="flex:1">
+                                        <h4 style="margin:0; font-size:0.7rem; color:var(--stm-accent); font-weight:800; text-transform:uppercase">${c.rubro}</h4>
+                                        <h3 style="font-size:0.9rem; margin-bottom:2px">${c.titulo}</h3>
+                                        <p style="font-size:0.75rem; opacity:0.8">${c.detalle.substring(0, 60)}...</p>
+                                    </div>
                                 </div>
                             </a>
                         `;
@@ -944,12 +951,14 @@
 
                     filteredNews.forEach(n => {
                         resList.innerHTML += `
-                            <a href="novedades.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid #6366f1;">
-                                <div class="res-ico" style="background:#6366f1; color:white"><i class="fa-solid fa-bolt"></i></div>
-                                <div class="card-info" style="flex:1">
-                                    <h4 style="margin:0; font-size:0.7rem; color:#6366f1; font-weight:800; text-transform:uppercase">NOTICIA</h4>
-                                    <h3 style="font-size:0.9rem; margin-bottom:2px">${n.titulo}</h3>
-                                    <p style="font-size:0.75rem; opacity:0.8">${n.desc.substring(0, 60)}...</p>
+                            <a href="novedades.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid #6366f1; display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; text-decoration:none; color:inherit; display:block">
+                                <div style="display:flex; align-items:center; gap:10px">
+                                    <div class="res-ico" style="background:#6366f1; color:white"><i class="fa-solid fa-bolt"></i></div>
+                                    <div class="card-info" style="flex:1">
+                                        <h4 style="margin:0; font-size:0.7rem; color:#6366f1; font-weight:800; text-transform:uppercase">NOTICIA</h4>
+                                        <h3 style="font-size:0.9rem; margin-bottom:2px">${n.titulo}</h3>
+                                        <p style="font-size:0.75rem; opacity:0.8">${n.desc.substring(0, 60)}...</p>
+                                    </div>
                                 </div>
                             </a>
                         `;

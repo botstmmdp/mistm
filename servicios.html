@@ -32,6 +32,9 @@
         body.dark-mode .service-content { background: rgba(15, 23, 42, 0.5); color: #f1f5f9; }
         body.dark-mode .bot-content { background: #1e293b; color: white; }
         body.dark-mode .bot-input { background: #0f172a; border-color: #334155; color: white; }
+        .res-item-bot { background: #f8fafc; border: 1px solid #f1f5f9; transition: 0.3s; }
+        body.dark-mode .res-item-bot { background: #0f172a !important; border-color: #334155 !important; color: white !important; }
+        body.dark-mode .res-item-bot p { color: #94a3b8 !important; }
 
         .hidden { display: none !important; }
         .nav-footer, .nav-bar, .bottom-nav { background: #111827 !important; }
@@ -324,7 +327,7 @@
 
     <script>
         const sitePages = [
-            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta", ico: "fa-calendar-check" },
+            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
@@ -334,7 +337,8 @@
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
-            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
+            { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
         function toggleDetail(el) { el.classList.toggle('open'); }
@@ -370,12 +374,16 @@
         }
 
         document.getElementById('botSearch').addEventListener('input', (e) => {
-            const val = normalize(e.target.value);
+            const val = normalize(e.target.value).trim();
             const res = document.getElementById('botRes');
             res.innerHTML = "";
             if (val.length > 2) {
-                sitePages.filter(p => normalize(p.t + " " + p.tags).includes(val)).forEach(p => {
-                    res.innerHTML += `<a href="${p.f}" style="display:flex; align-items:center; gap:12px; padding:12px; background:#f8fafc; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border:1px solid #e2e8f0; display:block">
+                const words = val.split(" ").filter(w => w.length > 2);
+                sitePages.filter(p => {
+                    const target = normalize(p.t + " " + p.tags);
+                    return words.some(w => target.includes(w)) || target.includes(val);
+                }).forEach(p => {
+                    res.innerHTML += `<a href="${p.f}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; display:block">
                         <div style="display:flex; align-items:center; gap:10px">
                             <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
                             <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
