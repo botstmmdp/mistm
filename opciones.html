@@ -584,17 +584,18 @@
       });
 
       function pedirPermisoPush() {
-          alert("1. Iniciando solicitud a OneSignal...");
-          if(window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-              alert("ATENCIÓN: Estás en una red local (" + window.location.hostname + ") sin HTTPS. Los móviles bloquean las notificaciones en conexiones no seguras.");
+          alert("1. Iniciando proceso de suscripción...");
+          
+          if (typeof window.OneSignal === 'undefined') {
+              alert("❌ ERROR: El script de OneSignal fue bloqueado por tu navegador móvil (AdBlock, conexión inestable, o entorno local sin HTTPS). ¡Por eso no avanza!");
+              return;
           }
-          window.OneSignalDeferred.push(async function(OneSignal) {
-              try {
-                  await OneSignal.Slidedown.promptPush();
-                  alert("2. Solicitud enviada (si no ves nada, el navegador la bloqueó silenciosamente).");
-              } catch (e) {
-                  alert("3. Error en OneSignal: " + e);
-              }
+          alert("2. OneSignal detectado. Intentando suscribir...");
+          
+          window.OneSignal.Slidedown.promptPush().then(function() {
+              alert("3. Finalizado. ¡Revisa tu OneSignal!");
+          }).catch(function(e) {
+              alert("ERROR al suscribir: " + e);
           });
       }
     </script>
