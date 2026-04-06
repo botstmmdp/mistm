@@ -279,6 +279,35 @@
         const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
         let allNews = [];
 
+        /**
+         * Convierte el formato de fecha de Google Sheets a DD de mes de YYYY.
+         */
+        function formatDate(dateString) {
+            let date;
+            const stringMatch = dateString.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+            if (stringMatch) {
+                const day = parseInt(stringMatch[1], 10);
+                const month = parseInt(stringMatch[2], 10);
+                const year = parseInt(stringMatch[3], 10);
+                date = new Date(year, month - 1, day);
+            } else {
+                const vizMatch = dateString.match(/Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/);
+                if (vizMatch) {
+                    const year = parseInt(vizMatch[1]);
+                    const day = parseInt(vizMatch[2]);
+                    const monthIndex = parseInt(vizMatch[3]);
+                    date = new Date(year, monthIndex, day);
+                } else {
+                    date = new Date(dateString);
+                }
+            }
+            if (isNaN(date.getTime())) return dateString;
+            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            const formatter = new Intl.DateTimeFormat('es-AR', options);
+            let formattedDate = formatter.format(date).replace(/\./g, '').replace(/,/g, '').trim();
+            return formattedDate;
+        }
+
         async function loadNews() {
             try {
                 const res = await fetch(URL);
@@ -289,12 +318,12 @@
                 allNews = rows.map(r => {
                     const c = r.c;
                     return {
-                        titulo: c[1]?.v || "",
-                        desc: c[2]?.v || "",
-                        fecha: c[3]?.f || c[3]?.v || "",
-                        activo: (c[4]?.v || "").toString().toUpperCase() === "SI"
+                        titulo: (c[1]?.v || "").toString(),
+                        desc: (c[2]?.v || "").toString(),
+                        fecha: (c[3]?.f || c[3]?.v || "").toString(),
+                        activo: (c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                     };
-                }).filter(n => n.activo).reverse(); // Lo último primero
+                }).reverse(); // Lo último primero
 
                 renderFeed(allNews);
             } catch (e) {
@@ -320,7 +349,7 @@
             hero.innerHTML = `
                 <div class="hero-tag">Última noticia</div>
                 <div class="hero-content">
-                    <span class="hero-date">${latest.fecha}</span>
+                    <span class="hero-date">${formatDate(latest.fecha)}</span>
                     <h2>${latest.titulo}</h2>
                     <p class="hero-desc">${latest.desc}</p>
                 </div>
@@ -334,7 +363,7 @@
                 card.style.cursor = "pointer";
                 card.onclick = () => alertDetail(n);
                 card.innerHTML = `
-                    <span class="feed-date">${n.fecha}</span>
+                    <span class="feed-date">${formatDate(n.fecha)}</span>
                     <h3 class="feed-title">${n.titulo}</h3>
                     <p class="feed-desc">${n.desc}</p>
                 `;
@@ -347,7 +376,7 @@
             const res = document.getElementById('botRes');
             res.innerHTML = `
                 <div style="padding:15px">
-                    <span style="font-size:0.7rem; color:#6366f1; font-weight:800">${n.fecha}</span>
+                    <span style="font-size:0.7rem; color:#6366f1; font-weight:800">${formatDate(n.fecha)}</span>
                     <h3 style="margin:5px 0 10px; font-weight:800">${n.titulo}</h3>
                     <p style="font-size:0.92rem; color:#475569; line-height:1.6">${n.desc}</p>
                 </div>
@@ -424,11 +453,21 @@
             return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
+        let searchTimer = null;
         document.getElementById('botInput').addEventListener('input', (e) => {
-            const val = normalize(e.target.value);
+            const val = normalize(e.target.value).trim();
             const res = document.getElementById('botRes');
-            res.innerHTML = "";
-            if (val.length > 2) {
+            if (searchTimer) clearTimeout(searchTimer);
+            
+            if (val.length <= 2) {
+                res.innerHTML = "";
+                return;
+            }
+
+            res.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;" class="animate__animated animate__pulse animate__infinite">Buscando en el STM...</div>`;
+
+            searchTimer = setTimeout(() => {
+                res.innerHTML = "";
                 const words = val.split(" ").filter(w => w.length > 2);
 
                 const filtered = sitePages.filter(p => {
@@ -470,10 +509,9 @@
                 } else {
                     res.innerHTML = `<p style="font-size:0.8rem; opacity:0.6">No encontré resultados para eso, ¿probamos con otra palabra?</p>`;
                 }
-            }
+            }, 600);
         });
 
-        loadNews();
 
         // Saludo y Usuario
         const h = new Date().getHours();
@@ -500,6 +538,7 @@
 
         window.addEventListener('load', () => {
             loadSettings();
+            loadNews();
             const loader = document.getElementById('loader-wrapper');
             setTimeout(() => {
                 loader.style.opacity = '0';
