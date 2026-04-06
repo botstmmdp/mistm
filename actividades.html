@@ -318,11 +318,17 @@
                 <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña" style="padding-left:20px">
                 <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar Contraseña</button>
             </div>
-            <button onclick="toggleUser(false)" style="margin-top: 15px; width: 100%; padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
+                <button onclick="logout()" style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar Sesión</button>
+                <button onclick="toggleUser(false)" style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // Verificación de Acceso
+        if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
+
         const sitePages = [
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
@@ -394,6 +400,13 @@
                 });
             }, 500);
         });
+        function logout() {
+            localStorage.removeItem('isLogged');
+            localStorage.removeItem('usrName');
+            localStorage.removeItem('usrFullName');
+            localStorage.removeItem('usrPermiso');
+            window.location.href = 'index.html';
+        }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
