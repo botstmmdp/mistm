@@ -47,6 +47,9 @@
             color: #94a3b8;
         }
 
+        body.dark-mode .bot-content { background: #1e293b; color: white; }
+        body.dark-mode .bot-input { background: #0f172a; border-color: #334155; color: white; }
+
         .bottom-nav {
             background: #111827 !important;
         }
@@ -566,39 +569,6 @@
             }
         }
     </style>
-    <!-- OneSignal Push Notifications -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-    <script>
-      window.OneSignalDeferred = window.OneSignalDeferred || [];
-      OneSignalDeferred.push(async function(OneSignal) {
-        try {
-            await OneSignal.init({
-              appId: "a8fdac83-0195-4d2e-95ec-8ce85bf1b69f",
-              allowLocalhostAsSecureOrigin: true,
-              notifyButton: { enable: true }
-            });
-            console.log("OneSignal inicializado correctamente");
-        } catch (error) {
-            console.error("Error al iniciar OneSignal:", error);
-        }
-      });
-
-      function pedirPermisoPush() {
-          alert("1. Iniciando proceso de suscripción...");
-          
-          if (typeof window.OneSignal === 'undefined') {
-              alert("❌ ERROR: El script de OneSignal fue bloqueado por tu navegador móvil (AdBlock, conexión inestable, o entorno local sin HTTPS). ¡Por eso no avanza!");
-              return;
-          }
-          alert("2. OneSignal detectado. Intentando suscribir...");
-          
-          window.OneSignal.Slidedown.promptPush().then(function() {
-              alert("3. Finalizado. ¡Revisa tu OneSignal!");
-          }).catch(function(e) {
-              alert("ERROR al suscribir: " + e);
-          });
-      }
-    </script>
 </head>
 
 <body>
@@ -618,7 +588,6 @@
             <div class="welcome-msg">
                 <h1 id="usrGreeting">¡Cargando...!</h1>
                 <p id="usrDisplayName">Procesando usuario...</p>
-                <button onclick="pedirPermisoPush()" style="background:linear-gradient(135deg, #4f46e5, #3730a3); color:white; border:none; padding:8px 15px; border-radius:20px; font-weight:800; font-size:0.8rem; margin-top:10px; cursor:pointer; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);"><i class="fa-solid fa-bell"></i> Activar Notificaciones</button>
             </div>
         </div>
     </header>
