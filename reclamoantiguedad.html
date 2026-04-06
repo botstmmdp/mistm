@@ -105,7 +105,7 @@
             width: 60px; height: 60px;
             background: #6366f1 !important; color: white !important;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; cursor: pointer; z-index: 10001; 
+            font-size: 1.5rem; cursor: pointer; z-index: 1001; 
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
             animation: bounceBot 3s infinite;
         }
@@ -130,12 +130,12 @@
 
         /* --- NAVIGATION --- */
         .nav-footer {
-            position: fixed; bottom: 25px; left: 0; right: 0; margin: 0 auto;
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: calc(100% - 40px); max-width: 400px;
             height: 70px; background: var(--nav-bg);
             border-radius: 35px; padding: 0 10px;
             display: flex; justify-content: space-around; align-items: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 9999;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 1000;
         }
         .nav-link {
             text-decoration: none; color: #4b5563; width: 50px; height: 50px;
