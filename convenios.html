@@ -167,7 +167,12 @@
 
         /* UTIL */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .loader { text-align: center; padding: 40px; color: var(--stm-primary); font-weight: 700; }
+        .loader { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 40px; width: 100%; grid-column: 1 / -1;
+        }
+        .loader img { width: 60px; animation: logo-spin 2s linear infinite; margin-bottom: 15px; }
+        .loader span { color: var(--stm-primary); font-weight: 700; font-size: 0.9rem; }
 
         /* --- PRELOADER --- */
         #loader-wrapper {
@@ -216,7 +221,10 @@
     <div id="screenRubros" class="screen active">
         <h2 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.6; margin-bottom: 20px;">Explora por categorías</h2>
         <div id="rubroGrid" class="rubro-grid">
-            <div class="loader">Cargando beneficios...</div>
+            <div class="loader">
+                <img src="logo nuevo.png" alt="Cargando...">
+                <span>Cargando beneficios...</span>
+            </div>
         </div>
     </div>
 
