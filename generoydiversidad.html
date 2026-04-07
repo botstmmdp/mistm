@@ -348,6 +348,7 @@
         let allNews = [];
         const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4", GID = "195669740";
         const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
 
         async function fetchNews() {
             if (allNews.length > 0) return;
@@ -375,31 +376,40 @@
             if (show) document.getElementById('newPass').focus();
         }
 
-        function changePassword() {
+        async function changePassword() {
             const p1 = document.getElementById('newPass').value;
             const p2 = document.getElementById('confirmPass').value;
             const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            const usrID = localStorage.getItem('usrID');
             
             if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
             if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            
-            localStorage.setItem('usrPass', p1);
-            showNotify("¡Contraseña actualizada con éxito!", "success");
-            
+            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
+
             const originalText = btn.innerText;
-            btn.innerText = "¡Actualizado! ✓";
-            btn.style.background = "#10b981";
-            btn.style.color = "white";
+            btn.innerText = "Procesando...";
             btn.style.pointerEvents = "none";
-            
-            setTimeout(() => {
-                toggleUser(false);
-                btn.innerText = originalText;
-                btn.style.background = "var(--stm-primary)";
-                btn.style.pointerEvents = "auto";
-                document.getElementById('newPass').value = "";
-                document.getElementById('confirmPass').value = "";
-            }, 1500);
+
+            try {
+                await fetch(USER_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
+                });
+                localStorage.setItem('usrPass', p1);
+                showNotify("¡Contraseña actualizada en la nube!", "success");
+                btn.innerText = "¡Listo! ✓";
+                btn.style.background = "#10b981";
+                btn.style.color = "white";
+                setTimeout(() => {
+                    toggleUser(false);
+                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
+                    btn.style.pointerEvents = "auto";
+                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
+                }, 1500);
+            } catch (err) {
+                showNotify("Error de conexión", "error");
+                btn.innerText = originalText; btn.style.pointerEvents = "auto";
+            }
         }
 
         function showNotify(msg, type = 'info') {
@@ -417,10 +427,7 @@
         }
 
         function logout() {
-            localStorage.removeItem('isLogged');
-            localStorage.removeItem('usrName');
-            localStorage.removeItem('usrFullName');
-            localStorage.removeItem('usrPermiso');
+            localStorage.clear();
             window.location.href = 'index.html';
         }
 

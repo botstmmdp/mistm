@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Autoridades STM - Cuerpo Directivo</title>
+    <title>Capacitación STM - Beneficio Estudiantil 2026</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
@@ -32,12 +32,6 @@
 
         .hidden {
             display: none !important;
-        }
-
-        .nav-footer,
-        .nav-bar,
-        .bottom-nav {
-            background: #111827 !important;
         }
 
         .nav-home-pulse i {
@@ -83,6 +77,11 @@
             z-index: 100;
         }
 
+        body.dark-mode header {
+            background: rgba(15, 23, 42, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
         .header-box {
             display: flex;
             align-items: center;
@@ -107,117 +106,159 @@
             object-fit: contain;
         }
 
-        .welcome-msg h1 {
-            margin: 0;
-            font-size: 1.25rem;
+        .header-text h1 {
+            font-size: 1.2rem;
             font-weight: 800;
+            margin: 0;
+            color: var(--stm-primary);
         }
 
-        .welcome-msg p {
-            margin: 0;
+        .header-text p {
             font-size: 0.8rem;
-            opacity: 0.5;
+            font-weight: 500;
+            margin: 0;
+            opacity: 0.7;
         }
 
         .container {
-            padding: 20px 16px 120px;
+            padding: 25px 20px 145px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* --- AUTHORITIES LIST --- */
-        .section-title {
-            font-size: 0.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--stm-primary);
-            margin: 30px 0 15px 5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        /* --- CARDS --- */
+        .card-edu {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
         }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--stm-primary);
-            opacity: 0.2;
-        }
-
-        .auth-card {
-            background: white;
-            border-radius: 22px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        body.dark-mode .auth-card {
-            background: #1e293b;
-            border-color: #334155;
-        }
-
-        .auth-ico {
-            width: 45px;
-            height: 45px;
-            border-radius: 14px;
-            background: #f1f5f9;
-            color: var(--stm-primary);
+        .edu-banner {
+            width: 100%;
+            height: 160px;
+            border-radius: 20px;
+            background: linear-gradient(rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.05));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
         }
 
-        body.dark-mode .auth-ico {
-            background: #334155;
+        .edu-banner i {
+            font-size: 4rem;
+            color: var(--stm-primary);
+            opacity: 0.2;
         }
 
-        .auth-info {
-            flex: 1;
+        .edu-header {
+            margin-bottom: 25px;
         }
 
-        .auth-pos {
-            font-size: 0.72rem;
+        .edu-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.75rem;
             font-weight: 700;
-            color: #94a3b8;
+            margin-bottom: 8px;
             text-transform: uppercase;
-            margin-bottom: 2px;
         }
 
-        .auth-name {
-            font-size: 1.05rem;
+        body.dark-mode .edu-badge {
+            background: rgba(79, 70, 229, 0.2);
+            color: #818cf8;
+        }
+
+        .edu-title {
+            font-size: 1.3rem;
             font-weight: 800;
-            color: #334155;
+            margin: 0 0 10px;
+            color: var(--stm-primary);
+        }
+
+        .req-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .req-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .req-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--stm-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .req-list {
             margin: 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            line-height: 1.8;
         }
 
-        body.dark-mode .auth-name {
+        .req-list li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+        }
+
+        .req-list li::before {
+            content: "✓";
+            color: #10b981;
+            position: absolute;
+            left: -20px;
+            font-weight: bold;
+        }
+
+        .info-panel {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border: 1px solid #bae6fd;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            color: #0369a1;
+        }
+
+        body.dark-mode .info-panel {
+            background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
+            border-color: #0c4a6e;
+            color: #e0f2fe;
+        }
+
+        .form-btn {
+            display: block;
+            width: 100%;
+            background: var(--stm-primary);
             color: white;
+            text-align: center;
+            padding: 18px;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            margin-top: 15px;
         }
 
-        /* --- BOT STYLES --- */
+        /* --- BOT & NAV (STRICT) --- */
         .fab-bot {
             position: fixed;
             bottom: 100px;
@@ -235,10 +276,6 @@
             z-index: 1001;
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
             animation: bounceBot 3s infinite;
-        }
-
-        .fab-bot i {
-            color: white !important;
         }
 
         @keyframes bounceBot {
@@ -279,7 +316,7 @@
             background: white;
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
-            padding: 30px 20px;
+            padding: 30px 20px 40px;
             transform: translateY(100%);
             transition: 0.4s;
         }
@@ -302,10 +339,11 @@
             font-family: inherit;
         }
 
-        body.dark-mode .bot-input { background: #0f172a; border-color: #334155; color: white; }
-        .res-item-bot { background: #f8fafc; border: 1px solid #f1f5f9; transition: 0.3s; }
-        body.dark-mode .res-item-bot { background: #0f172a !important; border-color: #334155 !important; color: white !important; }
-        body.dark-mode .res-item-bot p { color: #94a3b8 !important; }
+        body.dark-mode .bot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
 
         .bot-search-box {
             position: relative;
@@ -319,7 +357,6 @@
             color: var(--stm-primary);
         }
 
-        /* --- NAVIGATION --- */
         .nav-footer {
             position: fixed;
             bottom: 25px;
@@ -328,7 +365,7 @@
             width: calc(100% - 40px);
             max-width: 400px;
             height: 70px;
-            background: var(--nav-bg);
+            background: #111827 !important;
             border-radius: 35px;
             padding: 0 10px;
             display: flex;
@@ -358,43 +395,7 @@
             box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4);
         }
 
-        /* --- NOTIFICATION & UTILS --- */
-        .stm-notify {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            border: 1px solid #e2e8f0;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.5s;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .stm-notify.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .stm-notify i {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--stm-primary);
-            color: white;
-            font-size: 0.8rem;
-        }
-
+        /* Loader */
         #loader-wrapper {
             position: fixed;
             top: 0;
@@ -403,10 +404,10 @@
             height: 100%;
             background: white;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 9999;
+            transition: 0.5s;
         }
 
         body.dark-mode #loader-wrapper {
@@ -414,19 +415,8 @@
         }
 
         .loader-logo {
-            width: 100px;
-            height: auto;
-            animation: logo-spin 2s linear infinite;
-        }
-
-        @keyframes logo-spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
+            width: 80px;
+            animation: pulse-logo 1.5s infinite ease-in-out;
         }
     </style>
 </head>
@@ -434,158 +424,87 @@
 <body>
 
     <div id="loader-wrapper">
-        <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">AUTORIDADES STM</div>
+        <img src="logo nuevo.png" class="loader-logo" alt="STM">
     </div>
 
     <header>
         <div class="header-box">
-            <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
-            <div class="welcome-msg">
-                <h1 id="usrGreeting">Autoridades</h1>
-                <p id="usrDisplayName">Cuerpo Directivo</p>
+            <div class="logo-box">
+                <img src="logo nuevo.png" alt="STM Logo">
+            </div>
+            <div class="header-text">
+                <h1>Capacitación</h1>
+                <p id="usrDisplayName">Afiliado STM</p>
             </div>
         </div>
     </header>
 
-    <div class="container animate__animated animate__fadeIn">
-        <h2 class="section-title">Secretariado General</h2>
+    <main class="container animate__animated animate__fadeIn">
 
-        <div class="auth-card" style="animation-delay: 0.1s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Secretario General</div>
-                <h3 class="auth-name">Daniel Alberto ZACARIAS</h3>
+        <div class="card-edu">
+            <div class="edu-banner">
+                <i class="fa-solid fa-graduation-cap"></i>
             </div>
+
+            <div class="edu-header">
+                <span class="edu-badge">Beneficio Educativo 2026</span>
+                <h2 class="edu-title">KIT Y VOUCHER TERCIARIO/UNIVERSITARIO</h2>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Para el afiliado o hijos/as que se encuentren cursando
+                    estudios superiores o universitarios.</p>
+            </div>
+
+            <div class="req-box">
+                <div class="req-title"><i class="fa-solid fa-file-signature"></i> REQUISITOS</div>
+                <ul class="req-list">
+                    <li>Planilla de inscripción completa.</li>
+                    <li>Certificado de Alumno Regular.</li>
+                    <li>Certificado de aprobación de 2 materias (para alumnos que NO inician carrera).</li>
+                    <li>Último recibo de sueldo del afiliado.</li>
+                </ul>
+            </div>
+
+            <div class="info-panel">
+                <div style="font-weight: 800; font-size: 1rem; margin-bottom: 5px;"><i
+                        class="fa-solid fa-calendar-check"></i> FECHA DE ENTREGA</div>
+                <div style="font-size: 0.95rem;">Martes 19 de Mayo de 2026</div>
+                <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px;"><i class="fa-solid fa-location-dot"></i>
+                    Moreno 4359 - Sede Gremial</div>
+            </div>
+
+            <div style="margin-top: 25px;">
+                <h4 style="font-weight: 800; margin-bottom: 15px;">EL BENEFICIO INCLUYE:</h4>
+                <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 12px;">
+                    <div
+                        style="display: flex; align-items: flex-start; gap: 12px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 15px;">
+                        <i class="fa-solid fa-pen-nib" style="color: var(--stm-primary); margin-top: 4px;"></i>
+                        <div>
+                            <div style="font-weight: 800; font-size: 0.9rem;">Kit de Útiles Específicos</div>
+                            <div style="font-size: 0.75rem; opacity: 0.7;">Elementos seleccionados para nivel superior.
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="display: flex; align-items: flex-start; gap: 12px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 15px;">
+                        <i class="fa-solid fa-ticket" style="color: var(--stm-primary); margin-top: 4px;"></i>
+                        <div>
+                            <div style="font-weight: 800; font-size: 0.9rem;">Voucher de Librería</div>
+                            <div style="font-size: 0.75rem; opacity: 0.7;">Para canje en librerías adheridas por
+                                material de estudio.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="https://forms.gle/9EmMeovY29sGw9WC6" target="_blank" class="form-btn">Inscripción Online <i
+                    class="fa-solid fa-arrow-right"></i></a>
         </div>
 
-        <div class="auth-card" style="animation-delay: 0.2s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Secretario Adjunto</div>
-                <h3 class="auth-name">Cristian Gabriel MILASINCIC</h3>
-            </div>
-        </div>
+    </main>
 
-        <h2 class="section-title">Secretarías</h2>
-
-        <div class="auth-card" style="animation-delay: 0.3s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Finanzas</div>
-                <h3 class="auth-name">Gaston Ignacio ARMENDARIZ</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.4s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Organización</div>
-                <h3 class="auth-name">Luis A. MARCHESANI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.5s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Gremial</div>
-                <h3 class="auth-name">Soledad LEIVA</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.6s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Administrativa y de Actas</div>
-                <h3 class="auth-name">María de los Angeles IRAZABAL</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.7s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Acción Social y Obras</div>
-                <h3 class="auth-name">Fernando N. SALOME</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.8s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Previsión Social</div>
-                <h3 class="auth-name">Sebastián G. MENDEZ</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.9s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Prensa y Difusión</div>
-                <h3 class="auth-name">Nicolas A. ALVAREZ LOZZI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.0s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Relac. Públicas y Sindicales</div>
-                <h3 class="auth-name">Ricardo A. PIGNATARO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.1s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Mujer</div>
-                <h3 class="auth-name">Cecilia M. GAUDIOSO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.2s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Docente</div>
-                <h3 class="auth-name">Alejandra S. AYEK</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.3s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Personal Jerárquico</div>
-                <h3 class="auth-name">Claudio J. CAMBARERI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.4s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Higiene y Seguridad</div>
-                <h3 class="auth-name">María V. MAIO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.5s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Personal Profesional</div>
-                <h3 class="auth-name">María Laura VILLALBA</h3>
-            </div>
-        </div>
-    </div>
-
-    <!-- BOT & NAV -->
+    <!-- FAB BOT -->
     <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
-    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
-        <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
-            </div>
-            <div class="bot-search-box"><i class="fa-solid fa-robot"></i><input type="text" class="bot-input"
-                    placeholder="¿Cómo puedo ayudarte?" id="botSearch"></div>
-            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
-        </div>
-    </div>
 
+    <!-- TAB BAR NAV (STRICT) -->
     <nav class="nav-footer">
         <a href="opciones.html" class="nav-link nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-link"><i class="fa-solid fa-phone"></i></a>
@@ -593,7 +512,46 @@
         <a href="#" class="nav-link" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
-    <!-- MODALS CONFIG & USER -->
+    <!-- BOT MODAL -->
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 25px;">
+            </div>
+            <div class="bot-search-box">
+                <i class="fa-solid fa-robot"></i>
+                <input type="text" class="bot-input" id="botSearch" placeholder="¿Cómo puedo ayudarte?">
+            </div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <!-- MODAL USER -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
+            </h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
+                    style="padding-left:20px">
+                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
+                    style="padding-left:20px">
+                <button onclick="changePassword()"
+                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar
+                    Contraseña</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
+                <button onclick="logout()"
+                    style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar
+                    Sesión</button>
+                <button onclick="toggleUser(false)"
+                    style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIG -->
     <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
@@ -613,40 +571,17 @@
         </div>
     </div>
 
-    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
-        <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
-            </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
-            </h2>
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
-                    style="padding-left:20px">
-                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
-                    style="padding-left:20px">
-                <button onclick="changePassword()"
-                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar
-                    Contraseña</button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
-                <button onclick="logout()" style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar Sesión</button>
-                <button onclick="toggleUser(false)" style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Verificación de Acceso
+        // Auth Check
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
+        // Bot Search Data
         const sitePages = [
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
-            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
-            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
@@ -660,16 +595,17 @@
 
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
         function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus(); }
-        function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
         function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if (show) document.getElementById('newPass').focus(); }
+        function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
 
         function showNotify(msg, type = 'info') {
             const div = document.createElement('div'); div.className = 'stm-notify';
             const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
             const bg = type === 'error' ? '#ef4444' : '#10b981';
-            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span>${msg}</span>`;
-            document.body.appendChild(div); setTimeout(() => div.classList.add('show'), 10);
-            setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
+            div.style = "position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-100px); background:white; padding:15px 25px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); z-index:10000; display:flex; align-items:center; gap:10px; transition:0.4s; opacity:0;";
+            div.innerHTML = `<i class="fa-solid ${ico}" style="width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:${bg}; color:white; font-size:0.8rem"></i> <span style="font-weight:600; font-size:0.9rem">${msg}</span>`;
+            document.body.appendChild(div); setTimeout(() => { div.style.transform = 'translateX(-50%) translateY(0)'; div.style.opacity = '1'; }, 10);
+            setTimeout(() => { div.style.transform = 'translateX(-50%) translateY(-100px)'; div.style.opacity = '0'; setTimeout(() => div.remove(), 500); }, 3000);
         }
 
         function applyConfig(type, value) {
@@ -683,24 +619,18 @@
             const p2 = document.getElementById('confirmPass').value;
             const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
             const usrID = localStorage.getItem('usrID');
-            
-            if(!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
-            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            if (!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
+            if (p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
             if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
-
-            const originalText = btn.innerText;
-            btn.innerText = "Procesando...";
-            btn.style.pointerEvents = "none";
-
+            const originalText = btn.innerText; btn.innerText = "Procesando..."; btn.style.pointerEvents = "none";
             try {
                 await fetch(USER_SCRIPT_URL, {
                     method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
                 });
                 localStorage.setItem('usrPass', p1);
-                showNotify("¡Contraseña actualizada en la nube!", "success");
-                btn.innerText = "¡Listo! ✓";
-                btn.style.background = "#10b981";
+                showNotify("¡Contraseña actualizada!", "success");
+                btn.innerText = "¡Listo! ✓"; btn.style.background = "#10b981";
                 setTimeout(() => {
                     toggleUser(false);
                     btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
@@ -718,14 +648,8 @@
             const val = normalize(e.target.value).trim();
             const res = document.getElementById('botRes');
             if (searchTimer) clearTimeout(searchTimer);
-
-            if (val.length <= 2) {
-                res.innerHTML = "";
-                return;
-            }
-
-            res.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;" class="animate__animated animate__pulse animate__infinite">Buscando en el STM...</div>`;
-
+            if (val.length <= 2) { res.innerHTML = ""; return; }
+            res.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;">Buscando...</div>`;
             searchTimer = setTimeout(() => {
                 res.innerHTML = "";
                 const words = val.split(" ").filter(w => w.length > 2);
@@ -733,25 +657,22 @@
                     const target = normalize(p.t + " " + p.tags);
                     return words.some(w => target.includes(w)) || target.includes(val);
                 }).forEach(p => {
-                    res.innerHTML += `<a href="${p.f}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; display:block">
-                        <div style="display:flex; align-items:center; gap:10px">
-                            <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
-                            <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
-                        </div>
+                    res.innerHTML += `<a href="${p.f}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit;">
+                        <div style="background:var(--stm-primary); color:white; width:35px; height:35px; border-radius:10px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid ${p.ico}"></i></div>
+                        <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
                     </a>`;
                 });
             }, 500);
         });
 
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
+        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);

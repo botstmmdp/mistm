@@ -277,6 +277,40 @@
             </div>
         </div>
 
+        <!-- CAPACITACION 2026 -->
+        <div class="activity-card" onclick="toggleCard(this)">
+            <div class="activity-header">
+                <div class="activity-ico"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="activity-info">
+                    <div class="activity-subtitle">Estudios Superiores</div>
+                    <h3 class="activity-title">Capacitación y Formación</h3>
+                </div>
+                <i class="fa-solid fa-chevron-down" style="opacity:0.3"></i>
+            </div>
+            <div class="activity-content">
+                <div class="tag-row">
+                    <div class="tag">Terciario</div>
+                    <div class="tag">Universitario</div>
+                    <div class="tag">Beca 2026</div>
+                </div>
+                <p>Nuevo beneficio para afiliados que cursan estudios superiores y trabajan. Kit de útiles + Voucher económico.</p>
+                <div style="background:#fff7ed; padding:15px; border-radius:15px; margin-bottom:15px; border:1px solid #ffedd5">
+                    <p style="margin:0; font-size:0.85rem; color:#9a3412"><strong>Límite entrega:</strong> 08/04/2026</p>
+                    <p style="margin:0; font-size:0.85rem; color:#9a3412"><strong>Sede:</strong> Subsuelo (Moreno 4359)</p>
+                    <p style="margin:0; font-size:0.85rem; color:#9a3412"><strong>Días/Horarios:</strong> Lun-Mié-Vie (16:30-19:00 hs)</p>
+                </div>
+                <div style="margin-bottom:15px">
+                    <p style="font-weight:700; font-size:0.8rem; margin-bottom:5px">Documentación Requerida:</p>
+                    <ul style="padding-left:20px; font-size:0.8rem; margin:0">
+                        <li>Programa de estudio completo</li>
+                        <li>Certificado de alumno/a regular</li>
+                        <li>Formulario de inscripción online</li>
+                    </ul>
+                </div>
+                <a href="https://forms.gle/9EmMeovY29sGw9WC6" class="form-btn" target="_blank"><i class="fa-solid fa-file-invoice"></i> Completar Inscripción</a>
+            </div>
+        </div>
+
     </div>
 
     <!-- BOT & NAV -->
@@ -341,8 +375,12 @@
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
+            { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
+
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
 
         function toggleCard(card) { card.classList.toggle('open'); }
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
@@ -365,10 +403,39 @@
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
         }
 
-        function changePassword() {
-            const p1 = document.getElementById('newPass').value; const p2 = document.getElementById('confirmPass').value;
-            if(!p1 || p1 !== p2) { showNotify("Contraseñas no coinciden", "error"); return; }
-            localStorage.setItem('usrPass', p1); showNotify("¡Actualizada!", "success"); setTimeout(() => toggleUser(false), 1000);
+        async function changePassword() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            const usrID = localStorage.getItem('usrID');
+            
+            if(!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
+            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
+
+            const originalText = btn.innerText;
+            btn.innerText = "Procesando...";
+            btn.style.pointerEvents = "none";
+
+            try {
+                await fetch(USER_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
+                });
+                localStorage.setItem('usrPass', p1);
+                showNotify("¡Contraseña actualizada en la nube!", "success");
+                btn.innerText = "¡Listo! ✓";
+                btn.style.background = "#10b981";
+                setTimeout(() => {
+                    toggleUser(false);
+                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
+                    btn.style.pointerEvents = "auto";
+                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
+                }, 1500);
+            } catch (err) {
+                showNotify("Error de conexión", "error");
+                btn.innerText = originalText; btn.style.pointerEvents = "auto";
+            }
         }
 
         let searchTimer = null;
@@ -401,10 +468,7 @@
             }, 500);
         });
         function logout() {
-            localStorage.removeItem('isLogged');
-            localStorage.removeItem('usrName');
-            localStorage.removeItem('usrFullName');
-            localStorage.removeItem('usrPermiso');
+            localStorage.clear();
             window.location.href = 'index.html';
         }
 

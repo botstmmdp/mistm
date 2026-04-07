@@ -679,6 +679,7 @@
     </a>
 
     <main class="main-grid" id="mainMenu">
+        <!-- 1. Autoridades -->
         <a href="autoridades.html" class="action-card">
             <div class="ico-box g-1"><i class="fa-solid fa-users-gear"></i></div>
             <div class="card-info">
@@ -686,41 +687,8 @@
                 <p>Gestión directiva</p>
             </div>
         </a>
-        <a href="contactos.html" class="action-card">
-            <div class="ico-box g-2"><i class="fa-solid fa-phone-volume"></i></div>
-            <div class="card-info">
-                <h3>Contacto</h3>
-                <p>Ayuda 24/7</p>
-            </div>
-        </a>
-        <a href="servicios.html" class="action-card">
-            <div class="ico-box g-3"><i class="fa-solid fa-screwdriver-wrench"></i></div>
-            <div class="card-info">
-                <h3>Servicios STM</h3>
-                <p>Beneficios y Trámites</p>
-            </div>
-        </a>
-        <a href="reclamoganancias.html" class="action-card">
-            <div class="ico-box g-4"><i class="fa-solid fa-scale-balanced"></i></div>
-            <div class="card-info">
-                <h3>Reclamos GANANCIAS</h3>
-                <p>Judicial e Impuestos</p>
-            </div>
-        </a>
-        <a href="reclamoantiguedad.html" class="action-card">
-            <div class="ico-box g-5"><i class="fa-solid fa-clock-rotate-left"></i></div>
-            <div class="card-info">
-                <h3>Reclamos ANTIGÜEDAD</h3>
-                <p>Judicial 1995-2014</p>
-            </div>
-        </a>
-        <a href="convenios.html" class="action-card">
-            <div class="ico-box g-6"><i class="fa-solid fa-handshake-angle"></i></div>
-            <div class="card-info">
-                <h3>Convenios</h3>
-                <p>Beneficios socios</p>
-            </div>
-        </a>
+
+        <!-- 2. Capacitación -->
         <a href="capacitacion.html" class="action-card">
             <div class="ico-box g-7"><i class="fa-solid fa-graduation-cap"></i></div>
             <div class="card-info">
@@ -728,11 +696,85 @@
                 <p>Cursos y Talleres</p>
             </div>
         </a>
-        <a href="#" class="action-card">
+
+        <!-- 3. Contacto -->
+        <a href="contactos.html" class="action-card">
+            <div class="ico-box g-2"><i class="fa-solid fa-phone-volume"></i></div>
+            <div class="card-info">
+                <h3>Contacto</h3>
+                <p>Ayuda 24/7</p>
+            </div>
+        </a>
+
+        <!-- 4. Convenios -->
+        <a href="convenios.html" class="action-card">
+            <div class="ico-box g-6"><i class="fa-solid fa-handshake-angle"></i></div>
+            <div class="card-info">
+                <h3>Convenios</h3>
+                <p>Beneficios socios</p>
+            </div>
+        </a>
+
+        <!-- 5. Deportes -->
+        <a href="#" class="action-card" onclick="toggleProximamente(true)">
+            <div class="ico-box g-3"><i class="fa-solid fa-volleyball"></i></div>
+            <div class="card-info">
+                <h3>Deportes</h3>
+                <p>Próximamente disponible</p>
+            </div>
+        </a>
+
+        <!-- 6. Mini-Turismo -->
+        <a href="miniturismo.html" class="action-card">
             <div class="ico-box g-8"><i class="fa-solid fa-map-location-dot"></i></div>
             <div class="card-info">
                 <h3>Mini-Turismo</h3>
                 <p>Recreación familiar</p>
+            </div>
+        </a>
+
+        <!-- 7. Proveeduría -->
+        <a href="#" class="action-card" onclick="toggleProximamente(true)">
+            <div class="ico-box g-2"><i class="fa-solid fa-basket-shopping"></i></div>
+            <div class="card-info">
+                <h3>Proveeduría</h3>
+                <p>Próximamente disponible</p>
+            </div>
+        </a>
+
+        <!-- 8. Reclamos ANTIGÜEDAD -->
+        <a href="reclamoantiguedad.html" class="action-card">
+            <div class="ico-box g-5"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <div class="card-info">
+                <h3>Reclamos ANTIGÜEDAD</h3>
+                <p>Judicial 1995-2014</p>
+            </div>
+        </a>
+
+        <!-- 9. Reclamos GANANCIAS -->
+        <a href="reclamoganancias.html" class="action-card">
+            <div class="ico-box g-4"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="card-info">
+                <h3>Reclamos GANANCIAS</h3>
+                <p>Judicial e Impuestos</p>
+            </div>
+        </a>
+
+        <!-- 10. Reserva de Quincho -->
+        <a href="#" class="action-card" onclick="toggleProximamente(true)">
+            <div class="ico-box g-1"><i class="fa-solid fa-house-user"></i></div>
+            <div class="card-info">
+                <h3>Reserva de Quincho</h3>
+                <p>Próximamente disponible</p>
+            </div>
+        </a>
+
+        <!-- 11. Servicios STM -->
+        <a href="servicios.html" class="action-card">
+            <div class="ico-box g-3"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+            <div class="card-info">
+                <h3>Servicios STM</h3>
+                <p>Beneficios y Trámites</p>
             </div>
         </a>
     </main>
@@ -811,8 +853,7 @@
         <div class="search-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
-            </h2>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="password" id="newPass" class="search-input" placeholder="Nueva Contraseña"
                     style="padding-left:20px">
@@ -829,6 +870,18 @@
                 <button onclick="toggleUser(false)"
                     style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL PROXIMAMENTE -->
+    <div class="search-modal" id="modalProx" onclick="if(event.target == this) toggleProximamente(false)">
+        <div class="search-content" style="text-align: center; padding: 40px 25px;">
+            <div style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fa-solid fa-clock" style="font-size: 1.5rem; color: var(--stm-primary);"></i>
+            </div>
+            <h2 style="font-weight: 900; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 10px;">¡En breve!</h2>
+            <p style="color: #64748b; font-size: 1rem; line-height: 1.5; margin-bottom: 30px;">Estamos trabajando en esta nueva sección para brindarle un mejor servicio próximamente.</p>
+            <button onclick="toggleProximamente(false)" style="width: 100%; padding: 18px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);">Entendido</button>
         </div>
     </div>
 
@@ -894,7 +947,10 @@
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
-            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" }
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
+            { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
         let allConvenios = [], allNews = [];
@@ -903,6 +959,10 @@
         const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
         // CAMBIAR POR EL URL DEL SCRIPT DE USUARIOS SI ES DISTINTO
         const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
+
+        function toggleProximamente(show) {
+            document.getElementById('modalProx').classList.toggle('active', show);
+        }
 
         async function fetchConvenios() {
             if (allConvenios.length > 0) return;

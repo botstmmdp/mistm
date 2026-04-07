@@ -289,6 +289,7 @@
         const CONVENIOS_URL = 'https://script.google.com/macros/s/AKfycbwFF-ZTptmhjFBItUzfh2CCkjycg485z2amS-girpV5hRF3JLZwWgD1yhgl63uABPwskA/exec?action=READ_ALL';
         const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4", GID = "195669740";
         const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
 
         async function fetchConvenios() {
             if (allData.length > 0) return;
@@ -392,6 +393,8 @@
             { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
+            { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
@@ -409,31 +412,40 @@
             if (show) document.getElementById('newPass').focus();
         }
 
-        function changePassword() {
+        async function changePassword() {
             const p1 = document.getElementById('newPass').value;
             const p2 = document.getElementById('confirmPass').value;
             const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            const usrID = localStorage.getItem('usrID');
             
             if(!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
             if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            
-            localStorage.setItem('usrPass', p1);
-            showNotify("¡Contraseña actualizada con éxito!", "success");
-            
+            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
+
             const originalText = btn.innerText;
-            btn.innerText = "¡Actualizado! ✓";
-            btn.style.background = "#10b981";
-            btn.style.color = "white";
+            btn.innerText = "Procesando...";
             btn.style.pointerEvents = "none";
-            
-            setTimeout(() => {
-                toggleUser(false);
-                btn.innerText = originalText;
-                btn.style.background = "var(--stm-primary)";
-                btn.style.pointerEvents = "auto";
-                document.getElementById('newPass').value = "";
-                document.getElementById('confirmPass').value = "";
-            }, 1500);
+
+            try {
+                await fetch(USER_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
+                });
+                localStorage.setItem('usrPass', p1);
+                showNotify("¡Contraseña actualizada!", "success");
+                btn.innerText = "¡Listo! ✓";
+                btn.style.background = "#10b981";
+                btn.style.color = "white";
+                setTimeout(() => {
+                    toggleUser(false);
+                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
+                    btn.style.pointerEvents = "auto";
+                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
+                }, 1500);
+            } catch (err) {
+                showNotify("Error de conexión", "error");
+                btn.innerText = originalText; btn.style.pointerEvents = "auto";
+            }
         }
 
         function showNotify(msg, type = 'info') {
@@ -536,10 +548,7 @@
         }
 
         function logout() {
-            localStorage.removeItem('isLogged');
-            localStorage.removeItem('usrName');
-            localStorage.removeItem('usrFullName');
-            localStorage.removeItem('usrPermiso');
+            localStorage.clear();
             window.location.href = 'index.html';
         }
 
