@@ -917,6 +917,12 @@
                     <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)" checked
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
+                <!-- MARCADOR TELEFONICO -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver marcador telefónico</span>
+                    <input type="checkbox" id="checkPhone" onchange="applyConfig('phone', this.checked)" checked
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
             </div>
 
             <button onclick="toggleSettings(false)"
@@ -1284,6 +1290,10 @@
                 const cred = document.getElementById('fabCred');
                 if (cred) cred.classList.toggle('hidden', !value);
             }
+            if (type === 'phone') {
+                const phone = document.getElementById('fabPhone');
+                if (phone) phone.classList.toggle('hidden', !value);
+            }
         }
 
         // Carga inicial de configuración
@@ -1293,7 +1303,8 @@
                 bot: localStorage.getItem('cfg_bot') !== 'false',
                 gen: localStorage.getItem('cfg_gen') !== 'false',
                 act: localStorage.getItem('cfg_act') !== 'false',
-                cred: localStorage.getItem('cfg_cred') !== 'false'
+                cred: localStorage.getItem('cfg_cred') !== 'false',
+                phone: localStorage.getItem('cfg_phone') !== 'false'
             };
 
             document.body.classList.toggle('dark-mode', cfg.dark);
@@ -1319,6 +1330,12 @@
             if (cred) {
                 cred.classList.toggle('hidden', !cfg.cred);
                 if (document.getElementById('checkCred')) document.getElementById('checkCred').checked = cfg.cred;
+            }
+
+            const phone = document.getElementById('fabPhone');
+            if (phone) {
+                phone.classList.toggle('hidden', !cfg.phone);
+                if (document.getElementById('checkPhone')) document.getElementById('checkPhone').checked = cfg.phone;
             }
         }
 
