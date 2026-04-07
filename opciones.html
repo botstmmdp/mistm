@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dashboard STM - Panel Ágil</title>
+    <title>MiStm App</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
@@ -322,16 +322,32 @@
         }
 
         @keyframes bounceBot {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
+
+        /* --- FAB CREDENCIAL --- */
+        .fab-credencial {
+            position: fixed;
+            bottom: 170px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+            color: white !important;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+            transition: 0.3s;
+            animation: bounceBot 3s infinite 0.5s;
+        }
+
+        .fab-credencial:active { transform: scale(0.95); }
 
         /* --- ASISTENTE OVERLAY --- */
         .search-modal {
@@ -779,6 +795,11 @@
         </a>
     </main>
 
+    <!-- FAB CREDENCIAL -->
+    <div class="fab-credencial" id="fabCred" onclick="toggleProximamente(true)">
+        <i class="fa-solid fa-address-card"></i>
+    </div>
+
     <!-- FAB BOT -->
     <div class="fab-bot" id="fabBotIcon" onclick="toggleModal(true)">
         <i class="fa-solid fa-robot"></i>
@@ -841,6 +862,12 @@
                     <input type="checkbox" id="checkAct" onchange="applyConfig('act', this.checked)" checked
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
+                <!-- CREDENCIAL DIGITAL -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver Credencial Digital</span>
+                    <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)" checked
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
             </div>
 
             <button onclick="toggleSettings(false)"
@@ -853,7 +880,8 @@
         <div class="search-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
+            </h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
                 <input type="password" id="newPass" class="search-input" placeholder="Nueva Contraseña"
                     style="padding-left:20px">
@@ -876,12 +904,16 @@
     <!-- MODAL PROXIMAMENTE -->
     <div class="search-modal" id="modalProx" onclick="if(event.target == this) toggleProximamente(false)">
         <div class="search-content" style="text-align: center; padding: 40px 25px;">
-            <div style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <div
+                style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                 <i class="fa-solid fa-clock" style="font-size: 1.5rem; color: var(--stm-primary);"></i>
             </div>
-            <h2 style="font-weight: 900; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 10px;">¡En breve!</h2>
-            <p style="color: #64748b; font-size: 1rem; line-height: 1.5; margin-bottom: 30px;">Estamos trabajando en esta nueva sección para brindarle un mejor servicio próximamente.</p>
-            <button onclick="toggleProximamente(false)" style="width: 100%; padding: 18px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);">Entendido</button>
+            <h2 style="font-weight: 900; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 10px;">¡En breve!
+            </h2>
+            <p style="color: #64748b; font-size: 1rem; line-height: 1.5; margin-bottom: 30px;">Estamos trabajando en
+                esta nueva sección para brindarle un mejor servicio próximamente.</p>
+            <button onclick="toggleProximamente(false)"
+                style="width: 100%; padding: 18px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);">Entendido</button>
         </div>
     </div>
 
@@ -1198,6 +1230,10 @@
                 const act = document.getElementById('shortcutAct');
                 if (act) act.classList.toggle('hidden', !value);
             }
+            if (type === 'cred') {
+                const cred = document.getElementById('fabCred');
+                if (cred) cred.classList.toggle('hidden', !value);
+            }
         }
 
         // Carga inicial de configuración
@@ -1206,7 +1242,8 @@
                 dark: localStorage.getItem('cfg_dark') === 'true',
                 bot: localStorage.getItem('cfg_bot') !== 'false',
                 gen: localStorage.getItem('cfg_gen') !== 'false',
-                act: localStorage.getItem('cfg_act') !== 'false'
+                act: localStorage.getItem('cfg_act') !== 'false',
+                cred: localStorage.getItem('cfg_cred') !== 'false'
             };
 
             document.body.classList.toggle('dark-mode', cfg.dark);
@@ -1226,6 +1263,12 @@
             if (act) {
                 act.classList.toggle('hidden', !cfg.act);
                 if (document.getElementById('checkAct')) document.getElementById('checkAct').checked = cfg.act;
+            }
+
+            const cred = document.getElementById('fabCred');
+            if (cred) {
+                cred.classList.toggle('hidden', !cfg.cred);
+                if (document.getElementById('checkCred')) document.getElementById('checkCred').checked = cfg.cred;
             }
         }
 
