@@ -322,8 +322,15 @@
         }
 
         @keyframes bounceBot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         /* --- FAB CREDENCIAL --- */
@@ -347,7 +354,35 @@
             animation: bounceBot 3s infinite 0.5s;
         }
 
-        .fab-credencial:active { transform: scale(0.95); }
+        .fab-credencial:active {
+            transform: scale(0.95);
+        }
+
+        /* --- FAB TELEFONO --- */
+        .fab-telefono {
+            position: fixed;
+            bottom: 240px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #10b981, #059669) !important;
+            color: white !important;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            transition: 0.3s;
+            animation: bounceBot 3s infinite 1s;
+            text-decoration: none;
+        }
+
+        .fab-telefono:active {
+            transform: scale(0.95);
+        }
 
         /* --- ASISTENTE OVERLAY --- */
         .search-modal {
@@ -740,7 +775,16 @@
             </div>
         </a>
 
-        <!-- 6. Mini-Turismo -->
+        <!-- 6. Farmacia Sindical -->
+        <a href="#" class="action-card" onclick="toggleProximamente(true)">
+            <div class="ico-box g-6"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+            <div class="card-info">
+                <h3>Farmacia Sindical</h3>
+                <p>Próximamente disponible</p>
+            </div>
+        </a>
+
+        <!-- 7. Mini-Turismo -->
         <a href="miniturismo.html" class="action-card">
             <div class="ico-box g-8"><i class="fa-solid fa-map-location-dot"></i></div>
             <div class="card-info">
@@ -749,7 +793,7 @@
             </div>
         </a>
 
-        <!-- 7. Proveeduría -->
+        <!-- 8. Proveeduría -->
         <a href="#" class="action-card" onclick="toggleProximamente(true)">
             <div class="ico-box g-2"><i class="fa-solid fa-basket-shopping"></i></div>
             <div class="card-info">
@@ -758,7 +802,7 @@
             </div>
         </a>
 
-        <!-- 8. Reclamos ANTIGÜEDAD -->
+        <!-- 9. Reclamos ANTIGÜEDAD -->
         <a href="reclamoantiguedad.html" class="action-card">
             <div class="ico-box g-5"><i class="fa-solid fa-clock-rotate-left"></i></div>
             <div class="card-info">
@@ -767,7 +811,7 @@
             </div>
         </a>
 
-        <!-- 9. Reclamos GANANCIAS -->
+        <!-- 10. Reclamos GANANCIAS -->
         <a href="reclamoganancias.html" class="action-card">
             <div class="ico-box g-4"><i class="fa-solid fa-scale-balanced"></i></div>
             <div class="card-info">
@@ -776,7 +820,7 @@
             </div>
         </a>
 
-        <!-- 10. Reserva de Quincho -->
+        <!-- 11. Reserva de Quincho -->
         <a href="#" class="action-card" onclick="toggleProximamente(true)">
             <div class="ico-box g-1"><i class="fa-solid fa-house-user"></i></div>
             <div class="card-info">
@@ -785,7 +829,7 @@
             </div>
         </a>
 
-        <!-- 11. Servicios STM -->
+        <!-- 12. Servicios STM -->
         <a href="servicios.html" class="action-card">
             <div class="ico-box g-3"><i class="fa-solid fa-screwdriver-wrench"></i></div>
             <div class="card-info">
@@ -794,6 +838,11 @@
             </div>
         </a>
     </main>
+
+    <!-- FAB TELEFONO -->
+    <a href="tel:2234723756" class="fab-telefono" id="fabPhone">
+        <i class="fa-solid fa-phone"></i>
+    </a>
 
     <!-- FAB CREDENCIAL -->
     <div class="fab-credencial" id="fabCred" onclick="toggleProximamente(true)">
@@ -1012,9 +1061,10 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 allNews = json.table.rows.map(r => ({
-                    titulo: r.c[1]?.v || "",
-                    desc: r.c[2]?.v || ""
-                }));
+                    titulo: (r.c[1]?.v || "").toString(),
+                    desc: (r.c[2]?.v || "").toString(),
+                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                })).filter(n => n.activo);
             } catch (e) { console.error("News search fail", e); }
         }
 
