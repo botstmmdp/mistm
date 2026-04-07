@@ -200,7 +200,8 @@
             display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.5s;
         }
         body.dark-mode #loader-wrapper { background: #0f172a; }
-        .loader-logo { width: 80px; animation: pulse-logo 1.5s infinite ease-in-out; }
+        .loader-logo { width: 80px; animation: logo-spin 2s linear infinite; }
+        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 
