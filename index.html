@@ -198,9 +198,6 @@
                     localStorage.setItem('usrFullName', `${found.nombre} ${found.apellido}`);
                     localStorage.setItem('usrPermiso', found.permiso);
                     
-                    // Activamos el flag para mostrar el recordatorio de vigencias una sola vez al entrar
-                    localStorage.setItem('showWelcomeVigencias', 'true');
-                    
                     showNotify(`¡Hola ${found.nombre}! Entrando...`, 'success');
                     
                     setTimeout(() => {
