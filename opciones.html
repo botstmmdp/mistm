@@ -200,6 +200,59 @@
             transform: scale(0.98);
         }
 
+        /* --- BOTÓN DE ALERTA EN HEADER --- */
+        .header-alert-btn {
+            margin-left: auto;
+            width: 42px;
+            height: 42px;
+            background: #ef4444;
+            color: white !important;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            transition: 0.3s;
+            animation: alert-shake 2s infinite ease-in-out;
+            text-decoration: none;
+            z-index: 10;
+        }
+
+        .header-alert-btn:active {
+            transform: scale(0.9);
+        }
+
+        .alert-dot {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 14px;
+            height: 14px;
+            background: #f59e0b;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: none;
+        }
+
+        .header-alert-btn.has-urgent .alert-dot {
+            display: block;
+        }
+
+        @keyframes alert-shake {
+            0%, 100% { transform: scale(1); }
+            10%, 20% { transform: scale(0.9) rotate(-3deg); }
+            30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+            40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+        }
+
+        body.dark-mode .header-alert-btn {
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
         /* Custom Notification */
         .stm-notify {
             position: fixed;
@@ -296,11 +349,39 @@
             background: linear-gradient(135deg, #f43f5e, #e11d48);
         }
 
-        /* --- FLOATING ASISTENTE (FAB) --- */
-        .fab-bot {
+        /* --- FAB WRAPPER & ANIMATIONS --- */
+        .fab-wrapper {
             position: fixed;
             bottom: 100px;
             right: 20px;
+            display: flex;
+            flex-direction: column-reverse; /* Stacks upwards starting from 100px bottom */
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .fab-item-wrapper {
+            margin-top: 15px; /* Spacing between items */
+            max-height: 80px; 
+            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-origin: center bottom;
+        }
+
+        .fab-item-wrapper.hidden {
+            display: flex !important; /* Override standard .hidden if any */
+            max-height: 0;
+            margin-top: 0;
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+
+        /* --- FAB BOT --- */
+        .fab-bot {
             width: 60px;
             height: 60px;
             background: #6366f1 !important;
@@ -311,7 +392,6 @@
             justify-content: center;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 1001;
             box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
             transition: 0.3s;
             animation: bounceBot 3s infinite;
@@ -335,9 +415,6 @@
 
         /* --- FAB CREDENCIAL --- */
         .fab-credencial {
-            position: fixed;
-            bottom: 170px;
-            right: 20px;
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, #f59e0b, #d97706) !important;
@@ -348,7 +425,6 @@
             justify-content: center;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 1001;
             box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
             transition: 0.3s;
             animation: bounceBot 3s infinite 0.5s;
@@ -360,9 +436,6 @@
 
         /* --- FAB TELEFONO --- */
         .fab-telefono {
-            position: fixed;
-            bottom: 240px;
-            right: 20px;
             width: 60px;
             height: 60px;
             background: linear-gradient(135deg, #10b981, #059669) !important;
@@ -373,7 +446,6 @@
             justify-content: center;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 1001;
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
             transition: 0.3s;
             animation: bounceBot 3s infinite 1s;
@@ -690,6 +762,11 @@
                 <h1 id="usrGreeting">¡Cargando...!</h1>
                 <p id="usrDisplayName">Procesando usuario...</p>
             </div>
+            <!-- Botón de alerta dinámico -->
+            <div id="headerAlertBtn" class="header-alert-btn hidden" onclick="toggleProximamente(true)">
+                <i class="fa-solid fa-bell"></i>
+                <span class="alert-dot"></span>
+            </div>
         </div>
     </header>
 
@@ -706,19 +783,21 @@
     </a>
 
     <!-- ATAJO A NOVEDADES -->
-    <a href="novedades.html" class="news-shortcut animate__animated animate__fadeIn">
+    <a href="novedades.html" id="shortcutNov" class="news-shortcut animate__animated animate__fadeIn"
+        style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 12px;">
         <div class="news-shortcut-info">
-            <h4>¿Qué hay de nuevo?</h4>
-            <h2>Ver Novedades STM</h2>
+            <h4>Últimas noticias</h4>
+            <h2>🗞️ Novedades STM</h2>
         </div>
-        <div class="news-shortcut-ico pulse-icon">
-            <i class="fa-solid fa-bolt"></i>
+        <div class="news-shortcut-ico pulse-icon"
+            style="background: rgba(255,255,255,0.25);">
+            <i class="fa-solid fa-newspaper"></i>
         </div>
     </a>
 
     <!-- ATAJO A GÉNERO Y DIVERSIDAD -->
     <a href="generoydiversidad.html" id="shortcutGen" class="news-shortcut animate__animated animate__fadeIn pulse-card"
-        style="background: linear-gradient(135deg, #db2777, #9d174d); margin-top: -10px;">
+        style="background: linear-gradient(135deg, #db2777, #9d174d); margin-bottom: 12px;">
         <div class="news-shortcut-info">
             <h4>Bienestar Integral</h4>
             <h2>Género y Diversidad</h2>
@@ -757,14 +836,6 @@
             </div>
         </a>
 
-        <!-- 4. Convenios -->
-        <a href="convenios.html" class="action-card">
-            <div class="ico-box g-6"><i class="fa-solid fa-handshake-angle"></i></div>
-            <div class="card-info">
-                <h3>Convenios</h3>
-                <p>Beneficios socios</p>
-            </div>
-        </a>
 
         <!-- 5. Deportes -->
         <a href="#" class="action-card" onclick="toggleProximamente(true)">
@@ -839,19 +910,28 @@
         </a>
     </main>
 
-    <!-- FAB TELEFONO -->
-    <a href="tel:2234723756" class="fab-telefono" id="fabPhone">
-        <i class="fa-solid fa-phone"></i>
-    </a>
+    <!-- CONTENEDOR DE FABS -->
+    <div class="fab-wrapper">
+        <!-- BOT: Se ordena de abajo hacia arriba -->
+        <div class="fab-item-wrapper" id="fabBotIcon">
+            <div class="fab-bot" onclick="toggleModal(true)">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+        </div>
 
-    <!-- FAB CREDENCIAL -->
-    <div class="fab-credencial" id="fabCred" onclick="toggleProximamente(true)">
-        <i class="fa-solid fa-address-card"></i>
-    </div>
+        <!-- CREDENCIAL -->
+        <div class="fab-item-wrapper" id="fabCred">
+            <div class="fab-credencial" onclick="toggleProximamente(true)">
+                <i class="fa-solid fa-address-card"></i>
+            </div>
+        </div>
 
-    <!-- FAB BOT -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleModal(true)">
-        <i class="fa-solid fa-robot"></i>
+        <!-- TELEFONO -->
+        <div class="fab-item-wrapper" id="fabPhone">
+            <a href="tel:2234723756" class="fab-telefono">
+                <i class="fa-solid fa-phone"></i>
+            </a>
+        </div>
     </div>
 
     <!-- MODAL ASISTENTE -->
@@ -915,6 +995,12 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver Credencial Digital</span>
                     <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)" checked
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
+                <!-- NOVEDADES -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver Novedades STM</span>
+                    <input type="checkbox" id="checkNov" onchange="applyConfig('nov', this.checked)" checked
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
                 <!-- MARCADOR TELEFONICO -->
@@ -1032,54 +1118,74 @@
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
-            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
             { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-        let allConvenios = [], allNews = [];
-        const CONVENIOS_URL = 'https://script.google.com/macros/s/AKfycbwFF-ZTptmhjFBItUzfh2CCkjycg485z2amS-girpV5hRF3JLZwWgD1yhgl63uABPwskA/exec?action=READ_ALL';
-        const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4", GID = "195669740";
-        const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
         // CAMBIAR POR EL URL DEL SCRIPT DE USUARIOS SI ES DISTINTO
-        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCxqMSFt7usCe2e8Z6w20-ad5G_vB21rEEKnB6hWZ0zDKfu64mgNFXiTVT3oM5R4tTHw/exec';
+
+        // --- NOVEDADES PARA EL BOT ---
+        const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
+        const NEWS_GID = "195669740";
+        const NEWS_URL = `https://docs.google.com/spreadsheets/d/${NEWS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${NEWS_GID}`;
+        let allNews = [];
+
+        async function fetchNews() {
+            if (allNews.length > 0) return; // ya cargadas
+            try {
+                const res = await fetch(NEWS_URL);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                allNews = (json.table.rows || []).map(r => ({
+                    titulo: (r.c[1]?.v || "").toString(),
+                    desc:   (r.c[2]?.v || "").toString(),
+                    fecha:  (r.c[3]?.f || r.c[3]?.v || "").toString(),
+                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                })).filter(n => n.activo).reverse();
+
+                // Verificar si mostramos el botón de alerta en el header
+                checkHeaderAlerts();
+            } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
+        }
+
+        function checkHeaderAlerts() {
+            const btn = document.getElementById('headerAlertBtn');
+            if (!btn) return;
+
+            if (allNews.length > 0) {
+                btn.classList.remove('hidden');
+                
+                // Si alguna noticia es URGENTE o ALERTA, poner el puntito vibrante
+                const isUrgent = allNews.some(n => 
+                    n.titulo.toUpperCase().includes('URGENTE') || 
+                    n.titulo.toUpperCase().includes('ALERTA') ||
+                    n.desc.toUpperCase().includes('URGENTE') || 
+                    n.desc.toUpperCase().includes('ALERTA')
+                );
+                
+                if (isUrgent) {
+                    btn.classList.add('has-urgent');
+                } else {
+                    btn.classList.remove('has-urgent');
+                }
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
 
         function toggleProximamente(show) {
             document.getElementById('modalProx').classList.toggle('active', show);
-        }
-
-        async function fetchConvenios() {
-            if (allConvenios.length > 0) return;
-            try {
-                const res = await fetch(CONVENIOS_URL);
-                const data = await res.json();
-                allConvenios = (data.convenios || []).filter(c => (c.ACTIVO || '').toUpperCase() === 'SI');
-            } catch (e) { console.error("Bot search fail", e); }
-        }
-
-        async function fetchNews() {
-            if (allNews.length > 0) return;
-            try {
-                const res = await fetch(URL_NEWS);
-                const text = await res.text();
-                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
-                allNews = json.table.rows.map(r => ({
-                    titulo: (r.c[1]?.v || "").toString(),
-                    desc: (r.c[2]?.v || "").toString(),
-                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
-                })).filter(n => n.activo);
-            } catch (e) { console.error("News search fail", e); }
         }
 
         function toggleModal(show) {
             document.getElementById('modalAsist').classList.toggle('active', show);
             if (show) {
                 document.getElementById('searchInput').focus();
-                fetchConvenios();
-                fetchNews();
+                fetchNews(); // carga novedades en background si aún no están
             }
             if (window.navigator.vibrate) window.navigator.vibrate(15);
         }
@@ -1196,17 +1302,12 @@
                     return words.some(w => target.includes(w)) || target.includes(val);
                 });
 
-                const filteredConv = allConvenios.filter(c => {
-                    const target = normalize(c.titulo + " " + c.rubro + " " + c.detalle);
-                    return words.some(w => target.includes(w)) || target.includes(val);
-                }).slice(0, 5);
-
                 const filteredNews = allNews.filter(n => {
                     const target = normalize(n.titulo + " " + n.desc);
                     return words.some(w => target.includes(w)) || target.includes(val);
                 }).slice(0, 5);
 
-                if (filtered.length > 0 || filteredConv.length > 0 || filteredNews.length > 0) {
+                if (filtered.length > 0 || filteredNews.length > 0) {
                     titleA.style.display = "block";
                     titleA.innerHTML = `¡Hola! Encontré esto para vos... <i class="fa-solid fa-face-smile" style="margin-left:5px; color:var(--stm-accent)"></i>`;
 
@@ -1225,35 +1326,22 @@
                         `;
                     });
 
-                    filteredConv.forEach(c => {
+                    filteredNews.forEach(n => {
                         resList.innerHTML += `
-                            <a href="convenios.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid var(--stm-accent); display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; text-decoration:none; color:inherit; display:block">
+                            <a href="novedades.html" class="res-item animate__animated animate__fadeInUp" style="display:block; padding:12px; border-radius:18px; text-decoration:none; color:inherit; border-left:4px solid #6366f1">
                                 <div style="display:flex; align-items:center; gap:10px">
-                                    <div class="res-ico" style="background: var(--stm-accent); color:white"><i class="fa-solid fa-gift"></i></div>
-                                    <div class="card-info" style="flex:1">
-                                        <h4 style="margin:0; font-size:0.7rem; color:var(--stm-accent); font-weight:800; text-transform:uppercase">${c.rubro}</h4>
-                                        <h3 style="font-size:0.9rem; margin-bottom:2px">${c.titulo}</h3>
-                                        <p style="font-size:0.75rem; opacity:0.8">${c.detalle.substring(0, 60)}...</p>
+                                    <div class="res-ico" style="background:#6366f1; color:white"><i class="fa-solid fa-bolt"></i></div>
+                                    <div style="flex:1">
+                                        <h4 style="margin:0; font-size:0.65rem; color:#6366f1; text-transform:uppercase; letter-spacing:0.5px">NOVEDAD</h4>
+                                        <h3 style="margin:2px 0 0; font-size:0.9rem">${n.titulo}</h3>
+                                        <p style="margin:2px 0 0; font-size:0.72rem; opacity:0.65">${n.fecha}</p>
                                     </div>
+                                    <i class="fa-solid fa-eye" style="font-size:0.8rem; opacity:0.3"></i>
                                 </div>
                             </a>
                         `;
                     });
 
-                    filteredNews.forEach(n => {
-                        resList.innerHTML += `
-                            <a href="novedades.html" class="res-item animate__animated animate__fadeInUp" style="border-left: 4px solid #6366f1; display:flex; align-items:center; gap:12px; padding:12px; border-radius:18px; text-decoration:none; color:inherit; display:block">
-                                <div style="display:flex; align-items:center; gap:10px">
-                                    <div class="res-ico" style="background:#6366f1; color:white"><i class="fa-solid fa-bolt"></i></div>
-                                    <div class="card-info" style="flex:1">
-                                        <h4 style="margin:0; font-size:0.7rem; color:#6366f1; font-weight:800; text-transform:uppercase">NOTICIA</h4>
-                                        <h3 style="font-size:0.9rem; margin-bottom:2px">${n.titulo}</h3>
-                                        <p style="font-size:0.75rem; opacity:0.8">${n.desc.substring(0, 60)}...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        `;
-                    });
                 } else {
                     titleA.style.display = "block";
                     titleA.innerHTML = `Mmm... no encontré nada exacto, ¿probamos con otro término? <i class="fa-solid fa-face-thinking" style="margin-left:5px"></i>`;
@@ -1290,6 +1378,10 @@
                 const cred = document.getElementById('fabCred');
                 if (cred) cred.classList.toggle('hidden', !value);
             }
+            if (type === 'nov') {
+                const nov = document.getElementById('shortcutNov');
+                if (nov) nov.classList.toggle('hidden', !value);
+            }
             if (type === 'phone') {
                 const phone = document.getElementById('fabPhone');
                 if (phone) phone.classList.toggle('hidden', !value);
@@ -1304,6 +1396,7 @@
                 gen: localStorage.getItem('cfg_gen') !== 'false',
                 act: localStorage.getItem('cfg_act') !== 'false',
                 cred: localStorage.getItem('cfg_cred') !== 'false',
+                nov: localStorage.getItem('cfg_nov') !== 'false',
                 phone: localStorage.getItem('cfg_phone') !== 'false'
             };
 
@@ -1332,6 +1425,12 @@
                 if (document.getElementById('checkCred')) document.getElementById('checkCred').checked = cfg.cred;
             }
 
+            const nov = document.getElementById('shortcutNov');
+            if (nov) {
+                nov.classList.toggle('hidden', !cfg.nov);
+                if (document.getElementById('checkNov')) document.getElementById('checkNov').checked = cfg.nov;
+            }
+
             const phone = document.getElementById('fabPhone');
             if (phone) {
                 phone.classList.toggle('hidden', !cfg.phone);
@@ -1348,6 +1447,7 @@
 
         window.addEventListener('load', () => {
             loadSettings();
+            fetchNews(); // Cargar novedades y verificar alertas al iniciar
 
             // Lógica para mostrar recordatorio siempre que Actividades esté activo en config
             const isActEnabled = localStorage.getItem('cfg_act') !== 'false';

@@ -29,11 +29,6 @@
 
         body.dark-mode .section-card,
         body.dark-mode header,
-        body.dark-mode .bot-content {
-            background: #1e293b;
-            color: white;
-            border-color: #334155;
-        }
 
         body.dark-mode p {
             color: #94a3b8;
@@ -45,12 +40,6 @@
         }
 
         body.dark-mode .contact-box strong {
-            color: white;
-        }
-
-        body.dark-mode .bot-input {
-            background: #0f172a;
-            border-color: #334155;
             color: white;
         }
 
@@ -403,44 +392,7 @@
             opacity: 1;
         }
 
-        .bot-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: white;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            padding: 30px 20px;
-            transform: translateY(100%);
-            transition: 0.4s;
-        }
-
-        .bot-modal.active .bot-content {
-            transform: translateY(0);
-        }
-
-        .bot-input {
-            width: 100%;
-            padding: 15px 20px 15px 20px;
-            border-radius: 15px;
-            border: 2px solid #f1f5f9;
-            background: #f8fafc;
-            font-family: inherit;
-            font-size: 0.95rem;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .bot-input:focus {
-            border-color: var(--stm-primary);
-            background: white;
-        }
-
-        body.dark-mode .bot-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
+        
 
         /* Custom Notification */
         .stm-notify {
@@ -499,42 +451,7 @@
             opacity: 1;
         }
 
-        .bot-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: white;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            padding: 30px 20px;
-            transform: translateY(100%);
-            transition: 0.4s;
-        }
-
-        .bot-modal.active .bot-content {
-            transform: translateY(0);
-        }
-
-        .bot-input {
-            width: 100%;
-            padding: 15px 20px 15px 50px;
-            border-radius: 15px;
-            border: 2px solid #f1f5f9;
-            background: #f8fafc;
-            font-family: inherit;
-        }
-
-        .bot-search-box {
-            position: relative;
-        }
-
-        .bot-search-box i {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--stm-secondary);
-        }
+        
 
         /* --- PRELOADER --- */
         #loader-wrapper {
@@ -580,6 +497,73 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-size: 0.8rem;
+        }
+        .bot-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 18px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            outline: none;
+            transition: 0.3s;
+        }
+        .bot-input:focus {
+            border-color: var(--stm-primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+        }
+        body.dark-mode .bot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        body.dark-mode .bot-input:focus {
+            border-color: var(--stm-primary);
+            background: #0f172a;
+        }
+        .bot-search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        .bot-search-box > i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--stm-primary);
+            font-size: 1.1rem;
+        }
+        .bot-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 30px 20px 40px;
+            transform: translateY(100%);
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        body.dark-mode .bot-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+        .bot-modal.active .bot-content {
+            transform: translateY(0);
+        }
+        .bot-results-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--stm-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 10px;
         }
     </style>
 </head>
@@ -662,7 +646,7 @@
             </div>
             <div class="bot-search-box">
                 <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" placeholder="¿Cómo puedo ayudarte?" id="botInput">
+                <input type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botInput">
             </div>
             <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;">
                 <p style="font-size: 0.85rem; color: #64748b; padding: 10px;">Probá buscando: "Asistencia", "Salud",
@@ -741,35 +725,18 @@
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Convenios y Beneficios", d: "Descuentos en comercios y servicios", f: "convenios.html", tags: "comercio farmacia descuento beneficio ahorro turismo salud clínica médico sanatorio farmacia", ico: "fa-tags" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
-            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias aviso boletín sorteos último información", ico: "fa-newspaper" },
+                        { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-        let allNews = [];
-        const SHEET_ID = "1SwegGRpv0RzhSJ8_DwDFt36R0dQhut42H532AIzCFn4", GID = "195669740";
-        const URL_NEWS = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
         const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
-
-        async function fetchNews() {
-            if (allNews.length > 0) return;
-            try {
-                const res = await fetch(URL_NEWS);
-                const text = await res.text();
-                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
-                allNews = json.table.rows.map(r => ({
-                    titulo: r.c[1]?.v || "",
-                    desc: r.c[2]?.v || ""
-                }));
-            } catch (e) { console.error("News fail", e); }
-        }
 
         function toggleBot(show) {
             document.getElementById('modalBot').classList.toggle('active', show);
             if (show) {
                 document.getElementById('botInput').focus();
-                fetchNews();
+            fetchNews();
             }
         }
 
@@ -855,6 +822,28 @@
             if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
         }
 
+        
+        // --- NOVEDADES PARA EL BOT ---
+        const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
+        const NEWS_GID = "195669740";
+        const NEWS_URL = `https://docs.google.com/spreadsheets/d/${NEWS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${NEWS_GID}`;
+        let allNews = [];
+
+        async function fetchNews() {
+            if (allNews.length > 0) return;
+            try {
+                const res = await fetch(NEWS_URL);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                allNews = (json.table.rows || []).map(r => ({
+                    titulo: (r.c[1]?.v || "").toString(),
+                    desc:   (r.c[2]?.v || "").toString(),
+                    fecha:  (r.c[3]?.f || r.c[3]?.v || "").toString(),
+                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                })).filter(n => n.activo).reverse();
+            } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
+        }
+
         function normalize(str) {
             return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
@@ -870,7 +859,6 @@
                     const target = normalize(p.t + " " + p.tags);
                     return words.some(w => target.includes(w)) || target.includes(val);
                 });
-
                 const filteredNews = allNews.filter(n => {
                     const target = normalize(n.titulo + " " + n.desc);
                     return words.some(w => target.includes(w)) || target.includes(val);
@@ -890,12 +878,13 @@
 
                     filteredNews.forEach(n => {
                         res.innerHTML += `
-                            <a href="novedades.html" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; border-left: 4px solid #6366f1; text-decoration:none; color:inherit; display:block">
-                                <div style="display:flex; align-items:center; gap:10px; width:100%">
+                            <a href="novedades.html" class="res-item-bot" style="display:block; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; border-left:4px solid #6366f1">
+                                <div style="display:flex; align-items:center; gap:10px">
                                     <div style="width:30px; height:30px; border-radius:8px; background:#6366f1; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-bolt"></i></div>
                                     <div style="flex:1">
-                                        <h4 style="margin:0; font-size:0.65rem; color:#6366f1; text-transform:uppercase">NOTICIA</h4>
+                                        <h4 style="margin:0; font-size:0.65rem; color:#6366f1; text-transform:uppercase">NOVEDAD</h4>
                                         <h4 style="margin:0; font-size:0.85rem">${n.titulo}</h4>
+                                        <p style="margin:2px 0 0; font-size:0.7rem; opacity:0.6">${n.fecha}</p>
                                     </div>
                                     <i class="fa-solid fa-eye" style="color:#94a3b8; font-size:0.8rem"></i>
                                 </div>
