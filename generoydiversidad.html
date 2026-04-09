@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Género y Diversidad - STM</title>
     <link rel="icon" type="image/png" href="logo_STM.png">
 
@@ -98,12 +98,11 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            color: var(--text-dark);
-            overflow-x: clip;
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
         }
+
+        html { height: 100%; }
 
         /* --- HEADER --- */
         header {
@@ -302,21 +301,14 @@
 
         /* --- FAB BOT --- */
         .fab-bot {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #6366f1 !important;
-            color: white !important;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            position: fixed; 
+            bottom: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 98px);
+            right: 20px; 
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            cursor: pointer; z-index: 1001; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
             transition: 0.3s;
             animation: bounceBot 3s infinite;
         }
@@ -339,20 +331,21 @@
 
         /* --- NAVIGATION --- */
         .nav-bar {
-            position: fixed;
-            bottom: 25px;
-            left: 50%;
+            position: fixed; 
+            bottom: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+            left: 50%; 
             transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 400px;
-            height: 70px;
-            background: var(--nav-bg);
+            width: calc(100% - 32px); 
+            max-width: 400px; 
+            height: 68px;
+            background: var(--nav-bg) !important; 
             border-radius: 35px;
-            display: flex;
-            justify-content: space-around;
+            display: flex; 
+            justify-content: space-around; 
             align-items: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+            z-index: 5000;
         }
 
         .nav-btn {

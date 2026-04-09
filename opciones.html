@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MiStm App</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
@@ -86,11 +86,13 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             color: var(--text-dark);
-            overflow-x: clip;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
         }
 
         /* --- HEADER (LOGO RESTAURADO) --- */
@@ -353,10 +355,11 @@
         /* --- FAB WRAPPER & ANIMATIONS --- */
         .fab-wrapper {
             position: fixed;
-            bottom: 100px;
+            bottom: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 98px);
             right: 20px;
             display: flex;
-            flex-direction: column-reverse; /* Stacks upwards starting from 100px bottom */
+            flex-direction: column-reverse; /* Stacks upwards starting from bottom */
             align-items: center;
             z-index: 1001;
         }
@@ -577,20 +580,21 @@
         /* --- NAVIGATION --- */
         .bottom-nav {
             position: fixed;
-            bottom: 25px;
+            bottom: 20px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 40px);
+            width: calc(100% - 32px);
             max-width: 400px;
-            height: 70px;
+            height: 68px;
             background: #111827 !important;
             border-radius: 35px;
             padding: 0 10px;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            z-index: 1000;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
         }
 
         .nav-btn {
