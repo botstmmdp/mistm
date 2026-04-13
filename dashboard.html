@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../logo nuevo.png" type="image/png">
+    <title>STM | Tablero Administrador</title>
+
+    <!-- Fonts & Frameworks -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            /* Paleta de Colores Dashboard Premium (STM) */
+            --primary: #1E293B;
+            /* Slate Blue profundo */
+            --primary-light: #334155;
+            --accent: #10B981;
+            /* Emerald Teal vibrante */
+            --accent-dark: #059669;
+            --bg-light: #F8FAFC;
+            /* Slate ultra claro para fondo */
+            --white: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+
+            /* Efectos de Elevación y Glassmorphism */
+            --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-strong: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --glass: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+
+            /* Transiciones */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- Componentes UI Modernizados --- */
+        .main-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .header-logo-mini {
+            height: 32px;
+            filter: brightness(0) invert(1);
+            transition: var(--transition);
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: inset 0 -4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .main-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            aspect-ratio: 1/1;
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+            margin-bottom: 2rem;
+        }
+
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(4px);
+            border: none;
+        }
+
+        /* Nav Tabs Modernizadas con Parpadeo Colorado */
+        .nav-tabs {
+            border: none;
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 1.25rem;
+            display: inline-flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none !important;
+            padding: 0.75rem 1.25rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-radius: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent !important;
+            font-size: 0.9rem;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        /* Animación de parpadeo para el menú seleccionado */
+        @keyframes blink-red {
+            0% {
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+                border: 1px solid rgba(239, 68, 68, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 4px 20px rgba(239, 68, 68, 0.6);
+                border: 1px solid rgba(239, 68, 68, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+                border: 1px solid rgba(239, 68, 68, 0.1);
+            }
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #b91c1c !important;
+            /* Rojo oscuro para el texto */
+            background: white !important;
+            animation: blink-red 2s infinite ease-in-out;
+            border-bottom: none !important;
+        }
+
+        /* --- Table Modernizada --- */
+        .table-premium {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        .table-premium thead th {
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            border: none;
+        }
+
+        .table-premium tbody tr {
+            background: var(--white);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .table-premium tbody tr:hover {
+            transform: scale(1.005);
+            background: #fdfdfd;
+        }
+
+        .table-premium tbody td {
+            padding: 1.25rem 1rem;
+            border-top: 1px solid #F1F5F9;
+            border-bottom: 1px solid #F1F5F9;
+            vertical-align: middle;
+        }
+
+        .table-premium tbody td:first-child {
+            border-left: 1px solid #F1F5F9;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+        }
+
+        .table-premium tbody td:last-child {
+            border-right: 1px solid #F1F5F9;
+            border-top-right-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+
+        /* --- Buttons Premium --- */
+        .btn-premium {
+            padding: 0.75rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-accent-p {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-accent-p:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            color: white;
+        }
+
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-edit {
+            background: rgba(79, 70, 229, 0.1);
+            color: #4f46e5;
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .btn-msg {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* --- Loading Overlay Moderno --- */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .loading-overlay.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @keyframes spin-logo {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-logo-spin {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            aspect-ratio: 1/1;
+            animation: spin-logo 3s linear infinite;
+        }
+
+        .loading-text {
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Status Badge */
+        .badge-status {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+        }
+
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        /* User & Permiso Badges */
+        .badge-user {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        .badge-permiso {
+            background: #ecfdf5;
+            color: #059669;
+            padding: 0.4rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* --- Feedback Toast --- */
+        .feedback {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            background: white;
+            box-shadow: var(--shadow-strong);
+            z-index: 3000;
+            font-weight: 700;
+            transition: var(--transition);
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .feedback.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .feedback.success {
+            border-left: 5px solid var(--accent);
+            color: var(--text-main);
+        }
+
+        .feedback.error {
+            border-left: 5px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* Modal specific polish */
+        .modal-content {
+            border-radius: 1.5rem !important;
+            border: none !important;
+            box-shadow: var(--shadow-strong) !important;
+        }
+
+        .modal-header .modal-title {
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-color: #e2e8f0;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            border-color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="d-flex flex-column align-items-center">
+            <img src="../logo nuevo.png" class="loader-logo-spin" alt="Cargando...">
+            <span class="loading-text">Cargando datos...</span>
+        </div>
+    </div>
+
+    <div class="feedback" id="feedbackMessage"></div>
+
+    <header class="main-header p-3 sticky-top">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <img src="../logo nuevo.png" alt="Logo" class="header-logo-mini">
+                <h1 class="h6 mb-0 text-white font-black tracking-tight hide-on-mobile">
+                    STM <span class="fw-light opacity-60">| Panel Administrativo</span>
+                </h1>
+            </div>
+
+            <div class="d-flex gap-3 align-items-center">
+                <div id="userBadge" class="glass-badge">
+                    <i class="fas fa-user-circle text-white"></i>
+                    <span id="adminName" class="text-white text-xs fw-bold tracking-wide uppercase">Cargando...</span>
+                </div>
+                <button onclick="logout()"
+                    class="btn btn-sm btn-outline-light rounded-pill px-3 border-white/30 hover:bg-white/10">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container py-5">
+
+        <div class="header-section animate__animated animate__fadeIn">
+            <img src="../logo_STM.png" alt="Logo STM" class="main-logo mx-auto">
+            <h1 class="text-4xl font-black text-[var(--primary)] tracking-tight mb-2">Panel de Control General</h1>
+            <p class="text-[var(--text-muted)] font-medium max-w-2xl mx-auto">
+                Gestión de contenidos, convenios y acceso a usuarios del Sindicato de Trabajadores Municipales.
+            </p>
+        </div>
+
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+            <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#convenios"
+                        onclick="setTab('Convenios')">
+                        <i class="fas fa-handshake"></i> Convenios
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#novedades"
+                        onclick="setTab('Novedades')">
+                        <i class="fas fa-newspaper"></i> Novedades
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#usuarios"
+                        onclick="setTab('Usuarios')">
+                        <i class="fas fa-user-shield"></i> Usuarios
+                    </button>
+                </li>
+
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#quincho" onclick="setTab('Quincho')">
+                        <i class="fas fa-home"></i> Quincho
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deportes"
+                        onclick="setTab('Deportes')">
+                        <i class="fas fa-volleyball-ball"></i> Deportes
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#proveduría"
+                        onclick="setTab('Proveduría')">
+                        <i class="fas fa-shopping-basket"></i> Proveduría
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#farmacia"
+                        onclick="setTab('Farmacia')">
+                        <i class="fas fa-briefcase-medical"></i> Farmacia
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#capacitación"
+                        onclick="setTab('Camacitación')">
+                        <i class="fas fa-chalkboard-teacher"></i> Capacitación
+                    </button>
+                </li>
+            </ul>
+
+            <button id="btnAdd" class="btn-premium btn-accent-p" onclick="showNewModal()">
+                <i class="fas fa-plus-circle"></i> Nuevo Registro
+            </button>
+        </div>
+
+        <div class="tab-content">
+            <!-- TAB CONVENIOS -->
+            <div class="tab-pane fade show active" id="convenios">
+                <div class="table-responsive">
+                    <table class="table-premium" id="tableConvenios">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Rubro</th>
+                                <th style="width: 25%;">Título</th>
+                                <th style="width: 35%;">Detalle</th>
+                                <th style="width: 10%;">Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB NOVEDADES -->
+            <div class="tab-pane fade" id="novedades">
+                <div class="table-responsive">
+                    <table class="table-premium" id="tableNovedades">
+                        <thead>
+                            <tr>
+                                <th style="width: 12%;">Fecha</th>
+                                <th style="width: 25%;">Título</th>
+                                <th style="width: 40%;">Descripción</th>
+                                <th style="width: 10%;">Estado</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB USUARIOS -->
+            <div class="tab-pane fade" id="usuarios">
+                <div class="table-responsive">
+                    <table class="table-premium" id="tableUsers">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Nombre Completo</th>
+                                <th style="width: 20%;">Usuario</th>
+                                <th style="width: 20%;">Permiso</th>
+                                <th style="width: 20%;">Email</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB MENSAJES -->
+            <div class="tab-pane fade" id="mensajes">
+                <div class="table-responsive">
+                    <table class="table-premium w-100" id="tableMensajes">
+                        <thead>
+                            <tr>
+                                <th>Usuario Destino</th>
+                                <th>Título</th>
+                                <th>Mensaje</th>
+                                <th>Fecha</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB QUINCHO -->
+            <div class="tab-pane fade" id="quincho">
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-tools fa-4x text-muted opacity-20"></i>
+                    </div>
+                    <h3 class="fw-black text-[var(--primary)]">Módulo Quincho</h3>
+                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                </div>
+            </div>
+
+            <!-- TAB DEPORTES -->
+            <div class="tab-pane fade" id="deportes">
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-running fa-4x text-muted opacity-20"></i>
+                    </div>
+                    <h3 class="fw-black text-[var(--primary)]">Módulo Deportes</h3>
+                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                </div>
+            </div>
+            <!-- TAB PROVEDURIA -->
+            <div class="tab-pane fade" id="proveduría">
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-shopping-basket fa-4x text-muted opacity-20"></i>
+                    </div>
+                    <h3 class="fw-black text-[var(--primary)]">Módulo Proveduría</h3>
+                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                </div>
+            </div>
+            <!-- TAB FARMACIA -->
+            <div class="tab-pane fade" id="farmacia">
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-briefcase-medical fa-4x text-muted opacity-20"></i>
+                    </div>
+                    <h3 class="fw-black text-[var(--primary)]">Módulo Farmacia</h3>
+                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                </div>
+            </div>
+            <!-- TAB CAPACITACION -->
+            <div class="tab-pane fade" id="capacitación">
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-chalkboard-teacher fa-4x text-muted opacity-20"></i>
+                    </div>
+                    <h3 class="fw-black text-[var(--primary)]">Módulo Capacitación</h3>
+                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATALIST PARA RUBROS (Se llena dinámicamente) -->
+    <datalist id="rubrosList"></datalist>
+
+    <!-- MODAL FORM -->
+    <div class="modal fade" id="entityModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 1.5rem;">
+                <div class="modal-header border-0 p-4">
+                    <h5 class="modal-title fw-black" id="modalTitle">Nuevo Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="entityForm">
+                    <input type="hidden" id="entityId">
+                    <div class="modal-body p-4 pt-0">
+                        <div id="dynamicForm"></div>
+
+                        <div class="mt-4 p-3 rounded-4 bg-light">
+                            <label class="form-label text-xs fw-bold text-uppercase opacity-50">Estado de
+                                visibilidad</label>
+                            <div class="d-flex gap-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="activo" id="checkActive"
+                                        value="SI" checked>
+                                    <label class="form-check-label fw-bold text-success"
+                                        for="checkActive">ACTIVO</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="activo" id="checkInactive"
+                                        value="NO">
+                                    <label class="form-check-label fw-bold text-danger"
+                                        for="checkInactive">INACTIVO</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 p-4 pt-0 gap-2">
+                        <button type="button" class="btn-premium bg-slate-100 text-slate-800"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="btnSubmitForm" class="btn-premium btn-accent-p">
+                            <i class="fas fa-save me-2"></i> <span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIRMACIÓN -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="text-danger mb-4" style="font-size: 3.5rem;">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <h4 class="fw-black text-[var(--primary)] mb-2" id="confirmTitle">¿Confirmar?</h4>
+                    <p class="text-muted font-medium mb-0" id="confirmMessage">¿Deseas realizar esta acción?</p>
+                </div>
+                <div class="modal-footer border-0 flex-nowrap p-4 pt-0 gap-3">
+                    <button type="button" class="btn-premium bg-slate-100 w-100" data-bs-dismiss="modal">No</button>
+                    <button type="button" id="confirmBtnAction" class="btn-premium bg-danger text-white w-100">Sí,
+                        seguro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // CONFIGURACIÓN DE BACKEND
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwd9b0Om70wp2uJO616Kt4T1EB-1vWm_Ru9F4LANYbYca3LAoBNwCwRoI1rHXHZrAW9/exec';
+
+        const SHEET_ID = '16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc';
+
+        let activeTab = 'Convenios';
+        let modal;
+        let confirmModal;
+        let dataStore = {
+            Convenios: [],
+            Novedades: [],
+            Usuarios: [],
+            Mensajes: []
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // CARGAR NOMBRE DE USUARIO LOGUEADO
+            const usuarioLogueado = sessionStorage.getItem('usuario_nombre');
+            if (usuarioLogueado) {
+                document.getElementById('adminName').innerText = usuarioLogueado.toUpperCase();
+            } else {
+                document.getElementById('adminName').innerText = 'ADMINISTRADOR';
+            }
+
+            modal = new bootstrap.Modal(document.getElementById('entityModal'));
+            confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+            loadData();
+
+            document.getElementById('entityForm').onsubmit = (e) => {
+                e.preventDefault();
+                saveEntry();
+            };
+        });
+
+        function setTab(tab) {
+            activeTab = tab;
+            const btnAdd = document.getElementById('btnAdd');
+
+            // Mostrar el botón Agregar solo en las pestañas funcionales
+            if (activeTab === 'Quincho' || activeTab === 'Deportes') {
+                btnAdd.style.display = 'none';
+            } else {
+                btnAdd.style.display = 'inline-flex';
+            }
+            renderAll();
+        }
+
+        async function loadData() {
+            toggleLoader(true);
+            try {
+                const response = await fetch(WEB_APP_URL);
+                const result = await response.json();
+
+                dataStore.Convenios = result.CONVENIOS || [];
+                dataStore.Novedades = result.NOVEDADES || [];
+                dataStore.Usuarios = result.USUARIOS || [];
+                dataStore.Mensajes = result.MENSAJES || [];
+
+                updateRubrosDatalist();
+                renderAll();
+            } catch (err) {
+                console.error("Error loading data:", err);
+                showFeedback("Error al cargar datos.", false);
+            }
+            toggleLoader(false);
+        }
+
+        // FUNCIÓN PARA ACTUALIZAR EL DATALIST DE RUBROS EXISTENTES
+        function updateRubrosDatalist() {
+            const rubrosExistentes = [...new Set(dataStore.Convenios.map(c => c.rubro.trim().toUpperCase()))];
+            const datalist = document.getElementById('rubrosList');
+            datalist.innerHTML = rubrosExistentes.map(r => `<option value="${r}">`).join('');
+        }
+
+        function renderAll() {
+            renderConvenios();
+            renderNovedades();
+            renderUsuarios();
+            renderMensajes();
+        }
+
+        function renderConvenios() {
+            const tbody = document.querySelector('#tableConvenios tbody');
+            tbody.innerHTML = dataStore.Convenios.map(c => `
+                <tr>
+                    <td><span class="badge bg-light text-primary fw-bold px-2 py-1" style="font-size: 0.7rem;">${c.rubro}</span></td>
+                    <td class="fw-bold text-[var(--primary)]">${c.titulo}</td>
+                    <td><small class="text-muted font-medium">${(c.detalle || "").toString().substring(0, 100)}...</small></td>
+                    <td><span class="badge-status ${c.activo === 'SI' ? 'status-active' : 'status-inactive'}">${c.activo}</span></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <div class="action-btn btn-edit" onclick='editEntry("Convenios", ${JSON.stringify(c)})'><i class="fas fa-edit"></i></div>
+                            <div class="action-btn btn-delete" onclick='deleteEntry("Convenios", ${c.id})'><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatDisplayDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const dateObj = new Date(dateStr);
+                if (isNaN(dateObj.getTime())) return dateStr;
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const year = dateObj.getFullYear();
+                return `${day}/${month}/${year}`;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function renderNovedades() {
+            const tbody = document.querySelector('#tableNovedades tbody');
+            const sortedNovedades = [...dataStore.Novedades].sort((a, b) => {
+                const dateA = new Date(a.fecha_novedad || a.fecha);
+                const dateB = new Date(b.fecha_novedad || b.fecha);
+                return dateB - dateA;
+            });
+            tbody.innerHTML = sortedNovedades.map(n => `
+                <tr>
+                    <td><small class="fw-bold text-[var(--primary)]">${formatDisplayDate(n.fecha_novedad || n.fecha)}</small></td>
+                    <td class="fw-bold text-emerald-600">${n.titulo}</td>
+                    <td><small class="text-muted font-medium">${((n.descripción || n.descripcion || n.detalle || "")).toString().substring(0, 100)}...</small></td>
+                    <td><span class="badge-status ${n.activo === 'SI' ? 'status-active' : 'status-inactive'}">${n.activo}</span></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <div class="action-btn btn-edit" onclick='editEntry("Novedades", ${JSON.stringify(n)})'><i class="fas fa-edit"></i></div>
+                            <div class="action-btn btn-delete" onclick='deleteEntry("Novedades", ${n.id})'><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderUsuarios() {
+            const tbody = document.querySelector('#tableUsers tbody');
+            tbody.innerHTML = dataStore.Usuarios.map(u => `
+                <tr>
+                    <td class="fw-bold text-[var(--primary)]">${u.apellido}, ${u.nombre}</td>
+                    <td><span class="badge-user">${u.usuario || u.user || '-'}</span></td>
+                    <td><span class="badge-permiso">${u.permiso || u.permisos || '-'}</span></td>
+                    <td><small class="text-muted">${u.email || '-'}</small></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <div class="action-btn btn-msg" title="Enviar Mensaje" onclick='sendMessageToUser("${u.id}")'><i class="fas fa-comment-dots"></i></div>
+                            <div class="action-btn btn-edit" onclick='editEntry("Usuarios", ${JSON.stringify(u)})'><i class="fas fa-edit"></i></div>
+                            <div class="action-btn btn-delete" onclick='deleteEntry("Usuarios", ${u.id})'><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function sendMessageToUser(userId) {
+            // Actualizar estado interno
+            setTab('Mensajes');
+
+            // Si el botón no existe, forzamos mostrar el pane de mensajes
+            const msgPane = document.getElementById('mensajes');
+            if (msgPane) {
+                // Ocultar panes activos
+                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active', 'show'));
+                // Mostrar pane de mensajes
+                msgPane.classList.add('active', 'show');
+
+                // Abrir modal y preseleccionar usuario
+                setTimeout(() => {
+                    showNewModal();
+                    const select = document.querySelector('select[name="id_user"]');
+                    if (select) select.value = userId;
+                }, 100);
+            }
+        }
+
+        function renderMensajes() {
+            const tbody = document.querySelector('#tableMensajes tbody');
+            tbody.innerHTML = dataStore.Mensajes.slice().reverse().map(m => {
+                const user = dataStore.Usuarios.find(u => String(u.id) === String(m.id_user));
+                const userName = user ? `${user.apellido}, ${user.nombre}` : 'Usuario desconocido';
+                const msgId = m.id_mensaje || m.id;
+                return `
+                <tr>
+                    <td class="fw-bold text-[var(--primary)]">${userName}</td>
+                    <td class="fw-bold text-accent">${m.titulo || '-'}</td>
+                    <td><small class="text-muted font-medium">${m.mensaje}</small></td>
+                    <td><small class="fw-bold text-slate-500">${formatDisplayDate(m.fecha)}</small></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <div class="action-btn btn-delete" onclick='deleteEntry("Mensajes", ${msgId})'><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function showNewModal() {
+            document.getElementById('entityId').value = "";
+            document.getElementById('modalTitle').innerText = `Nuevo registro en ${activeTab}`;
+
+            const btnText = document.querySelector('#btnSubmitForm span');
+            const btnIcon = document.querySelector('#btnSubmitForm i');
+
+            if (activeTab === 'Mensajes') {
+                btnText.innerText = "Enviar Mensaje";
+                btnIcon.className = "fas fa-paper-plane me-2";
+            } else {
+                btnText.innerText = "Guardar Cambios";
+                btnIcon.className = "fas fa-save me-2";
+            }
+
+            const statusContainer = document.querySelector('.bg-light.rounded-4');
+            if (statusContainer) {
+                statusContainer.style.display = (activeTab === 'Usuarios') ? 'none' : 'block';
+            }
+
+            renderDynamicFields();
+            modal.show();
+        }
+
+        function renderDynamicFields(data = null) {
+            const container = document.getElementById('dynamicForm');
+            let html = "";
+
+            if (activeTab === 'Convenios') {
+                html = `
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Rubro (Selecciona uno existente o escribe uno nuevo)</label>
+                        <input type="text" class="form-control" name="rubro" list="rubrosList" value="${data?.rubro || ''}" required placeholder="Ej: SALUD, AUTOMOTOR">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Título</label>
+                        <input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Detalle / Beneficio</label>
+                        <textarea class="form-control" name="detalle" rows="4" required>${data?.detalle || ''}</textarea>
+                    </div>
+                `;
+            } else if (activeTab === 'Novedades') {
+                html = `
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Título de la Noticia</label>
+                        <input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Descripción / Cuerpo</label>
+                        <textarea class="form-control" name="descripción" rows="6" required>${data?.descripción || data?.descripcion || data?.detalle || ''}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Fecha</label>
+                        <input type="date" class="form-control" name="fecha_novedad" value="${data ? formatDateForInput(data.fecha_novedad || data.fecha) : ''}" required>
+                    </div>
+                `;
+            } else if (activeTab === 'Mensajes') {
+                const statusContainer = document.querySelector('.bg-light.rounded-4');
+                if (statusContainer) statusContainer.style.display = 'none';
+
+                const userOptions = dataStore.Usuarios.map(u =>
+                    `<option value="${u.id}">${u.apellido}, ${u.nombre} (${u.usuario})</option>`
+                ).join('');
+
+                html = `
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Seleccionar Usuario Destino</label>
+                        <select class="form-select" name="id_user" required>
+                            <option value="">-- Selecciona un usuario --</option>
+                            ${userOptions}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Asunto / Título</label>
+                        <input type="text" class="form-control" name="titulo" placeholder="Ej: Importante, Recordatorio, Bienvenida" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Mensaje</label>
+                        <textarea class="form-control" name="mensaje" rows="4" required placeholder="Escribe el mensaje para el usuario..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Fecha del Mensaje</label>
+                        <input type="date" class="form-control" name="fecha" value="${new Date().toISOString().split('T')[0]}" required>
+                    </div>
+                `;
+            } else if (activeTab === 'Usuarios') {
+                const statusContainer = document.querySelector('.bg-light.rounded-4');
+                if (statusContainer) statusContainer.style.display = 'none';
+                html = `
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Apellido</label>
+                            <input type="text" class="form-control" name="apellido" id="inputApellido" value="${data?.apellido || ''}" required oninput="updateUsernameSuggestion()">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="inputNombre" value="${data?.nombre || ''}" required oninput="updateUsernameSuggestion()">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Usuario (Login)</label>
+                            <input type="text" class="form-control" name="usuario" id="inputUsuario" value="${data?.usuario || data?.user || ''}" required placeholder="ej: jlopez">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Contraseña</label>
+                            <input type="text" class="form-control" name="password" id="inputPassword" value="${data?.password || '1234'}" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Email (Opcional - para enviar bienvenida)</label>
+                            <input type="email" class="form-control" name="email" value="${data?.email || ''}" placeholder="ejemplo@correo.com">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Permiso</label>
+                            <select class="form-select" name="permiso">
+                                <option value="USER" ${(data?.permiso || data?.permisos) === 'USER' ? 'selected' : ''}>USER</option>
+                                <option value="ADMIN" ${(data?.permiso || data?.permisos) === 'ADMIN' ? 'selected' : ''}>ADMIN</option>
+                            </select>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            if (data) {
+                document.getElementById(data.activo === 'SI' ? 'checkActive' : 'checkInactive').checked = true;
+            }
+        }
+
+        // Sugerencia dinámica de usuario
+        function updateUsernameSuggestion() {
+            if (document.getElementById('entityId').value) return; // No auto-sugerir si estamos editando
+
+            const nombre = document.getElementById('inputNombre').value.trim().toLowerCase();
+            const apellido = document.getElementById('inputApellido').value.trim().toLowerCase();
+            const inputUser = document.getElementById('inputUsuario');
+
+            if (nombre && apellido) {
+                const suggestion = nombre.charAt(0) + apellido.replace(/\s+/g, '');
+                inputUser.placeholder = `Sugerencia: ${suggestion}`;
+                // Opcional: Si el campo está vacío, lo autollenamos para facilitar la carga
+                if (inputUser.value === "" || inputUser.dataset.autoFilled === "true") {
+                    inputUser.value = suggestion;
+                    inputUser.dataset.autoFilled = "true";
+                }
+            }
+        }
+
+        async function saveEntry() {
+            const formData = new FormData(document.getElementById('entityForm'));
+            const isUpdate = !!document.getElementById('entityId').value;
+            const payload = {
+                action: isUpdate ? 'UPDATE' : 'CREATE',
+                sheet: activeTab.toUpperCase(),
+                id: document.getElementById('entityId').value,
+                data: Object.fromEntries(formData.entries())
+            };
+
+            toggleLoader(true);
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                // AUTOMATIZACIÓN: Si se crea un Usuario, enviar mensaje de bienvenida
+                if (!isUpdate && activeTab === 'Usuarios' && result.id) {
+                    const welcomePayload = {
+                        action: 'CREATE',
+                        sheet: 'MENSAJES',
+                        data: {
+                            id_user: result.id,
+                            titulo: '¡Bienvenido/a!',
+                            mensaje: 'Le damos la bienvenida a la app del STM. Desde aquí estaremos en contacto con usted.',
+                            fecha: new Date().toISOString().split('T')[0]
+                        }
+                    };
+                    await fetch(WEB_APP_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: JSON.stringify(welcomePayload)
+                    });
+                }
+
+                showFeedback("¡Proceso enviado exitosamente!", true);
+                modal.hide();
+                setTimeout(loadData, 2000);
+            } catch (err) {
+                console.error(err);
+                showFeedback("Error al guardar: " + err, false);
+            }
+            toggleLoader(false);
+        }
+
+        function editEntry(tab, data) {
+            activeTab = tab;
+            document.getElementById('entityId').value = data.id;
+            document.getElementById('modalTitle').innerText = `Editando en ${tab}`;
+            renderDynamicFields(data);
+            modal.show();
+        }
+
+        async function deleteEntry(tab, id) {
+            showConfirm(
+                "¿Eliminar registro?",
+                "¿Seguro que deseas eliminar definitivamente este registro?",
+                async () => {
+                    toggleLoader(true);
+                    try {
+                        await fetch(WEB_APP_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify({ action: 'DELETE', sheet: tab.toUpperCase(), id: id })
+                        });
+                        showFeedback("Eliminación enviada.", true);
+                        setTimeout(loadData, 2000);
+                    } catch (err) {
+                        showFeedback("Error: " + err, false);
+                    }
+                    toggleLoader(false);
+                }
+            );
+        }
+
+        function showFeedback(message, isSuccess) {
+            const feedback = document.getElementById('feedbackMessage');
+            feedback.innerHTML = `
+                <i class="fas ${isSuccess ? 'fa-check-circle text-success' : 'fa-exclamation-circle text-danger'}"></i>
+                <span>${message}</span>
+            `;
+            feedback.className = `feedback show ${isSuccess ? 'success' : 'error'}`;
+            setTimeout(() => feedback.classList.remove('show'), 3500);
+        }
+
+        function showConfirm(title, message, onConfirm) {
+            document.getElementById('confirmTitle').innerText = title;
+            document.getElementById('confirmMessage').innerText = message;
+
+            const btn = document.getElementById('confirmBtnAction');
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+
+            newBtn.addEventListener('click', () => {
+                confirmModal.hide();
+                onConfirm();
+            });
+
+            confirmModal.show();
+        }
+
+        function toggleLoader(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (show) overlay.classList.add('visible');
+            else overlay.classList.remove('visible');
+        }
+
+        function formatDateForInput(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const d = new Date(dateStr);
+                if (!isNaN(d.getTime())) {
+                    return d.toISOString().split('T')[0];
+                }
+                // Si falla el constructor, intentar parsear DD/MM/YYYY manual
+                const parts = String(dateStr).split('/');
+                if (parts.length === 3) return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                return dateStr;
+            } catch (e) {
+                return dateStr;
+            }
+        }
+
+        function logout() {
+            showConfirm(
+                "Cerrar Sesión",
+                "¿Deseas salir del panel de administración?",
+                () => { window.location.href = '../index.html'; }
+            );
+        }
+
+    </script>
+</body>
+
+</html>
