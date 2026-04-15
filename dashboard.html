@@ -16,29 +16,20 @@
 
     <style>
         :root {
-            /* Paleta de Colores Dashboard Premium (STM) */
-            --primary: #1E293B;
-            /* Slate Blue profundo */
-            --primary-light: #334155;
-            --accent: #10B981;
-            /* Emerald Teal vibrante */
-            --accent-dark: #059669;
-            --bg-light: #F8FAFC;
-            /* Slate ultra claro para fondo */
-            --white: #FFFFFF;
-            --text-main: #1E293B;
-            --text-muted: #64748B;
-            --danger: #EF4444;
-            --warning: #F59E0B;
-
-            /* Efectos de Elevación y Glassmorphism */
-            --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-strong: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            --glass: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.3);
-
-            /* Transiciones */
+            /* Paleta STM — colores primarios */
+            --primary: #1e1b3a;
+            --primary-light: #2a2650;
+            --sidebar-width: 280px;
+            --accent: #37306B;
+            --accent-bright: #4a4280;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --danger: #ef4444;
+            --warning: #f59e0b;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         body {
@@ -46,112 +37,340 @@
             background-color: var(--bg-light);
             color: var(--text-main);
             margin: 0;
-            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
         }
 
-        /* --- Componentes UI Modernizados --- */
-        .main-header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: linear-gradient(to right, var(--primary), var(--primary-light));
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .header-logo-mini {
-            height: 32px;
-            filter: brightness(0) invert(1);
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 1001;
+            padding: 1.5rem 0;
             transition: var(--transition);
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
         }
 
-        .header-section {
-            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-            padding: 3rem 1.5rem;
-            text-align: center;
-            border-radius: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: inset 0 -4px 12px rgba(0, 0, 0, 0.02);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .main-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            aspect-ratio: 1/1;
-            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
-            margin-bottom: 2rem;
-        }
-
-        .glass-badge {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            backdrop-filter: blur(4px);
-            border: none;
-        }
-
-        /* Nav Tabs Modernizadas con Parpadeo Colorado */
-        .nav-tabs {
-            border: none;
-            background: #f1f5f9;
-            padding: 0.5rem;
-            border-radius: 1.25rem;
-            display: inline-flex;
-            gap: 0.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .nav-tabs .nav-link {
-            border: none !important;
-            padding: 0.75rem 1.25rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            border-radius: 1rem;
-            transition: var(--transition);
+        .sidebar-brand {
+            padding: 0 1.5rem 2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            background: transparent !important;
+            gap: 12px;
+            color: #ffffff;
+        }
+
+        .sidebar-brand img {
+            height: 45px;
+        }
+
+        .sidebar-brand span {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            font-size: 1.2rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .nav-item-dashboard {
+            padding: 0.2rem 1rem;
+        }
+
+        .nav-link-dashboard {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: var(--transition);
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
             font-size: 0.9rem;
         }
 
-        .nav-tabs .nav-link:hover {
-            color: var(--primary);
-            background: rgba(255, 255, 255, 0.5) !important;
+        .nav-link-dev {
+            color: rgba(255, 255, 255, 0.3) !important;
+            cursor: default !important;
+            pointer-events: none;
         }
 
-        /* Animación de parpadeo para el menú seleccionado */
-        @keyframes blink-red {
+        .nav-link-dashboard i {
+            width: 20px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .nav-link-dashboard:hover:not(.nav-link-dev) {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-link-dashboard.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+            border-left: 3px solid #ffffff;
+            font-weight: 700;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .top-header {
+            height: 70px;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .content-area {
+            padding: 2.5rem;
+        }
+
+        /* --- STAT CARDS --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .bg-accent-soft {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+        }
+
+        .bg-blue-soft {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .bg-purple-soft {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        .bg-red-soft {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .stat-card-disabled {
+            opacity: 0.6;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
+
+        .blink-btn {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0.4;
+            }
+        }
+
+        .blink-red {
+            animation: blink-red-border 1.5s infinite ease-in-out;
+            border-width: 2px !important;
+        }
+
+        @keyframes blink-red-border {
             0% {
-                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-                border: 1px solid rgba(239, 68, 68, 0.1);
+                border-color: #e2e8f0;
+                box-shadow: none;
             }
 
             50% {
-                box-shadow: 0 4px 20px rgba(239, 68, 68, 0.6);
-                border: 1px solid rgba(239, 68, 68, 0.5);
+                border-color: #ef4444;
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
             }
 
             100% {
-                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
-                border: 1px solid rgba(239, 68, 68, 0.1);
+                border-color: #e2e8f0;
+                box-shadow: none;
             }
         }
 
-        .nav-tabs .nav-link.active {
-            color: #b91c1c !important;
-            /* Rojo oscuro para el texto */
-            background: white !important;
-            animation: blink-red 2s infinite ease-in-out;
-            border-bottom: none !important;
+        /* Parpadeo visible para botones del sidebar */
+        .nav-link-dashboard.blink-red {
+            animation: sidebar-pulse 1.4s infinite ease-in-out !important;
+            border-width: 0 !important;
+            color: #fff !important;
+        }
+
+        @keyframes sidebar-pulse {
+            0% {
+                background: rgba(239, 68, 68, 0.25);
+                box-shadow: inset 0 0 0 0 transparent;
+            }
+
+            50% {
+                background: rgba(239, 68, 68, 0.55);
+                box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+            }
+
+            100% {
+                background: rgba(239, 68, 68, 0.25);
+                box-shadow: inset 0 0 0 0 transparent;
+            }
+        }
+
+        /* Tables & UI */
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Status & Badges */
+        .badge-status {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .status-active {
+            background: #ecfdf5;
+            color: #059669;
+        }
+
+        .status-inactive {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .badge-user {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-permiso {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Loader */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .loading-overlay.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .loader-logo-spin {
+            width: 90px;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .feedback {
+            position: fixed;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            z-index: 4000;
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        .feedback.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         /* --- Table Modernizada --- */
@@ -167,7 +386,6 @@
             font-size: 0.8rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
             padding: 1rem;
             border: none;
         }
@@ -202,7 +420,6 @@
             border-bottom-right-radius: 1rem;
         }
 
-        /* --- Buttons Premium --- */
         .btn-premium {
             padding: 0.75rem 1.5rem;
             border-radius: 1rem;
@@ -217,14 +434,13 @@
         }
 
         .btn-accent-p {
-            background: var(--accent);
+            background: var(--primary);
             color: white;
         }
 
         .btn-accent-p:hover {
-            background: var(--accent-dark);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 5px 15px rgba(30, 27, 58, 0.35);
             color: white;
         }
 
@@ -250,396 +466,422 @@
         }
 
         .btn-msg {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent);
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
         }
 
         .action-btn:hover {
             transform: translateY(-2px);
         }
-
-        /* --- Loading Overlay Moderno --- */
-        .loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .loading-overlay.visible {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        @keyframes spin-logo {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loader-logo-spin {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            aspect-ratio: 1/1;
-            animation: spin-logo 3s linear infinite;
-        }
-
-        .loading-text {
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        /* Status Badge */
-        .badge-status {
-            padding: 0.35rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-        }
-
-        .status-active {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent);
-        }
-
-        .status-inactive {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-        }
-
-        /* User & Permiso Badges */
-        .badge-user {
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 0.4rem 0.8rem;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: inline-block;
-        }
-
-        .badge-permiso {
-            background: #ecfdf5;
-            color: #059669;
-            padding: 0.4rem 0.8rem;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            display: inline-block;
-        }
-
-        /* --- Feedback Toast --- */
-        .feedback {
-            position: fixed;
-            top: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100%);
-            padding: 1rem 2rem;
-            border-radius: 1rem;
-            background: white;
-            box-shadow: var(--shadow-strong);
-            z-index: 3000;
-            font-weight: 700;
-            transition: var(--transition);
-            opacity: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .feedback.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .feedback.success {
-            border-left: 5px solid var(--accent);
-            color: var(--text-main);
-        }
-
-        .feedback.error {
-            border-left: 5px solid var(--danger);
-            color: var(--danger);
-        }
-
-        /* Modal specific polish */
-        .modal-content {
-            border-radius: 1.5rem !important;
-            border: none !important;
-            box-shadow: var(--shadow-strong) !important;
-        }
-
-        .modal-header .modal-title {
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .form-control,
-        .form-select {
-            border-radius: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-color: #e2e8f0;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-            border-color: var(--accent);
-        }
     </style>
 </head>
 
-<body>
+<body class="bg-light">
 
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="d-flex flex-column align-items-center">
+        <div class="text-center">
             <img src="../logo nuevo.png" class="loader-logo-spin" alt="Cargando...">
-            <span class="loading-text">Cargando datos...</span>
+            <div class="loading-text mt-3 fw-bold">Aguarde un instante...</div>
         </div>
     </div>
 
     <div class="feedback" id="feedbackMessage"></div>
 
-    <header class="main-header p-3 sticky-top">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-3">
-                <img src="../logo nuevo.png" alt="Logo" class="header-logo-mini">
-                <h1 class="h6 mb-0 text-white font-black tracking-tight hide-on-mobile">
-                    STM <span class="fw-light opacity-60">| Panel Administrativo</span>
-                </h1>
-            </div>
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <img src="../logo nuevo.png" alt="STM">
+            <span>Gestor de aplicación web</span>
+        </div>
 
-            <div class="d-flex gap-3 align-items-center">
-                <div id="userBadge" class="glass-badge">
-                    <i class="fas fa-user-circle text-white"></i>
-                    <span id="adminName" class="text-white text-xs fw-bold tracking-wide uppercase">Cargando...</span>
-                </div>
-                <button onclick="logout()"
-                    class="btn btn-sm btn-outline-light rounded-pill px-3 border-white/30 hover:bg-white/10">
-                    <i class="fas fa-sign-out-alt"></i>
+        <nav class="nav-menu">
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard active" onclick="switchModule('inicio', this)">
+                    <i class="fas fa-th-large"></i> Inicio
                 </button>
             </div>
-        </div>
-    </header>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard" onclick="switchModule('convenios', this)">
+                    <i class="fas fa-handshake"></i> Convenios
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard" onclick="switchModule('novedades', this)">
+                    <i class="fas fa-newspaper"></i> Novedades
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard" onclick="switchModule('usuarios', this)">
+                    <i class="fas fa-user-shield"></i> Usuarios
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button id="nav-mensajes-recibidos" class="nav-link-dashboard"
+                    onclick="switchModule('mensajes-recibidos', this)">
+                    <i class="fas fa-comment-dots"></i> Mensajes Recibidos
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button id="nav-afiliaciones" class="nav-link-dashboard" onclick="switchModule('afiliaciones', this)">
+                    <i class="fas fa-user-plus"></i> Solicitudes Afiliación
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('quincho', this)">
+                    <i class="fas fa-home"></i> Quincho
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('deportes', this)">
+                    <i class="fas fa-running"></i> Deportes
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('proveduria', this)">
+                    <i class="fas fa-shopping-basket"></i> Proveduría
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('farmacia', this)">
+                    <i class="fas fa-briefcase-medical"></i> Farmacia
+                </button>
+            </div>
+            <div class="nav-item-dashboard">
+                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('capacitacion', this)">
+                    <i class="fas fa-chalkboard-teacher"></i> Capacitación
+                </button>
+            </div>
+        </nav>
 
-    <div class="container py-5">
-
-        <div class="header-section animate__animated animate__fadeIn">
-            <img src="../logo_STM.png" alt="Logo STM" class="main-logo mx-auto">
-            <h1 class="text-4xl font-black text-[var(--primary)] tracking-tight mb-2">Panel de Control General</h1>
-            <p class="text-[var(--text-muted)] font-medium max-w-2xl mx-auto">
-                Gestión de contenidos, convenios y acceso a usuarios del Sindicato de Trabajadores Municipales.
-            </p>
-        </div>
-
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
-            <ul class="nav nav-tabs" id="mainTabs" role="tablist">
-                <li class="nav-item">
-                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#convenios"
-                        onclick="setTab('Convenios')">
-                        <i class="fas fa-handshake"></i> Convenios
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#novedades"
-                        onclick="setTab('Novedades')">
-                        <i class="fas fa-newspaper"></i> Novedades
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#usuarios"
-                        onclick="setTab('Usuarios')">
-                        <i class="fas fa-user-shield"></i> Usuarios
-                    </button>
-                </li>
-
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#quincho" onclick="setTab('Quincho')">
-                        <i class="fas fa-home"></i> Quincho
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deportes"
-                        onclick="setTab('Deportes')">
-                        <i class="fas fa-volleyball-ball"></i> Deportes
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#proveduría"
-                        onclick="setTab('Proveduría')">
-                        <i class="fas fa-shopping-basket"></i> Proveduría
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#farmacia"
-                        onclick="setTab('Farmacia')">
-                        <i class="fas fa-briefcase-medical"></i> Farmacia
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#capacitación"
-                        onclick="setTab('Camacitación')">
-                        <i class="fas fa-chalkboard-teacher"></i> Capacitación
-                    </button>
-                </li>
-            </ul>
-
-            <button id="btnAdd" class="btn-premium btn-accent-p" onclick="showNewModal()">
-                <i class="fas fa-plus-circle"></i> Nuevo Registro
+        <div class="px-4 mt-auto">
+            <button onclick="logout()" class="nav-link-dashboard text-danger">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
         </div>
+    </aside>
 
-        <div class="tab-content">
-            <!-- TAB CONVENIOS -->
-            <div class="tab-pane fade show active" id="convenios">
-                <div class="table-responsive">
-                    <table class="table-premium" id="tableConvenios">
-                        <thead>
-                            <tr>
-                                <th style="width: 15%;">Rubro</th>
-                                <th style="width: 25%;">Título</th>
-                                <th style="width: 35%;">Detalle</th>
-                                <th style="width: 10%;">Estado</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+    <div class="main-wrapper">
+        <header class="top-header">
+            <div id="currentTime" class="fw-bold text-slate-500 small"></div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="text-end">
+                    <div id="adminName" class="fw-black small text-slate-800">Cargando...</div>
+                    <div class="text-emerald-500 fw-bold" style="font-size: 10px;">ADMINISTRADOR</div>
                 </div>
+                <img src="https://ui-avatars.com/api/?name=Admin&background=0f172a&color=fff" class="rounded-circle"
+                    width="35">
             </div>
+        </header>
 
-            <!-- TAB NOVEDADES -->
-            <div class="tab-pane fade" id="novedades">
-                <div class="table-responsive">
-                    <table class="table-premium" id="tableNovedades">
-                        <thead>
-                            <tr>
-                                <th style="width: 12%;">Fecha</th>
-                                <th style="width: 25%;">Título</th>
-                                <th style="width: 40%;">Descripción</th>
-                                <th style="width: 10%;">Estado</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+        <main class="content-area">
+            <!-- INICIO -->
+            <div id="module-inicio" class="module animate__animated animate__fadeIn">
+                <h3 class="fw-black mb-4">Vista General</h3>
 
-            <!-- TAB USUARIOS -->
-            <div class="tab-pane fade" id="usuarios">
-                <div class="table-responsive">
-                    <table class="table-premium" id="tableUsers">
-                        <thead>
-                            <tr>
-                                <th style="width: 25%;">Nombre Completo</th>
-                                <th style="width: 20%;">Usuario</th>
-                                <th style="width: 20%;">Permiso</th>
-                                <th style="width: 20%;">Email</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB MENSAJES -->
-            <div class="tab-pane fade" id="mensajes">
-                <div class="table-responsive">
-                    <table class="table-premium w-100" id="tableMensajes">
-                        <thead>
-                            <tr>
-                                <th>Usuario Destino</th>
-                                <th>Título</th>
-                                <th>Mensaje</th>
-                                <th>Fecha</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB QUINCHO -->
-            <div class="tab-pane fade" id="quincho">
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-tools fa-4x text-muted opacity-20"></i>
+                <h5 class="fw-black mb-4">Accesos directos</h5>
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="stat-card p-4 text-center d-block cursor-pointer hover-scale"
+                            onclick="quickAction('novedades')">
+                            <div class="stat-icon bg-blue-soft mx-auto mb-3"><i class="fas fa-newspaper"></i></div>
+                            <h6 class="fw-bold mb-1">Publicar Novedad</h6>
+                            <p class="text-xs text-muted mb-0">Nueva novedad</p>
+                        </div>
                     </div>
-                    <h3 class="fw-black text-[var(--primary)]">Módulo Quincho</h3>
-                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                    <div class="col-md-4">
+                        <div class="stat-card p-4 text-center d-block cursor-pointer hover-scale"
+                            onclick="quickAction('mensajes')">
+                            <div class="stat-icon bg-purple-soft mx-auto mb-3"><i class="fas fa-paper-plane"></i></div>
+                            <h6 class="fw-bold mb-1">Enviar Mensaje</h6>
+                            <p class="text-xs text-muted mb-0">Comunicación con usuarios</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card p-4 text-center d-block cursor-pointer hover-scale"
+                            onclick="quickAction('convenios')">
+                            <div class="stat-icon bg-accent-soft mx-auto mb-3"><i class="fas fa-handshake"></i></div>
+                            <h6 class="fw-bold mb-1">Nuevo Convenio</h6>
+                            <p class="text-xs text-muted mb-0">Añadir beneficio sindical</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-accent-soft"><i class="fas fa-users"></i></div>
+                        <div>
+                            <h3 class="mb-0 fw-black" id="stat-users">0</h3>
+                            <p class="mb-0 text-muted small fw-bold">Usuarios activos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue-soft"><i class="fas fa-handshake"></i></div>
+                        <div>
+                            <h3 class="mb-0 fw-black" id="stat-convenios">0</h3>
+                            <p class="mb-0 text-muted small fw-bold">Convenios activos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple-soft"><i class="fas fa-newspaper"></i></div>
+                        <div>
+                            <h3 class="mb-0 fw-black" id="stat-novedades">0</h3>
+                            <p class="mb-0 text-muted small fw-bold">Noticias activas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-red-soft"><i class="fas fa-comment-dots"></i></div>
+                        <div>
+                            <h3 class="mb-0 fw-black" id="stat-recibidos">0</h3>
+                            <p class="mb-0 text-muted small fw-bold">Mensajes pendientes de usuarios</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue-soft"><i class="fas fa-user-plus"></i></div>
+                        <div>
+                            <h3 class="mb-0 fw-black" id="stat-afiliaciones">0</h3>
+                            <p class="mb-0 text-muted small fw-bold">Solicitudes Afiliación</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- TAB DEPORTES -->
-            <div class="tab-pane fade" id="deportes">
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-running fa-4x text-muted opacity-20"></i>
+            <!-- CONVENIOS -->
+            <div id="module-convenios" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Convenios</h4>
+                    <button class="btn-premium btn-accent-p" onclick="showNewModal()">
+                        <i class="fas fa-plus-circle"></i> Nuevo Registro
+                    </button>
+                </div>
+                <div class="table-container">
+                    <div class="mb-4 d-flex">
+                        <input type="text" id="convenioSearchInput" class="form-control w-25"
+                            placeholder="Buscar convenio..." onkeyup="filterConveniosTable()">
                     </div>
-                    <h3 class="fw-black text-[var(--primary)]">Módulo Deportes</h3>
-                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableConvenios">
+                            <thead>
+                                <tr>
+                                    <th>Rubro</th>
+                                    <th>Título</th>
+                                    <th style="width: 40%">Detalle</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- TAB PROVEDURIA -->
-            <div class="tab-pane fade" id="proveduría">
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-shopping-basket fa-4x text-muted opacity-20"></i>
+
+            <div id="module-novedades" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Novedades</h4>
+                    <button class="btn-premium btn-accent-p" onclick="showNewModal()">
+                        <i class="fas fa-plus-circle"></i> Publicar Noticia
+                    </button>
+                </div>
+                <div class="table-container">
+                    <div class="mb-4 d-flex">
+                        <input type="text" id="novedadSearchInput" class="form-control w-25"
+                            placeholder="Buscar noticia..." onkeyup="filterNovedadesTable()">
                     </div>
-                    <h3 class="fw-black text-[var(--primary)]">Módulo Proveduría</h3>
-                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableNovedades">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Título</th>
+                                    <th style="width: 45%">Contenido</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- TAB FARMACIA -->
-            <div class="tab-pane fade" id="farmacia">
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-briefcase-medical fa-4x text-muted opacity-20"></i>
+
+            <!-- USUARIOS -->
+            <div id="module-usuarios" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Control de Usuarios</h4>
+                    <button class="btn-premium btn-accent-p" onclick="showNewModal()">
+                        <i class="fas fa-plus-circle"></i> Nuevo Usuario
+                    </button>
+                </div>
+                <div class="table-container">
+                    <div class="mb-4 d-flex">
+                        <input type="text" id="userSearchInput" class="form-control w-25"
+                            placeholder="Buscar usuario..." onkeyup="filterUsersTable()">
                     </div>
-                    <h3 class="fw-black text-[var(--primary)]">Módulo Farmacia</h3>
-                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableUsers">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Usuario</th>
+                                    <th>Permiso</th>
+                                    <th>Email</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <!-- TAB CAPACITACION -->
-            <div class="tab-pane fade" id="capacitación">
-                <div class="text-center py-5">
-                    <div class="mb-4">
-                        <i class="fas fa-chalkboard-teacher fa-4x text-muted opacity-20"></i>
+
+
+            <!-- MODULE: MENSAJES -->
+            <div id="module-mensajes" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Mensajería Directa</h4>
+                    <button class="btn-premium btn-accent-p shadow-sm" onclick="showNewModal()">
+                        <i class="fas fa-plus-circle"></i> Nuevo Mensaje
+                    </button>
+                </div>
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableMensajes">
+                            <thead>
+                                <tr>
+                                    <th>Destinatario</th>
+                                    <th>Asunto</th>
+                                    <th>Mensaje</th>
+                                    <th>Fecha</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
-                    <h3 class="fw-black text-[var(--primary)]">Módulo Capacitación</h3>
-                    <p class="text-muted font-medium">Este apartado estará disponible en breve.</p>
                 </div>
             </div>
-        </div>
+
+            <!-- MODULE: MENSAJES RECIBIDOS (WEB/APP) -->
+            <div id="module-mensajes-recibidos" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Mensajes Recibidos (Web/App)</h4>
+                </div>
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableRecibidos">
+                            <thead>
+                                <tr>
+                                    <th>Remitente</th>
+                                    <th>Mensaje</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODULE: AFILIACIONES -->
+            <div id="module-afiliaciones" class="module d-none animate__animated animate__fadeIn">
+                <div class="module-header">
+                    <h4 class="fw-black m-0">Solicitudes de Afiliación</h4>
+                </div>
+                <div class="table-container">
+                    <div class="table-responsive">
+                        <table class="table-premium w-100" id="tableAfiliaciones">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Nombre y Apellido</th>
+                                    <th>Legajo</th>
+                                    <th>DNI</th>
+                                    <th>WhatsApp</th>
+                                    <th>Email</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OTROS MÓDULOS (EN DESARROLLO) -->
+            <div id="module-quincho" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-home fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Quincho</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">PRÓXIMAMENTE</span>
+                </div>
+            </div>
+
+            <div id="module-deportes" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-volleyball-ball fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Deportes</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">EN DESARROLLO</span>
+                </div>
+            </div>
+
+            <div id="module-proveduria" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-shopping-basket fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Proveduría</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">PRÓXIMAMENTE</span>
+                </div>
+            </div>
+
+            <div id="module-farmacia" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-medkit fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Farmacia</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">PRÓXIMAMENTE</span>
+                </div>
+            </div>
+
+            <div id="module-capacitacion" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-chalkboard-teacher fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Capacitación</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">PRÓXIMAMENTE</span>
+                </div>
+            </div>
+
+            <div id="module-afiliacion" class="module d-none animate__animated animate__fadeIn">
+                <div class="text-center py-5">
+                    <div class="mb-4 d-inline-block p-4 rounded-circle bg-slate-100">
+                        <i class="fas fa-user-plus fa-4x text-slate-300"></i>
+                    </div>
+                    <h3 class="fw-black text-slate-400">Módulo Afiliación</h3>
+                    <p class="text-muted fw-medium max-w-md mx-auto">Próximamente.</p>
+                    <span class="badge rounded-pill bg-slate-200 text-slate-500 px-3 py-2">EN DESARROLLO</span>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <!-- DATALIST PARA RUBROS (Se llena dinámicamente) -->
+    <!-- MODALES -->
     <datalist id="rubrosList"></datalist>
 
-    <!-- MODAL FORM -->
     <div class="modal fade" id="entityModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg" style="border-radius: 1.5rem;">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 1.5rem;">
                 <div class="modal-header border-0 p-4">
                     <h5 class="modal-title fw-black" id="modalTitle">Nuevo Registro</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -648,53 +890,72 @@
                     <input type="hidden" id="entityId">
                     <div class="modal-body p-4 pt-0">
                         <div id="dynamicForm"></div>
-
-                        <div class="mt-4 p-3 rounded-4 bg-light">
-                            <label class="form-label text-xs fw-bold text-uppercase opacity-50">Estado de
-                                visibilidad</label>
+                        <div id="statusSection" class="mt-4 p-3 rounded-4 bg-light">
+                            <label class="form-label text-xs fw-bold text-uppercase opacity-50">Estado</label>
                             <div class="d-flex gap-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="activo" id="checkActive"
-                                        value="SI" checked>
-                                    <label class="form-check-label fw-bold text-success"
-                                        for="checkActive">ACTIVO</label>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="activo"
+                                        id="checkActive" value="SI" checked><label
+                                        class="form-check-label fw-bold text-success" for="checkActive">ACTIVO</label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="activo" id="checkInactive"
-                                        value="NO">
-                                    <label class="form-check-label fw-bold text-danger"
-                                        for="checkInactive">INACTIVO</label>
-                                </div>
+                                <div class="form-check"><input class="form-check-input" type="radio" name="activo"
+                                        id="checkInactive" value="NO"><label
+                                        class="form-check-label fw-bold text-danger"
+                                        for="checkInactive">INACTIVO</label></div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer border-0 p-4 pt-0 gap-2">
-                        <button type="button" class="btn-premium bg-slate-100 text-slate-800"
+                        <button type="button" class="btn-premium bg-slate-100 text-slate-600"
                             data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="btnSubmitForm" class="btn-premium btn-accent-p">
-                            <i class="fas fa-save me-2"></i> <span>Guardar Cambios</span>
-                        </button>
+                        <button type="submit" id="btnSubmitForm" class="btn-premium btn-accent-p"><i
+                                class="fas fa-save me-2"></i> Guardar</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- MODAL CONFIRMACIÓN -->
+    </div>
+
     <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body text-center p-5">
-                    <div class="text-danger mb-4" style="font-size: 3.5rem;">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <h4 class="fw-black text-[var(--primary)] mb-2" id="confirmTitle">¿Confirmar?</h4>
-                    <p class="text-muted font-medium mb-0" id="confirmMessage">¿Deseas realizar esta acción?</p>
+            <div class="modal-content text-center p-4">
+                <i class="fas fa-exclamation-triangle text-danger fa-3x mb-3"></i>
+                <h5 class="fw-black" id="confirmTitle">¿Estás seguro?</h5>
+                <p class="text-muted small" id="confirmMessage"></p>
+                <div class="d-flex gap-2 mt-3">
+                    <button class="btn-premium bg-slate-100 w-100" data-bs-dismiss="modal">No</button>
+                    <button id="confirmBtnAction" class="btn-premium bg-danger text-white w-100">Eliminar</button>
                 </div>
-                <div class="modal-footer border-0 flex-nowrap p-4 pt-0 gap-3">
-                    <button type="button" class="btn-premium bg-slate-100 w-100" data-bs-dismiss="modal">No</button>
-                    <button type="button" id="confirmBtnAction" class="btn-premium bg-danger text-white w-100">Sí,
-                        seguro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL MENSAJE RECIBIDO (PROCESO DE ALERTA) -->
+    <div class="modal fade" id="modalRecibidoMsg" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg border-0" style="border-radius: 1.5rem;">
+                <div class="modal-body p-4 text-center">
+                    <div class="stat-icon bg-red-soft mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem;">
+                        <i class="fas fa-envelope-open-text animate__animated animate__bounce animate__infinite"></i>
+                    </div>
+                    <h4 class="fw-black mb-1">¡Nuevo Mensaje Recibido!</h4>
+                    <p class="text-muted small mb-4">Un usuario ha enviado una consulta desde la Web/App</p>
+
+                    <div class="p-3 bg-light rounded-4 text-start mb-4 border">
+                        <div class="d-flex align-items-center gap-2 mb-2">
+                            <img id="alertUserImg" src="" class="rounded-circle" width="30">
+                            <span id="alertUserName" class="fw-bold small text-slate-700">Usuario...</span>
+                        </div>
+                        <p id="alertUserMsg" class="mb-0 small text-slate-600" style="font-style: italic;">"Cargando
+                            mensaje..."</p>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn-premium btn-accent-p" onclick="markAsReadAndClose()">
+                            <i class="fas fa-check-circle me-2"></i> Marcar como visto
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -703,78 +964,241 @@
     <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // CONFIGURACIÓN DE BACKEND
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwd9b0Om70wp2uJO616Kt4T1EB-1vWm_Ru9F4LANYbYca3LAoBNwCwRoI1rHXHZrAW9/exec';
-
-        const SHEET_ID = '16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzuxst6AukDqEOH36tLRZlIY2T_bzPZuIgdVQAkfc4L8vTeS0aw8DreuisQASBQoOU/exec';
 
         let activeTab = 'Convenios';
-        let modal;
-        let confirmModal;
+        let activeModule = 'inicio';
+        let modal, confirmModal;
         let dataStore = {
             Convenios: [],
             Novedades: [],
             Usuarios: [],
-            Mensajes: []
+            Mensajes: [],
+            MensajesRecibidos: [],
+            Afiliaciones: []
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            // CARGAR NOMBRE DE USUARIO LOGUEADO
+            updateClock();
+            setInterval(updateClock, 1000);
+
             const usuarioLogueado = sessionStorage.getItem('usuario_nombre');
-            if (usuarioLogueado) {
-                document.getElementById('adminName').innerText = usuarioLogueado.toUpperCase();
-            } else {
-                document.getElementById('adminName').innerText = 'ADMINISTRADOR';
-            }
+            document.getElementById('adminName').innerText = usuarioLogueado ? usuarioLogueado.toUpperCase() : 'ADMINISTRADOR';
 
             modal = new bootstrap.Modal(document.getElementById('entityModal'));
             confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
             loadData();
 
-            document.getElementById('entityForm').onsubmit = (e) => {
-                e.preventDefault();
-                saveEntry();
-            };
+            document.getElementById('entityForm').onsubmit = (e) => { e.preventDefault(); saveEntry(); };
         });
 
-        function setTab(tab) {
-            activeTab = tab;
-            const btnAdd = document.getElementById('btnAdd');
+        function updateClock() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            document.getElementById('currentTime').innerText = now.toLocaleDateString('es-ES', options);
+        }
 
-            // Mostrar el botón Agregar solo en las pestañas funcionales
-            if (activeTab === 'Quincho' || activeTab === 'Deportes') {
-                btnAdd.style.display = 'none';
-            } else {
-                btnAdd.style.display = 'inline-flex';
-            }
-            renderAll();
+        function switchModule(moduleId, element) {
+            document.querySelectorAll('.nav-link-dashboard').forEach(link => link.classList.remove('active'));
+            element.classList.add('active');
+
+            document.querySelectorAll('.module').forEach(m => m.classList.add('d-none'));
+            const targetModule = document.getElementById(`module-${moduleId}`);
+            if (targetModule) targetModule.classList.remove('d-none');
+
+            activeModule = moduleId;
+            const tabMap = {
+                'convenios': 'Convenios',
+                'novedades': 'Novedades',
+                'usuarios': 'Usuarios',
+                'mensajes': 'Mensajes',
+                'mensajes-recibidos': 'MensajesRecibidos',
+                'afiliaciones': 'Afiliaciones',
+                'afiliacion': 'Afiliación',
+                'capacitacion': 'Capacitación'
+            };
+            activeTab = tabMap[moduleId] || 'Convenios';
         }
 
         async function loadData() {
             toggleLoader(true);
             try {
+                console.log("Conectando con URL:", WEB_APP_URL);
                 const response = await fetch(WEB_APP_URL);
-                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(`Servidor fuera de línea o URL incorrecta (${response.status})`);
+                }
+
+                const text = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(text);
+                } catch (e) {
+                    console.error("La respuesta no es un JSON válido. Servidor respondió:", text);
+                    throw new Error("Respuesta del servidor inválida (No es JSON)");
+                }
+
+                console.log("✅ Datos cargados:", result);
+
+                if (result.status === 'ERROR') {
+                    throw new Error(result.message);
+                }
 
                 dataStore.Convenios = result.CONVENIOS || [];
                 dataStore.Novedades = result.NOVEDADES || [];
                 dataStore.Usuarios = result.USUARIOS || [];
                 dataStore.Mensajes = result.MENSAJES || [];
+                dataStore.MensajesRecibidos = result.MENSAJES_RECIBIDOS || [];
+                dataStore.Afiliaciones = result.AFILIACIONES || [];
 
                 updateRubrosDatalist();
+                updateStats();
                 renderAll();
+                checkIncomingMessages();
+
             } catch (err) {
-                console.error("Error loading data:", err);
-                showFeedback("Error al cargar datos.", false);
+                console.error("❌ ERROR TÉCNICO:", err.message);
+                showFeedback(`Error: ${err.message}`, false);
             }
             toggleLoader(false);
         }
 
-        // FUNCIÓN PARA ACTUALIZAR EL DATALIST DE RUBROS EXISTENTES
+        function updateStats() {
+            document.getElementById('stat-users').innerText = dataStore.Usuarios.length;
+            document.getElementById('stat-convenios').innerText = dataStore.Convenios.filter(c => c.activo === 'SI').length;
+            document.getElementById('stat-novedades').innerText = dataStore.Novedades.filter(n => n.activo === 'SI').length;
+
+            // Lógica robusta para contar NO LEÍDOS (incluyendo vacíos)
+            const unreadCount = dataStore.MensajesRecibidos.filter(m => {
+                const v = (m.visto || "NO").toString().trim().toUpperCase();
+                return v === 'NO' || v === '';
+            }).length;
+
+            const statRecibidos = document.getElementById('stat-recibidos');
+            const navRecibidos = document.getElementById('nav-mensajes-recibidos');
+            statRecibidos.innerText = unreadCount;
+
+            if (unreadCount > 0) {
+                statRecibidos.parentElement.parentElement.classList.add('blink-red');
+                statRecibidos.parentElement.parentElement.classList.remove('stat-card-disabled');
+                if (navRecibidos) navRecibidos.classList.add('blink-red');
+            } else {
+                statRecibidos.parentElement.parentElement.classList.remove('blink-red');
+                statRecibidos.parentElement.parentElement.classList.add('stat-card-disabled');
+                if (navRecibidos) navRecibidos.classList.remove('blink-red');
+            }
+
+            const statAfiliaciones = document.getElementById('stat-afiliaciones');
+            const navAfiliaciones = document.getElementById('nav-afiliaciones');
+            statAfiliaciones.innerText = dataStore.Afiliaciones.length;
+
+            const todayISO = new Date().toISOString().split('T')[0];
+            const hasNewAfiliationToday = dataStore.Afiliaciones.some(af => {
+                // El formato suele ser YYYY-MM-DD
+                const afDate = (af.fecha_solicitud || "").toString();
+                return afDate.includes(todayISO);
+            });
+
+            if (hasNewAfiliationToday) {
+                statAfiliaciones.parentElement.parentElement.classList.add('blink-red');
+                if (navAfiliaciones) navAfiliaciones.classList.add('blink-red');
+            } else {
+                statAfiliaciones.parentElement.parentElement.classList.remove('blink-red');
+                if (navAfiliaciones) navAfiliaciones.classList.remove('blink-red');
+            }
+        }
+
+        function checkIncomingMessages() {
+            const today = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            // Buscamos mensajes de hoy no vistos
+            const unreadToday = dataStore.MensajesRecibidos.filter(m => {
+                const v = (m.visto || "NO").toString().trim().toUpperCase();
+                const isUnread = v === 'NO' || v === '';
+                return isUnread && (m.fecha_mensaje || "").includes(today);
+            });
+
+            if (unreadToday.length > 0) {
+                const msg = unreadToday[0];
+                const sender = dataStore.Usuarios.find(u => u.id.toString() === msg.id_user.toString());
+                const senderName = sender ? `${sender.apellido}, ${sender.nombre}` : `Usuario ID: ${msg.id_user}`;
+
+                const img = document.getElementById('alertUserImg');
+                const name = document.getElementById('alertUserName');
+                const body = document.getElementById('alertUserMsg');
+
+                if (name) name.innerText = senderName;
+                if (body) body.innerText = `"${msg.mensaje}"`;
+                if (img) img.src = `https://ui-avatars.com/api/?name=${senderName}&background=ef4444&color=fff`;
+
+                window.currentPendingMsgId = msg.id;
+
+                const alertModalElem = document.getElementById('modalRecibidoMsg');
+                if (alertModalElem) {
+                    const alertModal = new bootstrap.Modal(alertModalElem);
+                    alertModal.show();
+                }
+            }
+        }
+
+        async function markManualAsRead(id) {
+            try {
+                toggleLoader(true);
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        action: 'UPDATE',
+                        sheet: 'MENSAJES_RECIBIDOS',
+                        id: id,
+                        data: { visto: 'SI' }
+                    })
+                });
+                loadData();
+            } catch (e) {
+                console.error(e);
+                showFeedback("Error al actualizar", false);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        async function markAsReadAndClose() {
+            if (!window.currentPendingMsgId) return;
+
+            const btn = event.target.closest('button');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Procesando...`;
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        action: 'UPDATE',
+                        sheet: 'MENSAJES_RECIBIDOS',
+                        id: window.currentPendingMsgId,
+                        data: { visto: 'SI' }
+                    })
+                });
+
+                // Cerramos modal y recargamos datos para actualizar contadores
+                const alertModal = bootstrap.Modal.getInstance(document.getElementById('modalRecibidoMsg'));
+                alertModal.hide();
+                loadData();
+
+            } catch (err) {
+                console.error(err);
+                alert("Error al actualizar estado");
+                btn.innerHTML = originalHTML;
+            }
+        }
+
         function updateRubrosDatalist() {
-            const rubrosExistentes = [...new Set(dataStore.Convenios.map(c => c.rubro.trim().toUpperCase()))];
+            const rubrosExistentes = [...new Set(dataStore.Convenios.map(c => (c.rubro || "").trim().toUpperCase()))];
             const datalist = document.getElementById('rubrosList');
-            datalist.innerHTML = rubrosExistentes.map(r => `<option value="${r}">`).join('');
+            if (datalist) datalist.innerHTML = rubrosExistentes.map(r => `<option value="${r}">`).join('');
         }
 
         function renderAll() {
@@ -782,15 +1206,94 @@
             renderNovedades();
             renderUsuarios();
             renderMensajes();
+            renderMensajesRecibidos();
+            renderAfiliaciones();
         }
 
-        function renderConvenios() {
-            const tbody = document.querySelector('#tableConvenios tbody');
-            tbody.innerHTML = dataStore.Convenios.map(c => `
+        function renderAfiliaciones() {
+            const tbody = document.querySelector('#tableAfiliaciones tbody');
+            if (!tbody) return;
+
+            // Ordenamos del más reciente al más antiguo
+            const sorted = [...dataStore.Afiliaciones].sort((a, b) => {
+                const dateA = new Date(a.fecha_solicitud || 0);
+                const dateB = new Date(b.fecha_solicitud || 0);
+                return dateB - dateA;
+            });
+
+            tbody.innerHTML = sorted.map(af => `
                 <tr>
-                    <td><span class="badge bg-light text-primary fw-bold px-2 py-1" style="font-size: 0.7rem;">${c.rubro}</span></td>
-                    <td class="fw-bold text-[var(--primary)]">${c.titulo}</td>
-                    <td><small class="text-muted font-medium">${(c.detalle || "").toString().substring(0, 100)}...</small></td>
+                    <td><small class="fw-bold text-slate-400">${formatDisplayDate(af.fecha_solicitud || af.fecha)}</small></td>
+                    <td class="fw-bold text-slate-700">${af.nom_ap || '-'}</td>
+                    <td><span class="badge-user">${af.legajo || '-'}</span></td>
+                    <td><span class="badge-permiso">${af.dni || '-'}</span></td>
+                    <td><small class="text-muted fw-bold">${af.telefono || '-'}</small></td>
+                    <td><small class="text-muted">${af.email || '-'}</small></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                             <div class="action-btn btn-delete" onclick="deleteEntry('AFILIACIONES', ${af.id})"><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderMensajesRecibidos() {
+            const tbody = document.querySelector('#tableRecibidos tbody');
+            if (!tbody) return;
+            const sorted = [...dataStore.MensajesRecibidos].sort((a, b) => (b.id || 0) - (a.id || 0));
+            tbody.innerHTML = sorted.map(m => {
+                const sender = dataStore.Usuarios.find(u => u.id.toString() === m.id_user.toString());
+                const senderName = sender ? `${sender.apellido}, ${sender.nombre}` : `Usuario ID: ${m.id_user}`;
+                const v = (m.visto || "NO").toString().trim().toUpperCase();
+                const isUnread = v === 'NO' || v === '';
+
+                return `<tr style="${isUnread ? 'background: rgba(239, 68, 68, 0.03);' : ''}">
+                    <td><div class="fw-bold text-slate-700 small">${senderName}</div></td>
+                    <td><div class="small fw-medium ${isUnread ? 'text-danger' : 'text-slate-600'}">${m.mensaje}</div></td>
+                    <td><div class="small opacity-75">${m.fecha_mensaje || '---'}</div></td>
+                    <td><span class="badge-status ${isUnread ? 'status-inactive' : 'status-active'}">${isUnread ? 'PENDIENTE' : 'VISTO'}</span></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                             ${isUnread ? `<div class="action-btn btn-edit" style="background: rgba(16, 185, 129, 0.1); color: #10b981;" onclick="markManualAsRead('${m.id}')" title="Marcar como visto"><i class="fas fa-check"></i></div>` : ''}
+                             <div class="action-btn btn-delete" onclick="deleteEntry('MENSAJES_RECIBIDOS', ${m.id})"><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderMensajes() {
+            const tbody = document.querySelector('#tableMensajes tbody');
+            if (!tbody) return;
+            tbody.innerHTML = dataStore.Mensajes.map(m => {
+                const fecha = m.fecha ? new Date(m.fecha).toLocaleString() : '---';
+                // Buscar nombre del destinatario
+                const user = dataStore.Usuarios.find(u => u.id.toString() === m.id_user.toString());
+                const dest = user ? `${user.apellido}, ${user.nombre}` : `ID: ${m.id_user}`;
+
+                return `<tr>
+                    <td><div class="fw-bold text-slate-700">${dest}</div></td>
+                    <td><div class="fw-medium">${m.titulo || 'Sin Asunto'}</div></td>
+                    <td><div class="text-xs text-muted" style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${m.mensaje}</div></td>
+                    <td><div class="small opacity-75">${fecha}</div></td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                             <div class="action-btn btn-delete" onclick="deleteEntry('MENSAJES', ${m.id_mensaje || m.id})"><i class="fas fa-trash"></i></div>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderConvenios(filteredList = null) {
+            const tbody = document.querySelector('#tableConvenios tbody');
+            const list = filteredList || dataStore.Convenios;
+            tbody.innerHTML = list.map(c => `
+                <tr>
+                    <td><span class="badge-status status-active">${c.rubro}</span></td>
+                    <td class="fw-bold text-slate-700">${c.titulo}</td>
+                    <td><small class="text-muted">${(c.detalle || "").toString().substring(0, 70)}...</small></td>
                     <td><span class="badge-status ${c.activo === 'SI' ? 'status-active' : 'status-inactive'}">${c.activo}</span></td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
@@ -802,32 +1305,27 @@
             `).join('');
         }
 
-        function formatDisplayDate(dateStr) {
-            if (!dateStr) return '';
-            try {
-                const dateObj = new Date(dateStr);
-                if (isNaN(dateObj.getTime())) return dateStr;
-                const day = String(dateObj.getDate()).padStart(2, '0');
-                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-                const year = dateObj.getFullYear();
-                return `${day}/${month}/${year}`;
-            } catch (e) {
-                return dateStr;
-            }
+        function filterConveniosTable() {
+            const query = document.getElementById('convenioSearchInput').value.toLowerCase().trim();
+            const filtered = dataStore.Convenios.filter(c => (c.titulo || "").toLowerCase().includes(query) || (c.rubro || "").toLowerCase().includes(query));
+            renderConvenios(filtered);
         }
 
         function renderNovedades() {
             const tbody = document.querySelector('#tableNovedades tbody');
+
+            // Ordenamos: más reciente primero
             const sortedNovedades = [...dataStore.Novedades].sort((a, b) => {
                 const dateA = new Date(a.fecha_novedad || a.fecha);
                 const dateB = new Date(b.fecha_novedad || b.fecha);
                 return dateB - dateA;
             });
+
             tbody.innerHTML = sortedNovedades.map(n => `
                 <tr>
-                    <td><small class="fw-bold text-[var(--primary)]">${formatDisplayDate(n.fecha_novedad || n.fecha)}</small></td>
-                    <td class="fw-bold text-emerald-600">${n.titulo}</td>
-                    <td><small class="text-muted font-medium">${((n.descripción || n.descripcion || n.detalle || "")).toString().substring(0, 100)}...</small></td>
+                    <td><small class="fw-bold text-slate-400">${formatDisplayDate(n.fecha_novedad || n.fecha)}</small></td>
+                    <td class="fw-bold text-slate-700">${n.titulo}</td>
+                    <td><small class="text-muted">${(n.descripcion || n.descripción || "").toString().substring(0, 80)}...</small></td>
                     <td><span class="badge-status ${n.activo === 'SI' ? 'status-active' : 'status-inactive'}">${n.activo}</span></td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
@@ -839,17 +1337,27 @@
             `).join('');
         }
 
-        function renderUsuarios() {
+        function formatDisplayDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const d = new Date(dateStr);
+                if (isNaN(d.getTime())) return dateStr;
+                return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+            } catch (e) { return dateStr; }
+        }
+
+        function renderUsuarios(filteredList = null) {
             const tbody = document.querySelector('#tableUsers tbody');
-            tbody.innerHTML = dataStore.Usuarios.map(u => `
+            const list = filteredList || dataStore.Usuarios;
+            tbody.innerHTML = list.map(u => `
                 <tr>
-                    <td class="fw-bold text-[var(--primary)]">${u.apellido}, ${u.nombre}</td>
-                    <td><span class="badge-user">${u.usuario || u.user || '-'}</span></td>
-                    <td><span class="badge-permiso">${u.permiso || u.permisos || '-'}</span></td>
+                    <td class="fw-bold text-slate-700">${u.apellido}, ${u.nombre}</td>
+                    <td><span class="badge-user">${u.usuario || u.user}</span></td>
+                    <td><span class="badge-permiso">${u.permiso || 'USER'}</span></td>
                     <td><small class="text-muted">${u.email || '-'}</small></td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
-                            <div class="action-btn btn-msg" title="Enviar Mensaje" onclick='sendMessageToUser("${u.id}")'><i class="fas fa-comment-dots"></i></div>
+                            <div class="action-btn btn-msg" onclick="openDirectMessage('${u.id}')" title="Enviar Mensaje"><i class="fas fa-envelope"></i></div>
                             <div class="action-btn btn-edit" onclick='editEntry("Usuarios", ${JSON.stringify(u)})'><i class="fas fa-edit"></i></div>
                             <div class="action-btn btn-delete" onclick='deleteEntry("Usuarios", ${u.id})'><i class="fas fa-trash"></i></div>
                         </div>
@@ -858,335 +1366,203 @@
             `).join('');
         }
 
-        function sendMessageToUser(userId) {
-            // Actualizar estado interno
-            setTab('Mensajes');
-
-            // Si el botón no existe, forzamos mostrar el pane de mensajes
-            const msgPane = document.getElementById('mensajes');
-            if (msgPane) {
-                // Ocultar panes activos
-                document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active', 'show'));
-                // Mostrar pane de mensajes
-                msgPane.classList.add('active', 'show');
-
-                // Abrir modal y preseleccionar usuario
-                setTimeout(() => {
-                    showNewModal();
-                    const select = document.querySelector('select[name="id_user"]');
-                    if (select) select.value = userId;
-                }, 100);
-            }
+        function filterNovedadesTable() {
+            const query = document.getElementById('novedadSearchInput').value.toLowerCase().trim();
+            const filtered = dataStore.Novedades.filter(n => (n.titulo || "").toLowerCase().includes(query) || (n.descripcion || n.descripción || "").toLowerCase().includes(query));
+            renderNovedadesFiltered(filtered);
         }
 
-        function renderMensajes() {
-            const tbody = document.querySelector('#tableMensajes tbody');
-            tbody.innerHTML = dataStore.Mensajes.slice().reverse().map(m => {
-                const user = dataStore.Usuarios.find(u => String(u.id) === String(m.id_user));
-                const userName = user ? `${user.apellido}, ${user.nombre}` : 'Usuario desconocido';
-                const msgId = m.id_mensaje || m.id;
-                return `
+        function renderNovedadesFiltered(list) {
+            const tbody = document.querySelector('#tableNovedades tbody');
+            tbody.innerHTML = list.map(n => `
                 <tr>
-                    <td class="fw-bold text-[var(--primary)]">${userName}</td>
-                    <td class="fw-bold text-accent">${m.titulo || '-'}</td>
-                    <td><small class="text-muted font-medium">${m.mensaje}</small></td>
-                    <td><small class="fw-bold text-slate-500">${formatDisplayDate(m.fecha)}</small></td>
+                    <td><small class="fw-bold text-slate-400">${formatDisplayDate(n.fecha_novedad || n.fecha)}</small></td>
+                    <td class="fw-bold text-slate-700">${n.titulo}</td>
+                    <td><small class="text-muted">${(n.descripcion || n.descripción || "").toString().substring(0, 80)}...</small></td>
+                    <td><span class="badge-status ${n.activo === 'SI' ? 'status-active' : 'status-inactive'}">${n.activo}</span></td>
                     <td class="text-center">
                         <div class="d-flex justify-content-center gap-2">
-                            <div class="action-btn btn-delete" onclick='deleteEntry("Mensajes", ${msgId})'><i class="fas fa-trash"></i></div>
+                            <div class="action-btn btn-edit" onclick='editEntry("Novedades", ${JSON.stringify(n)})'><i class="fas fa-edit"></i></div>
+                            <div class="action-btn btn-delete" onclick='deleteEntry("Novedades", ${n.id})'><i class="fas fa-trash"></i></div>
                         </div>
                     </td>
                 </tr>
-            `}).join('');
+            `).join('');
         }
 
-        function showNewModal() {
-            document.getElementById('entityId').value = "";
-            document.getElementById('modalTitle').innerText = `Nuevo registro en ${activeTab}`;
-
-            const btnText = document.querySelector('#btnSubmitForm span');
-            const btnIcon = document.querySelector('#btnSubmitForm i');
-
-            if (activeTab === 'Mensajes') {
-                btnText.innerText = "Enviar Mensaje";
-                btnIcon.className = "fas fa-paper-plane me-2";
-            } else {
-                btnText.innerText = "Guardar Cambios";
-                btnIcon.className = "fas fa-save me-2";
-            }
-
-            const statusContainer = document.querySelector('.bg-light.rounded-4');
-            if (statusContainer) {
-                statusContainer.style.display = (activeTab === 'Usuarios') ? 'none' : 'block';
-            }
-
-            renderDynamicFields();
-            modal.show();
+        function filterUsersTable() {
+            const query = document.getElementById('userSearchInput').value.toLowerCase().trim();
+            const filtered = dataStore.Usuarios.filter(u =>
+                (u.nombre || "").toLowerCase().includes(query) ||
+                (u.apellido || "").toLowerCase().includes(query) ||
+                (u.usuario || u.user || "").toLowerCase().includes(query) ||
+                (u.email || "").toLowerCase().includes(query)
+            );
+            renderUsuarios(filtered);
         }
+
 
         function renderDynamicFields(data = null) {
             const container = document.getElementById('dynamicForm');
+            const statusSec = document.getElementById('statusSection');
+            const btnSubmit = document.getElementById('btnSubmitForm');
             let html = "";
 
-            if (activeTab === 'Convenios') {
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Rubro (Selecciona uno existente o escribe uno nuevo)</label>
-                        <input type="text" class="form-control" name="rubro" list="rubrosList" value="${data?.rubro || ''}" required placeholder="Ej: SALUD, AUTOMOTOR">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Título</label>
-                        <input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Detalle / Beneficio</label>
-                        <textarea class="form-control" name="detalle" rows="4" required>${data?.detalle || ''}</textarea>
-                    </div>
-                `;
-            } else if (activeTab === 'Novedades') {
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Título de la Noticia</label>
-                        <input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Descripción / Cuerpo</label>
-                        <textarea class="form-control" name="descripción" rows="6" required>${data?.descripción || data?.descripcion || data?.detalle || ''}</textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Fecha</label>
-                        <input type="date" class="form-control" name="fecha_novedad" value="${data ? formatDateForInput(data.fecha_novedad || data.fecha) : ''}" required>
-                    </div>
-                `;
-            } else if (activeTab === 'Mensajes') {
-                const statusContainer = document.querySelector('.bg-light.rounded-4');
-                if (statusContainer) statusContainer.style.display = 'none';
-
-                const userOptions = dataStore.Usuarios.map(u =>
-                    `<option value="${u.id}">${u.apellido}, ${u.nombre} (${u.usuario})</option>`
-                ).join('');
-
-                html = `
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Seleccionar Usuario Destino</label>
-                        <select class="form-select" name="id_user" required>
-                            <option value="">-- Selecciona un usuario --</option>
-                            ${userOptions}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Asunto / Título</label>
-                        <input type="text" class="form-control" name="titulo" placeholder="Ej: Importante, Recordatorio, Bienvenida" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Mensaje</label>
-                        <textarea class="form-control" name="mensaje" rows="4" required placeholder="Escribe el mensaje para el usuario..."></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Fecha del Mensaje</label>
-                        <input type="date" class="form-control" name="fecha" value="${new Date().toISOString().split('T')[0]}" required>
-                    </div>
-                `;
-            } else if (activeTab === 'Usuarios') {
-                const statusContainer = document.querySelector('.bg-light.rounded-4');
-                if (statusContainer) statusContainer.style.display = 'none';
-                html = `
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Apellido</label>
-                            <input type="text" class="form-control" name="apellido" id="inputApellido" value="${data?.apellido || ''}" required oninput="updateUsernameSuggestion()">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Nombre</label>
-                            <input type="text" class="form-control" name="nombre" id="inputNombre" value="${data?.nombre || ''}" required oninput="updateUsernameSuggestion()">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Usuario (Login)</label>
-                            <input type="text" class="form-control" name="usuario" id="inputUsuario" value="${data?.usuario || data?.user || ''}" required placeholder="ej: jlopez">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Contraseña</label>
-                            <input type="text" class="form-control" name="password" id="inputPassword" value="${data?.password || '1234'}" required>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Email (Opcional - para enviar bienvenida)</label>
-                            <input type="email" class="form-control" name="email" value="${data?.email || ''}" placeholder="ejemplo@correo.com">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Permiso</label>
-                            <select class="form-select" name="permiso">
-                                <option value="USER" ${(data?.permiso || data?.permisos) === 'USER' ? 'selected' : ''}>USER</option>
-                                <option value="ADMIN" ${(data?.permiso || data?.permisos) === 'ADMIN' ? 'selected' : ''}>ADMIN</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
+            // Adaptar UI según el módulo
+            if (activeTab === 'Mensajes') {
+                statusSec.style.display = 'none';
+                btnSubmit.innerHTML = `<i class="fas fa-paper-plane me-2"></i> Enviar`;
+            } else {
+                statusSec.style.display = 'block';
+                btnSubmit.innerHTML = `<i class="fas fa-save me-2"></i> Guardar`;
             }
 
+            if (activeTab === 'Convenios') {
+                html = `<div class="mb-3"><label class="form-label fw-bold small">Rubro</label><input type="text" class="form-control" name="rubro" list="rubrosList" value="${data?.rubro || ''}" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Título</label><input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Detalle</label><textarea class="form-control" name="detalle" rows="3" required>${data?.detalle || ''}</textarea></div>`;
+            } else if (activeTab === 'Novedades') {
+                html = `<div class="mb-3"><label class="form-label fw-bold small">Título</label><input type="text" class="form-control" name="titulo" value="${data?.titulo || ''}" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Contenido</label><textarea class="form-control" name="descripción" rows="4" required>${data?.descripción || data?.descripcion || ''}</textarea></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Fecha</label><input type="date" class="form-control" name="fecha_novedad" value="${formatDateForInput(data?.fecha_novedad || data?.fecha)}" required></div>`;
+            } else if (activeTab === 'Usuarios') {
+                html = `<div class="row"><div class="col-6 mb-3"><label class="form-label fw-bold small">Apellido</label><input type="text" class="form-control" name="apellido" id="inputApellido" value="${data?.apellido || ''}" oninput="generateUsername()" required></div>
+                        <div class="col-6 mb-3"><label class="form-label fw-bold small">Nombre</label><input type="text" class="form-control" name="nombre" id="inputNombre" value="${data?.nombre || ''}" oninput="generateUsername()" required></div></div>
+                        <div class="row"><div class="col-6 mb-3"><label class="form-label fw-bold small">Usuario</label><input type="text" class="form-control" name="usuario" id="inputUsuario" value="${data?.usuario || data?.user || ''}" required></div>
+                        <div class="col-6 mb-3"><label class="form-label fw-bold small">Clave</label><input type="text" class="form-control" name="password" id="inputPassword" value="${data?.password || ''}" placeholder="" required></div></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Permiso</label><select class="form-select" name="permiso"><option value="USER">USER</option><option value="ADMIN" ${data?.permiso === 'ADMIN' ? 'selected' : ''}>ADMIN</option></select></div>`;
+            } else if (activeTab === 'Mensajes') {
+                const opts = dataStore.Usuarios.map(u => `<option value="${u.id}">${u.apellido}, ${u.nombre}</option>`).join('');
+                html = `<div class="mb-3"><label class="form-label fw-bold small">Usuario Destinatario</label><select class="form-select" name="id_user" required>${opts}</select></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Título / Asunto</label><input type="text" class="form-control" name="titulo" required></div>
+                        <div class="mb-3"><label class="form-label fw-bold small">Mensaje</label><textarea class="form-control" name="mensaje" rows="3" required></textarea></div>`;
+            }
             container.innerHTML = html;
-            if (data) {
-                document.getElementById(data.activo === 'SI' ? 'checkActive' : 'checkInactive').checked = true;
+        }
+
+        function generateUsername() {
+            const isEdit = document.getElementById('entityId').value;
+            if (isEdit) return;
+
+            const nom = document.getElementById('inputNombre').value.trim().toLowerCase();
+            const ape = document.getElementById('inputApellido').value.trim().toLowerCase();
+            const userInput = document.getElementById('inputUsuario');
+            const passInput = document.getElementById('inputPassword');
+
+            if (nom && ape) {
+                // Primera letra del nombre + Apellido completo (sin espacios)
+                const generated = nom.charAt(0) + ape.split(" ")[0];
+                userInput.value = generated;
+
+                // Opcional: Sugerir el mismo usuario como password inicial si está vacío
+                if (!passInput.value) passInput.value = generated;
             }
         }
 
-        // Sugerencia dinámica de usuario
-        function updateUsernameSuggestion() {
-            if (document.getElementById('entityId').value) return; // No auto-sugerir si estamos editando
-
-            const nombre = document.getElementById('inputNombre').value.trim().toLowerCase();
-            const apellido = document.getElementById('inputApellido').value.trim().toLowerCase();
-            const inputUser = document.getElementById('inputUsuario');
-
-            if (nombre && apellido) {
-                const suggestion = nombre.charAt(0) + apellido.replace(/\s+/g, '');
-                inputUser.placeholder = `Sugerencia: ${suggestion}`;
-                // Opcional: Si el campo está vacío, lo autollenamos para facilitar la carga
-                if (inputUser.value === "" || inputUser.dataset.autoFilled === "true") {
-                    inputUser.value = suggestion;
-                    inputUser.dataset.autoFilled = "true";
-                }
-            }
+        function generateRandomString(length) {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+            let result = "";
+            for (let i = 0; i < length; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            return result;
         }
 
         async function saveEntry() {
-            const formData = new FormData(document.getElementById('entityForm'));
-            const isUpdate = !!document.getElementById('entityId').value;
-            const payload = {
-                action: isUpdate ? 'UPDATE' : 'CREATE',
-                sheet: activeTab.toUpperCase(),
-                id: document.getElementById('entityId').value,
-                data: Object.fromEntries(formData.entries())
-            };
-
             toggleLoader(true);
+            const formData = new FormData(document.getElementById('entityForm'));
+            const data = Object.fromEntries(formData.entries());
+            data.id = document.getElementById('entityId').value;
+
+            // Validación: Usuario repetido (solo para nuevos registros)
+            if (activeTab === 'Usuarios' && !data.id) {
+                const existingUser = dataStore.Usuarios.find(u => (u.usuario || u.user || "").toLowerCase() === data.usuario.toLowerCase());
+                if (existingUser) {
+                    showFeedback(`Error: El usuario '${data.usuario}' ya pertenece a ${existingUser.apellido}, ${existingUser.nombre}`, false);
+                    toggleLoader(false);
+                    return;
+                }
+            }
+
             try {
                 const response = await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'text/plain' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        action: data.id ? 'UPDATE' : 'CREATE',
+                        sheet: activeTab.toUpperCase(),
+                        id: data.id,
+                        data: data
+                    })
                 });
-
                 const result = await response.json();
-
-                // AUTOMATIZACIÓN: Si se crea un Usuario, enviar mensaje de bienvenida
-                if (!isUpdate && activeTab === 'Usuarios' && result.id) {
-                    const welcomePayload = {
-                        action: 'CREATE',
-                        sheet: 'MENSAJES',
-                        data: {
-                            id_user: result.id,
-                            titulo: '¡Bienvenido/a!',
-                            mensaje: 'Le damos la bienvenida a la app del STM. Desde aquí estaremos en contacto con usted.',
-                            fecha: new Date().toISOString().split('T')[0]
-                        }
-                    };
-                    await fetch(WEB_APP_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain' },
-                        body: JSON.stringify(welcomePayload)
-                    });
+                if (result.status === 'SUCCESS') {
+                    const successMsg = activeTab === 'Mensajes' ? 'Mensaje enviado exitosamente' : 'Guardado exitosamente';
+                    showFeedback(successMsg, true);
+                    modal.hide();
+                    loadData();
+                } else {
+                    showFeedback(result.message || 'Error al guardar', false);
                 }
-
-                showFeedback("¡Proceso enviado exitosamente!", true);
-                modal.hide();
-                setTimeout(loadData, 2000);
             } catch (err) {
-                console.error(err);
-                showFeedback("Error al guardar: " + err, false);
+                showFeedback("Error de conexión", false);
             }
             toggleLoader(false);
         }
 
-        function editEntry(tab, data) {
-            activeTab = tab;
-            document.getElementById('entityId').value = data.id;
-            document.getElementById('modalTitle').innerText = `Editando en ${tab}`;
-            renderDynamicFields(data);
+        function editEntry(tab, data) { activeTab = tab; document.getElementById('entityId').value = data.id; renderDynamicFields(data); modal.show(); }
+
+        function deleteEntry(tab, id) {
+            showConfirm("Eliminar", "¿Seguro que deseas borrar este registro?", async () => {
+                toggleLoader(true);
+                await fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify({ action: 'DELETE', sheet: tab.toUpperCase(), id: id }) });
+                loadData(); toggleLoader(false);
+            });
+        }
+
+        function openDirectMessage(userId) {
+            const user = dataStore.Usuarios.find(u => u.id.toString() === userId.toString());
+            if (!user) return;
+
+            activeModule = 'mensajes';
+            activeTab = 'Mensajes';
+
+            document.getElementById('statusSection').style.display = 'none';
+            document.getElementById('btnSubmitForm').innerHTML = `<i class="fas fa-paper-plane me-2"></i> Enviar`;
+            document.getElementById('entityId').value = "";
+            document.getElementById('modalTitle').innerText = `Mensaje para: ${user.apellido}, ${user.nombre}`;
+
+            const container = document.getElementById('dynamicForm');
+            container.innerHTML = `
+                <input type="hidden" name="id_user" value="${userId}">
+                <div class="mb-3"><label class="form-label fw-bold small text-uppercase opacity-50">Asunto del Mensaje</label>
+                    <input type="text" class="form-control" name="titulo" placeholder="Ej: Aviso de beneficio" required></div>
+                <div class="mb-3"><label class="form-label fw-bold small text-uppercase opacity-50">Contenido</label>
+                    <textarea class="form-control" name="mensaje" rows="5" placeholder="Escriba aquí el mensaje..." required></textarea></div>
+            `;
             modal.show();
         }
 
-        async function deleteEntry(tab, id) {
-            showConfirm(
-                "¿Eliminar registro?",
-                "¿Seguro que deseas eliminar definitivamente este registro?",
-                async () => {
-                    toggleLoader(true);
-                    try {
-                        await fetch(WEB_APP_URL, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'text/plain' },
-                            body: JSON.stringify({ action: 'DELETE', sheet: tab.toUpperCase(), id: id })
-                        });
-                        showFeedback("Eliminación enviada.", true);
-                        setTimeout(loadData, 2000);
-                    } catch (err) {
-                        showFeedback("Error: " + err, false);
-                    }
-                    toggleLoader(false);
-                }
-            );
+        function quickAction(module) {
+            // Limpiar estados previos
+            document.querySelectorAll('.module').forEach(m => m.classList.add('d-none'));
+            const targetMod = document.getElementById(`module-${module}`);
+            if (targetMod) targetMod.classList.remove('d-none');
+
+            document.querySelectorAll('.nav-link-dashboard').forEach(b => b.classList.remove('active'));
+            const btn = document.querySelector(`button[onclick*="'${module}'"]`);
+            if (btn) btn.classList.add('active');
+
+            activeModule = module;
+            activeTab = module.charAt(0).toUpperCase() + module.slice(1);
+
+            setTimeout(showNewModal, 300);
         }
 
-        function showFeedback(message, isSuccess) {
-            const feedback = document.getElementById('feedbackMessage');
-            feedback.innerHTML = `
-                <i class="fas ${isSuccess ? 'fa-check-circle text-success' : 'fa-exclamation-circle text-danger'}"></i>
-                <span>${message}</span>
-            `;
-            feedback.className = `feedback show ${isSuccess ? 'success' : 'error'}`;
-            setTimeout(() => feedback.classList.remove('show'), 3500);
-        }
 
-        function showConfirm(title, message, onConfirm) {
-            document.getElementById('confirmTitle').innerText = title;
-            document.getElementById('confirmMessage').innerText = message;
-
-            const btn = document.getElementById('confirmBtnAction');
-            const newBtn = btn.cloneNode(true);
-            btn.parentNode.replaceChild(newBtn, btn);
-
-            newBtn.addEventListener('click', () => {
-                confirmModal.hide();
-                onConfirm();
-            });
-
-            confirmModal.show();
-        }
-
-        function toggleLoader(show) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (show) overlay.classList.add('visible');
-            else overlay.classList.remove('visible');
-        }
-
-        function formatDateForInput(dateStr) {
-            if (!dateStr) return '';
-            try {
-                const d = new Date(dateStr);
-                if (!isNaN(d.getTime())) {
-                    return d.toISOString().split('T')[0];
-                }
-                // Si falla el constructor, intentar parsear DD/MM/YYYY manual
-                const parts = String(dateStr).split('/');
-                if (parts.length === 3) return `${parts[2]}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
-                return dateStr;
-            } catch (e) {
-                return dateStr;
-            }
-        }
-
-        function logout() {
-            showConfirm(
-                "Cerrar Sesión",
-                "¿Deseas salir del panel de administración?",
-                () => { window.location.href = '../index.html'; }
-            );
-        }
-
+        function showNewModal() { document.getElementById('entityId').value = ""; document.getElementById('modalTitle').innerText = `Nuevo en ${activeTab}`; renderDynamicFields(); modal.show(); }
+        function showFeedback(msg, isSuccess) { const f = document.getElementById('feedbackMessage'); f.innerText = msg; f.className = `feedback show ${isSuccess ? 'success' : 'error'}`; setTimeout(() => f.classList.remove('show'), 3000); }
+        function showConfirm(title, msg, onConfirm) { document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMessage').innerText = msg; const btn = document.getElementById('confirmBtnAction'); btn.onclick = () => { confirmModal.hide(); onConfirm(); }; confirmModal.show(); }
+        function toggleLoader(show) { document.getElementById('loadingOverlay').classList.toggle('visible', show); }
+        function logout() { window.location.href = '../index.html'; }
+        function formatDateForInput(ds) { if (!ds) return ""; const d = new Date(ds); return isNaN(d.getTime()) ? "" : d.toISOString().split('T')[0]; }
     </script>
 </body>
 
