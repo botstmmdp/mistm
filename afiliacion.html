@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Afiliación - STM App</title>
+    <!-- Iconos y Tipografía -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stm-primary: #6366f1;
+            --stm-secondary: #a855f7;
+            --stm-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --input-bg: #f1f5f9;
+            --text-main: #1e293b;
+            --text-dim: #64748b;
+            --glass-border: rgba(99, 102, 241, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--stm-bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            padding: 60px 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .back-btn {
+            width: 45px;
+            height: 45px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--stm-primary);
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-btn:active {
+            transform: scale(0.9);
+            background: var(--stm-primary);
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        /* CARD FORMULARIO */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .form-card p {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--stm-primary);
+            font-weight: 700;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* INPUTS */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            margin-left: 5px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 15px 18px;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--stm-primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.05);
+        }
+
+        .input-field::placeholder {
+            color: #94a3b8;
+        }
+
+        /* CHECKBOX CUSTOM */
+        .checkbox-group {
+            display: flex;
+            gap: 12px;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px dashed var(--glass-border);
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* BOTONES */
+        .btn-container {
+            margin-top: 30px;
+        }
+
+        .btn-stm {
+            width: 100%;
+            padding: 18px;
+            border-radius: 18px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-send {
+            background: linear-gradient(135deg, var(--stm-primary), var(--stm-secondary));
+            color: white;
+        }
+
+        .btn-stm:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.4);
+        }
+
+        /* LOADER OVERLAY */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-main, #0f172a);
+            background: radial-gradient(circle at center, #1e1b4b, #0f172a);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-logo {
+            max-width: 120px;
+            animation: logo-spin 2s infinite linear;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5));
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        /* MODALES / OVERLAYS */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .success-overlay.active {
+            display: flex;
+        }
+
+        .success-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* --- ESTADO INICIAL / IMPORTANTE --- */
+        .modal-exit {
+            animation: spinExit 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+        }
+
+        @keyframes spinExit {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- EL MODAL INICIAL SE ELIMINÓ Y SE MOVIÓ AL FINAL DEL PROCESO -->
+
+    <!-- LOADER -->
+    <div id="loader-wrapper">
+        <img src="logo_STM.png" alt="Logo STM" class="loader-logo">
+        <div class="loader-text">PROCESANDO...</div>
+    </div>
+
+    <header class="header">
+        <a href="opciones.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+        <h1>Solicitud Afiliación</h1>
+    </header>
+
+    <main class="main-content">
+        <div class="form-card">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="logo_STM.png" alt="Logo STM"
+                    style="max-width: 140px; height: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));">
+            </div>
+            <h2>📝 Unirse a STM</h2>
+            <p>Completá los datos para realizar tu solicitud de afiliación on-line.</p>
+
+            <form id="formularioAfiliacion">
+
+                <div class="section-title">Datos Personales</div>
+
+                <div class="input-group">
+                    <label>Nombre y Apellido</label>
+                    <input type="text" name="Nom_Ap" class="input-field" placeholder="Tu nombre completo" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="input-group">
+                        <label>Legajo</label>
+                        <input type="text" name="Legajo" class="input-field" placeholder="Legajo" required>
+                    </div>
+                    <div class="input-group">
+                        <label>DNI</label>
+                        <input type="text" name="DNI" class="input-field" placeholder="Sin puntos" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="date" name="f_nac" class="input-field" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Estado Civil</label>
+                    <select name="est_civil" class="input-field" required>
+                        <option value="">Seleccione...</option>
+                        <option value="Soltero">Soltero/a</option>
+                        <option value="Casado">Casado/a</option>
+                        <option value="Viudo">Viudo/a</option>
+                        <option value="Divorciado">Divorciado/a</option>
+                        <option value="UnionConcubinato">Unión/Concubinato</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Nacionalidad</label>
+                    <input type="text" name="nacionalidad" class="input-field" value="Argentina" required>
+                </div>
+
+                <div class="section-title">Contacto</div>
+
+                <div class="input-group">
+                    <label>Domicilio Completo</label>
+                    <input type="text" name="domicilio" class="input-field" placeholder="Calle, Número, Localidad"
+                        required>
+                </div>
+
+                <div class="input-group">
+                    <label>WhatsApp / Celular</label>
+                    <input type="tel" name="telefono" class="input-field" placeholder="Ej: 223..." required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email de contacto</label>
+                    <input type="email" name="email" class="input-field" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="section-title">Datos Laborales</div>
+
+                <div class="input-group">
+                    <label>Ente / Secretaría</label>
+                    <input type="text" name="ente_sec" class="input-field" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Dependencia / Área</label>
+                    <input type="text" name="dependencia" class="input-field" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Cargo</label>
+                    <input type="text" name="cargo" class="input-field" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Tipo de Planta</label>
+                    <select name="planta" class="input-field" required>
+                        <option value="">Seleccione...</option>
+                        <option value="permanente">Permanente</option>
+                        <option value="temporaria">Temporaria / Contratado</option>
+                        <option value="becario">Becario</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="section-title">Confirmación</div>
+
+                <div class="input-group">
+                    <label>Fecha de Solicitud</label>
+                    <input type="date" name="FechaSolicitud" id="inputFechaSolicitud" class="input-field" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email para recibir copia PDF</label>
+                    <input type="email" name="EmailCopiaPDF" class="input-field" placeholder="Donde recibirás el PDF"
+                        required>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" name="CertificacionDatos" value="SI" id="checkCert" required>
+                    <label for="checkCert">Certifico que todos los datos ingresados son reales y completos.</label>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn-stm btn-send" id="btnEnviar">
+                        <span>Enviar Solicitud</span> <i class="fa-solid fa-thumbs-up"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- OVERLAY ÉXITO -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-card">
+            <div class="success-icon" style="background: white; padding: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+                <img src="logo nuevo.png" alt="Logo" style="width: 100%; height: auto; object-fit: contain;">
+            </div>
+            <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 15px;">¡Solicitud Recibida!</h3>
+            <p id="successMsg" style="margin-bottom: 25px; line-height: 1.6; text-align: left;">
+                Luego de recibida la solicitud de afiliación, en breve nos pondremos en contacto con usted al número
+                telefónico que nos indicó.
+                <br><br>
+                <b>Recordatorio:</b> El trámite requiere la presentación del <b>Decreto de Designación</b> (si no es
+                planta permanente). La Comisión Directiva evaluará y aprobará la solicitud.
+            </p>
+            <button class="btn-stm btn-send" onclick="cerrarExito()">Entendido, Finalizar</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formularioAfiliacion');
+        const loader = document.getElementById('loader-wrapper');
+        const overlay = document.getElementById('successOverlay');
+        const inputFecha = document.getElementById('inputFechaSolicitud');
+
+        // Configurar fecha de hoy
+        const today = new Date().toISOString().split('T')[0];
+        inputFecha.value = today;
+
+        const APPSSCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwlfCFizhOOU3Tu3bYa93cNiS6kQJt_cZOHzz3tLY2q-xIh01CgWfvEcFt_U0NX5LmnRg/exec';
+        const DESTINATARIO_STM = 'bot.stmmdp@gmail.com';
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            loader.style.display = 'flex';
+
+            const formData = new FormData(form);
+            formData.append('EmailDestino', DESTINATARIO_STM);
+            const emailCopia = formData.get('EmailCopiaPDF');
+
+            try {
+                // Modo no-cors para GAS si es necesario, pero fetch normal suele funcionar
+                await fetch(APPSSCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                loader.style.display = 'none';
+                overlay.classList.add('active');
+                form.reset();
+                inputFecha.value = today;
+
+            } catch (error) {
+                console.error('Error:', error);
+                // A veces falla el CORS pero los datos llegan
+                loader.style.display = 'none';
+                overlay.classList.add('active');
+                form.reset();
+                inputFecha.value = today;
+            }
+        };
+
+        function cerrarExito() {
+            overlay.classList.remove('active');
+            window.location.href = 'opciones.html';
+        }
+    </script>
+</body>
+
+</html>

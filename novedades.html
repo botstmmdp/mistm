@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Novedades STM - Noticias de Interés</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
@@ -68,9 +69,7 @@
             display: none !important;
         }
 
-        .nav-bar {
-            background: #111827 !important;
-        }
+        
 
         .fab-bot i {
             color: white !important;
@@ -81,8 +80,17 @@
         }
 
         @keyframes home-blink {
-            0%, 100% { color: #4b5563; transform: scale(1); }
-            50% { color: white; transform: scale(1.2); }
+
+            0%,
+            100% {
+                color: #4b5563;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.2);
+            }
         }
 
         * {
@@ -93,12 +101,17 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0; padding: 0; min-height: 100vh;
-            color: var(--text-dark); overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        html { height: 100%; }
-        
+        html {
+            height: 100%;
+        }
+
         header {
             padding: 40px 20px 20px;
             background: rgba(255, 255, 255, 0.4);
@@ -177,8 +190,17 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.98); }
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
         }
 
         .hero-content {
@@ -273,7 +295,12 @@
             padding: 60px 20px;
             color: #94a3b8;
         }
-        .empty-state i { font-size: 3rem; margin-bottom: 15px; display: block; }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
 
         /* --- FAB BOT --- */
         .fab-bot {
@@ -296,51 +323,28 @@
             animation: bounceBot 3s infinite;
         }
 
-        .fab-bot i { color: white !important; }
+        .fab-bot i {
+            color: white !important;
+        }
 
         @keyframes bounceBot {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         /* --- NAVIGATION --- */
-        .nav-bar {
-            position: fixed;
-            bottom: 20px;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 400px;
-            height: 68px;
-            background: var(--nav-bg) !important;
-            border-radius: 35px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            z-index: 5000;
-        }
+        
 
-        .nav-btn {
-            color: #4b5563;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            text-decoration: none;
-        }
+        
 
-        .nav-btn.active {
-            color: white;
-            background: var(--stm-primary);
-            border-radius: 50%;
-            transform: translateY(-12px);
-            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4);
-        }
+        
 
         /* Custom Notification */
         .stm-notify {
@@ -382,11 +386,13 @@
         /* MODAL BOT */
         .bot-modal {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
-            z-index: 2000;
+            z-index: 9999;
             visibility: hidden;
             opacity: 0;
             transition: 0.3s;
@@ -397,13 +403,15 @@
             opacity: 1;
         }
 
-        
+
 
         /* --- PRELOADER --- */
         #loader-wrapper {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: white;
             display: flex;
             flex-direction: column;
@@ -413,7 +421,9 @@
             transition: opacity 0.5s ease;
         }
 
-        body.dark-mode #loader-wrapper { background: #0f172a; }
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
 
         .loader-logo {
             width: 100px;
@@ -424,8 +434,13 @@
         }
 
         @keyframes logo-spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loader-text {
@@ -435,6 +450,7 @@
             text-transform: uppercase;
             font-size: 0.8rem;
         }
+
         .bot-input {
             width: 100%;
             padding: 15px 20px 15px 50px;
@@ -448,25 +464,30 @@
             outline: none;
             transition: 0.3s;
         }
+
         .bot-input:focus {
             border-color: var(--stm-primary);
             background: white;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
         }
+
         body.dark-mode .bot-input {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
+
         body.dark-mode .bot-input:focus {
             border-color: var(--stm-primary);
             background: #0f172a;
         }
+
         .bot-search-box {
             position: relative;
             margin-bottom: 15px;
         }
-        .bot-search-box > i {
+
+        .bot-search-box>i {
             position: absolute;
             left: 18px;
             top: 50%;
@@ -474,6 +495,7 @@
             color: var(--stm-primary);
             font-size: 1.1rem;
         }
+
         .bot-content {
             position: absolute;
             bottom: 0;
@@ -487,13 +509,16 @@
             max-height: 85vh;
             overflow-y: auto;
         }
+
         body.dark-mode .bot-content {
             background: #1e293b;
             color: #f1f5f9;
         }
+
         .bot-modal.active .bot-content {
             transform: translateY(0);
         }
+
         .bot-results-title {
             font-size: 0.72rem;
             font-weight: 800;
@@ -501,6 +526,50 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin: 0 0 10px;
+        }
+    
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            height: 72px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-btn {
+            text-decoration: none;
+            color: #64748b;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
         }
     </style>
 </head>
@@ -539,19 +608,28 @@
         <i class="fa-solid fa-robot"></i>
     </div>
 
+    <!-- MODAL NOVEDAD DETALLE - DISEÑO CENTRADO PREMIUM -->
+    <div class="search-modal" id="modalNovedad" style="display: none; position: fixed; inset: 0; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.7); z-index: 10000; backdrop-filter: blur(10px); padding: 20px;">
+        <div class="search-content" style="position: relative; width: 100%; max-width: 400px; max-height: 90vh; transform: scale(0.5); border-radius: 35px; padding: 35px 25px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; display: flex; flex-direction: column; text-align: center; background: white; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden;">
+            <div id="novedadDetailContent" style="overflow-y: auto; flex: 1; padding-right: 5px;">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <button onclick="toggleNovedadModal(false)" style="margin-top: 25px; width: 100%; padding: 20px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; font-size: 1.1rem; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);">¡Entendido!</button>
+        </div>
+    </div>
+
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <div class="bot-search-box">
-                <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botInput">
-            </div>
-            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+            <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
+                    style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch" style="box-sizing: border-box; width: 100%;"></div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
         </div>
     </div>
 
-    <nav class="nav-bar">
+        <nav class="bottom-nav">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
@@ -621,20 +699,25 @@
         /**
          * Convierte el formato de fecha de Google Sheets a DD de mes de YYYY.
          */
-        function formatDate(dateString) {
+        function getRawDate(dateString) {
             let date;
-            const stringMatch = dateString.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+            const stringMatch = String(dateString).match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
             if (stringMatch) {
                 date = new Date(+stringMatch[3], +stringMatch[2] - 1, +stringMatch[1]);
             } else {
-                const vizMatch = dateString.match(/Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/);
+                const vizMatch = String(dateString).match(/Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/);
                 if (vizMatch) {
                     date = new Date(+vizMatch[1], +vizMatch[2], +vizMatch[3]);
                 } else {
                     date = new Date(dateString);
                 }
             }
-            if (isNaN(date.getTime())) return dateString;
+            return isNaN(date.getTime()) ? new Date(0) : date;
+        }
+
+        function formatDate(dateString) {
+            const date = getRawDate(dateString);
+            if (isNaN(date.getTime()) || date.getTime() === 0) return dateString;
             return new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: 'long', year: 'numeric' })
                 .format(date).replace(/\./g, '').replace(/,/g, '').trim();
         }
@@ -655,7 +738,7 @@
                         fecha: (c[3]?.f || c[3]?.v || "").toString(),
                         activo: (c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                     };
-                }).filter(n => n.activo).reverse(); // activas más recientes primero
+                }).filter(n => n.activo).sort((a,b) => getRawDate(b.fecha) - getRawDate(a.fecha)); // activas más recientes primero por FECHA
 
                 renderFeed(allNews);
             } catch (e) {
@@ -713,15 +796,38 @@
         }
 
         function alertDetail(n) {
-            const res = document.getElementById('botRes');
+            const res = document.getElementById('novedadDetailContent');
             res.innerHTML = `
-                <div style="padding:15px">
-                    <span style="font-size:0.7rem; color:#6366f1; font-weight:800">${formatDate(n.fecha)}</span>
-                    <h3 style="margin:5px 0 10px; font-weight:800">${n.titulo}</h3>
-                    <p style="font-size:0.92rem; color:#475569; line-height:1.6">${n.desc.replace(/\n/g,'<br>')}</p>
+                <div style="width: 70px; height: 70px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; flex-shrink: 0;">
+                    <i class="fa-solid fa-newspaper" style="font-size: 1.8rem; color: var(--stm-primary);"></i>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <span style="font-size:0.75rem; color:var(--stm-primary); font-weight:800; text-transform:uppercase; letter-spacing:1px">${formatDate(n.fecha)}</span>
+                    <h2 style="margin:10px 0 15px; font-weight:900; font-size:1.5rem; line-height:1.2; color:#1e293b">${n.titulo}</h2>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 24px; border: 1px solid #e2e8f0; text-align: left;">
+                        <p style="font-size:0.95rem; color:#475569; line-height:1.6; margin:0">${n.desc.replace(/\n/g, '<br>')}</p>
+                    </div>
                 </div>
             `;
-            toggleBot(true);
+            toggleNovedadModal(true);
+        }
+
+        function toggleNovedadModal(show) {
+            const modal = document.getElementById('modalNovedad');
+            const inner = modal.querySelector('.search-content');
+            if (show) {
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    inner.style.transform = 'scale(1)';
+                    inner.style.opacity = '1';
+                }, 50);
+            } else {
+                inner.style.transform = 'scale(0.5)';
+                inner.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 400);
+            }
         }
 
         const sitePages = [
@@ -729,6 +835,7 @@
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
@@ -742,7 +849,7 @@
 
         function toggleBot(show) {
             document.getElementById('modalBot').classList.toggle('active', show);
-            if (show) document.getElementById('botInput').focus();
+            if (show) document.getElementById('botSearch').focus();
         }
 
         function toggleUser(show) {
@@ -802,7 +909,7 @@
         }
 
         let searchTimer = null;
-        document.getElementById('botInput').addEventListener('input', (e) => {
+        document.getElementById('botSearch').addEventListener('input', (e) => {
             const val = normalize(e.target.value).trim();
             const res = document.getElementById('botRes');
             if (searchTimer) clearTimeout(searchTimer);
@@ -896,6 +1003,8 @@
             }, 600);
         });
     </script>
+
+    <script src="stm-bot.js"></script>
 </body>
 
 </html>

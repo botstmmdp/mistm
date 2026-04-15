@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Capacitación STM - Beneficio Estudiantil 2026</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
@@ -60,11 +61,16 @@
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0; padding: 0; min-height: 100vh;
-            color: var(--text-dark); overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        html { height: 100%; }
+        html {
+            height: 100%;
+        }
 
         header {
             padding: 40px 20px 20px;
@@ -105,18 +111,19 @@
             object-fit: contain;
         }
 
-        .header-text h1 {
-            font-size: 1.2rem;
-            font-weight: 800;
+        .welcome-msg h1 {
             margin: 0;
-            color: var(--stm-primary);
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .header-text p {
-            font-size: 0.8rem;
-            font-weight: 500;
+        .welcome-msg p {
             margin: 0;
-            opacity: 0.7;
+            font-size: 1.05rem;
+            opacity: 0.8;
+            font-weight: 600;
+            color: var(--stm-primary);
         }
 
         .container {
@@ -298,7 +305,7 @@
             height: 100%;
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
-            z-index: 2000;
+            z-index: 9999;
             visibility: hidden;
             opacity: 0;
             transition: 0.3s;
@@ -311,43 +318,28 @@
 
         
 
-        .nav-footer {
-            position: fixed;
-            bottom: 20px;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 400px;
-            height: 68px;
-            background: #111827 !important;
-            border-radius: 35px;
-            padding: 0 10px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            z-index: 5000;
+        
+
+        
+
+        
+
+        .nav-home-pulse i {
+            animation: home-blink 3s infinite ease-in-out;
         }
 
-        .nav-link {
-            text-decoration: none;
-            color: #4b5563;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
+        @keyframes home-blink {
 
-        .nav-link.active {
-            color: white;
-            background: var(--stm-primary);
-            border-radius: 50%;
-            transform: translateY(-12px);
-            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.4);
+            0%,
+            100% {
+                color: #64748b;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.1);
+            }
         }
 
         /* Loader */
@@ -383,6 +375,7 @@
                 transform: rotate(360deg);
             }
         }
+
         .bot-input {
             width: 100%;
             padding: 15px 20px 15px 50px;
@@ -396,25 +389,30 @@
             outline: none;
             transition: 0.3s;
         }
+
         .bot-input:focus {
             border-color: var(--stm-primary);
             background: white;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
         }
+
         body.dark-mode .bot-input {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
+
         body.dark-mode .bot-input:focus {
             border-color: var(--stm-primary);
             background: #0f172a;
         }
+
         .bot-search-box {
             position: relative;
             margin-bottom: 15px;
         }
-        .bot-search-box > i {
+
+        .bot-search-box>i {
             position: absolute;
             left: 18px;
             top: 50%;
@@ -422,6 +420,7 @@
             color: var(--stm-primary);
             font-size: 1.1rem;
         }
+
         .bot-content {
             position: absolute;
             bottom: 0;
@@ -435,13 +434,16 @@
             max-height: 85vh;
             overflow-y: auto;
         }
+
         body.dark-mode .bot-content {
             background: #1e293b;
             color: #f1f5f9;
         }
+
         .bot-modal.active .bot-content {
             transform: translateY(0);
         }
+
         .bot-results-title {
             font-size: 0.72rem;
             font-weight: 800;
@@ -449,6 +451,50 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin: 0 0 10px;
+        }
+    
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            height: 72px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-btn {
+            text-decoration: none;
+            color: #64748b;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
         }
     </style>
 </head>
@@ -464,9 +510,9 @@
             <div class="logo-box">
                 <img src="logo nuevo.png" alt="STM Logo">
             </div>
-            <div class="header-text">
-                <h1>Capacitación</h1>
-                <p id="usrDisplayName">Afiliado STM</p>
+            <div class="welcome-msg">
+                <h1 id="usrGreeting">¡Hola!</h1>
+                <p id="usrDisplayName">Cargando...</p>
             </div>
         </div>
     </header>
@@ -533,23 +579,22 @@
     <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
 
     <!-- TAB BAR NAV (STRICT) -->
-    <nav class="nav-footer">
-        <a href="opciones.html" class="nav-link nav-home-pulse"><i class="fa-solid fa-house"></i></a>
-        <a href="contactos.html" class="nav-link"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-link" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
-        <a href="#" class="nav-link" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
+        <nav class="bottom-nav">
+        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
     <!-- BOT MODAL -->
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 25px;">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <div class="bot-search-box">
-                <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" id="botSearch" placeholder="¿En qué puedo ayudarte?">
-            </div>
-            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
+            <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
+                    style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch" style="box-sizing: border-box; width: 100%;"></div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
         </div>
     </div>
 
@@ -609,18 +654,19 @@
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
             { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
-                        { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
         const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
 
-        
+
         // --- NOVEDADES PARA EL BOT ---
         const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
         const NEWS_GID = "195669740";
@@ -635,16 +681,18 @@
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 allNews = (json.table.rows || []).map(r => ({
                     titulo: (r.c[1]?.v || "").toString(),
-                    desc:   (r.c[2]?.v || "").toString(),
-                    fecha:  (r.c[3]?.f || r.c[3]?.v || "").toString(),
+                    desc: (r.c[2]?.v || "").toString(),
+                    fecha: (r.c[3]?.f || r.c[3]?.v || "").toString(),
                     activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                 })).filter(n => n.activo).reverse();
             } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
         }
 
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
-        function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus();
-            fetchNews(); }
+        function toggleBot(show) {
+            document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus();
+            fetchNews();
+        }
         function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if (show) document.getElementById('newPass').focus(); }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
 
@@ -725,9 +773,14 @@
             if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
+            const h = new Date().getHours();
+            const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+            if (document.getElementById('usrGreeting')) document.getElementById('usrGreeting').innerText = greet;
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
     </script>
+
+    <script src="stm-bot.js"></script>
 </body>
 
 </html>

@@ -64,9 +64,7 @@
         }
 
         .nav-bar,
-        .bottom-nav {
-            background: #111827 !important;
-        }
+        
 
         .fab-bot i {
             color: white !important;
@@ -330,41 +328,11 @@
         }
 
         /* --- NAVIGATION --- */
-        .nav-bar {
-            position: fixed; 
-            bottom: 20px;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
-            left: 50%; 
-            transform: translateX(-50%);
-            width: calc(100% - 32px); 
-            max-width: 400px; 
-            height: 68px;
-            background: var(--nav-bg) !important; 
-            border-radius: 35px;
-            display: flex; 
-            justify-content: space-around; 
-            align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
-            z-index: 5000;
-        }
+        
 
-        .nav-btn {
-            color: #4b5563;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
+        
 
-        .nav-btn.active {
-            color: white;
-            background: var(--stm-primary);
-            border-radius: 50%;
-            padding: 10px;
-        }
+        
 
         .bot-modal {
             position: fixed;
@@ -374,7 +342,7 @@
             height: 100%;
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
-            z-index: 2000;
+            z-index: 9999;
             visibility: hidden;
             opacity: 0;
             transition: 0.3s;
@@ -433,7 +401,7 @@
             height: 100%;
             background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(8px);
-            z-index: 2000;
+            z-index: 9999;
             visibility: hidden;
             opacity: 0;
             transition: 0.3s;
@@ -558,6 +526,50 @@
             letter-spacing: 0.5px;
             margin: 0 0 10px;
         }
+    
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            height: 72px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-btn {
+            text-decoration: none;
+            color: #64748b;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
+        }
     </style>
 </head>
 
@@ -637,18 +649,14 @@
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <div class="bot-search-box">
-                <i class="fa-solid fa-robot"></i>
-                <input type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botInput">
-            </div>
-            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;">
-                <p style="font-size: 0.85rem; color: #64748b; padding: 10px;">Probá buscando: "Asistencia", "Salud",
-                    "Género"...</p>
-            </div>
+            <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
+                    style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch" style="box-sizing: border-box; width: 100%;"></div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
         </div>
     </div>
 
-    <nav class="nav-bar">
+        <nav class="bottom-nav">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
@@ -714,6 +722,7 @@
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
             { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
@@ -728,7 +737,7 @@
         function toggleBot(show) {
             document.getElementById('modalBot').classList.toggle('active', show);
             if (show) {
-                document.getElementById('botInput').focus();
+                document.getElementById('botSearch').focus();
             fetchNews();
             }
         }
@@ -841,7 +850,7 @@
             return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
         }
 
-        document.getElementById('botInput').addEventListener('input', (e) => {
+        document.getElementById('botSearch').addEventListener('input', (e) => {
             const val = normalize(e.target.value);
             const res = document.getElementById('botRes');
             res.innerHTML = "";
@@ -898,6 +907,8 @@
             }, 600);
         });
     </script>
+
+    <script src="stm-bot.js"></script>
 </body>
 
 </html>
