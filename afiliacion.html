@@ -244,14 +244,14 @@
 
     <script>
         // URL de tu Apps Script proporcionada por el usuario
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz2XVZHYS6n0lQyPFs-icBg3pU0jZ3q6-057Zdj7-vPfuOj2GiqFPqApQaTdNdCTc0qmw/exec';
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwhOyAXp1sZIamzS1Xz09rOE1QaFQTUx1SJiHkit_KW1eqZiKHV1GJNqEEgq6QX7kqaoQ/exec';
 
         (function () {
             'use strict'
             const form = document.getElementById('afiliacionForm');
             const btn = document.getElementById('btnEnviar');
             const fNacInput = document.getElementById('f_nac');
-            
+
             // Establecer fecha máxima para nacimiento (hoy)
             fNacInput.max = new Date().toISOString().split("T")[0];
             const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
