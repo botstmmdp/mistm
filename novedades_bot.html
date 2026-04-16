@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Novedades STM - Noticias de Interés</title>
+    <link rel="icon" type="image/png" href="logo nuevo.png">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #f59e0b;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+            --bg-body: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        body.dark-mode {
+            --stm-primary: #818cf8;
+            --text-dark: #f1f5f9;
+            --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        body.dark-mode .news-hero,
+        body.dark-mode .feed-card,
+        body.dark-mode header,
+
+        body.dark-mode p {
+            color: #94a3b8;
+        }
+
+        body.dark-mode .hero-content h2 {
+            color: #818cf8;
+        }
+
+        body.dark-mode .feed-title {
+            color: white;
+        }
+
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
+
+        .res-item-bot {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+        }
+
+        body.dark-mode .res-item-bot {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: white !important;
+        }
+
+        body.dark-mode .res-item-bot p {
+            color: #94a3b8 !important;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        
+
+        .fab-bot i {
+            color: white !important;
+        }
+
+        .nav-home-pulse i {
+            animation: home-blink 2s infinite ease-in-out;
+        }
+
+        @keyframes home-blink {
+
+            0%,
+            100% {
+                color: #4b5563;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.2);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-box {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .welcome-msg h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .welcome-msg p {
+            margin: 0;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        .container {
+            padding: 20px 16px 60px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- NEWS HERO --- */
+        .news-hero {
+            background: white;
+            border-radius: 26px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-tag {
+            display: inline-block;
+            margin: 20px 20px 0;
+            background: var(--stm-primary);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+            animation: blink 1.5s infinite ease-in-out;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
+        }
+
+        .hero-content {
+            padding: 20px 25px 30px;
+        }
+
+        .hero-content h2 {
+            margin: 10px 0;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #1e1b4b;
+            line-height: 1.2;
+        }
+
+        .hero-date {
+            font-size: 0.75rem;
+            color: #6366f1;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .hero-desc {
+            font-size: 0.95rem;
+            color: #64748b;
+            line-height: 1.5;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* --- FEED CARD --- */
+        .feed-card {
+            background: white;
+            border-radius: 22px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .feed-card:active {
+            transform: scale(0.98);
+            background: #f8fafc;
+        }
+
+        .feed-date {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .feed-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #334155;
+            margin: 0;
+        }
+
+        .feed-desc {
+            font-size: 0.88rem;
+            color: #64748b;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 50px;
+            color: var(--stm-primary);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+
+
+        /* --- NAVIGATION --- */
+        
+
+        
+
+        
+
+        /* Custom Notification */
+        .stm-notify {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: white;
+            padding: 15px 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e2e8f0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .stm-notify.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .stm-notify i {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--stm-primary);
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* MODAL BOT */
+        .bot-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .bot-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+
+        /* --- PRELOADER --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
+
+        .loader-logo {
+            width: 100px;
+            height: auto;
+            object-fit: contain;
+            animation: logo-spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-weight: 700;
+            color: var(--stm-primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        .bot-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 18px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .bot-input:focus {
+            border-color: var(--stm-primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
+        }
+
+        body.dark-mode .bot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .bot-input:focus {
+            border-color: var(--stm-primary);
+            background: #0f172a;
+        }
+
+        .bot-search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .bot-search-box>i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--stm-primary);
+            font-size: 1.1rem;
+        }
+
+        .bot-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 30px 20px 40px;
+            transform: translateY(100%);
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .bot-content {
+            background: #1e293b;
+            color: #f1f5f9;
+        }
+
+        .bot-modal.active .bot-content {
+            transform: translateY(0);
+        }
+
+        .bot-results-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: var(--stm-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 10px;
+        }
+    
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            height: 72px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-btn {
+            text-decoration: none;
+            color: #64748b;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PRELOADER -->
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="Cargando..."
+            onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+        <div class="loader-text">Novedades STM...</div>
+    </div>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box">
+                <img src="logo nuevo.png" alt="STM"
+                    onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=STM'">
+            </div>
+            <div class="welcome-msg">
+                <h1 id="usrGreeting">¡Cargando!</h1>
+                <p id="usrDisplayName">Buscando usuario...</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" id="newsFeed">
+        <div class="loader">
+            <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+            <p style="font-weight: 700; margin:0">Cargando noticias...</p>
+        </div>
+    </div>
+
+    <!-- FAB BOT -->
+
+
+    <!-- MODAL NOVEDAD DETALLE - DISEÑO CENTRADO PREMIUM -->
+    <div class="search-modal" id="modalNovedad" style="display: none; position: fixed; inset: 0; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.7); z-index: 10000; backdrop-filter: blur(10px); padding: 20px;">
+        <div class="search-content" style="position: relative; width: 100%; max-width: 400px; max-height: 90vh; transform: scale(0.5); border-radius: 35px; padding: 35px 25px; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; display: flex; flex-direction: column; text-align: center; background: white; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); overflow: hidden;">
+            <div id="novedadDetailContent" style="overflow-y: auto; flex: 1; padding-right: 5px;">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <button onclick="toggleNovedadModal(false)" style="margin-top: 25px; width: 100%; padding: 20px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; font-family: inherit; font-size: 1.1rem; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);">¡Entendido!</button>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- MODAL CONFIGURACIÓN -->
+    <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 20px 5px; color: var(--stm-primary);">
+                Configuración</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Modo Oscuro</span>
+                    <input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)"
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver Asistente Bot</span>
+                    <input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
+            </div>
+            <button onclick="toggleSettings(false)"
+                style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; font-family: inherit; cursor: pointer;">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL/CONTRASEÑA -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
+            </h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
+                    style="padding-left:20px">
+                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
+                    style="padding-left:20px">
+                <button onclick="changePassword()"
+                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar
+                    Contraseña</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
+                <button onclick="logout()"
+                    style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar
+                    Sesión</button>
+                <button onclick="toggleUser(false)"
+                    style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificación de Acceso
+
+
+        const SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
+        const GID = "195669740"; // hoja novedades
+        const URL_SHEET = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCxqMSFt7usCe2e8Z6w20-ad5G_vB21rEEKnB6hWZ0zDKfu64mgNFXiTVT3oM5R4tTHw/exec';
+        let allNews = [];
+
+        /**
+         * Convierte el formato de fecha de Google Sheets a DD de mes de YYYY.
+         */
+        function getRawDate(dateString) {
+            let date;
+            const stringMatch = String(dateString).match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+            if (stringMatch) {
+                date = new Date(+stringMatch[3], +stringMatch[2] - 1, +stringMatch[1]);
+            } else {
+                const vizMatch = String(dateString).match(/Date\((\d{4}),(\d{1,2}),(\d{1,2})\)/);
+                if (vizMatch) {
+                    date = new Date(+vizMatch[1], +vizMatch[2], +vizMatch[3]);
+                } else {
+                    date = new Date(dateString);
+                }
+            }
+            return isNaN(date.getTime()) ? new Date(0) : date;
+        }
+
+        function formatDate(dateString) {
+            const date = getRawDate(dateString);
+            if (isNaN(date.getTime()) || date.getTime() === 0) return dateString;
+            return new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: 'long', year: 'numeric' })
+                .format(date).replace(/\./g, '').replace(/,/g, '').trim();
+        }
+
+        async function loadNews() {
+            try {
+                const res = await fetch(URL_SHEET);
+                const text = await res.text();
+                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
+                const rows = json.table.rows;
+
+                // Columnas: id(0), titulo(1), Descripción(2), fecha_novedad(3), ACTIVO(4)
+                allNews = rows.map(r => {
+                    const c = r.c;
+                    return {
+                        id: (c[0]?.v || "").toString(),
+                        titulo: (c[1]?.v || "").toString(),
+                        desc: (c[2]?.v || "").toString(),
+                        fecha: (c[3]?.f || c[3]?.v || "").toString(),
+                        activo: (c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                    };
+                }).filter(n => n.activo).sort((a,b) => getRawDate(b.fecha) - getRawDate(a.fecha)); // activas más recientes primero por FECHA
+
+                renderFeed(allNews);
+
+                // Manejo de foco directo desde el Bot
+                const urlParams = new URLSearchParams(window.location.search);
+                const focusId = urlParams.get('id');
+                if (focusId) {
+                    setTimeout(() => {
+                        const target = document.getElementById('news-' + focusId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => {
+                                target.click();
+                            }, 800);
+                        }
+                    }, 1000);
+                }
+            } catch (e) {
+                document.getElementById('newsFeed').innerHTML =
+                    `<div style="text-align:center; padding:60px 20px; color:#94a3b8">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size:2.5rem; color:#ef4444; display:block; margin-bottom:15px"></i>
+                        <p style="font-weight:700">No se pudieron cargar las novedades.</p>
+                        <p style="font-size:0.85rem">Verificá tu conexión e intentá nuevamente.</p>
+                    </div>`;
+            }
+        }
+
+        function renderFeed(news) {
+            const feed = document.getElementById('newsFeed');
+            feed.innerHTML = "";
+
+            if (news.length === 0) {
+                feed.innerHTML = `
+                    <div style="text-align:center; padding:60px 20px; color:#94a3b8">
+                        <i class="fa-solid fa-newspaper" style="font-size:3rem; display:block; margin-bottom:15px"></i>
+                        <p style="font-weight:700">No hay novedades activas en este momento.</p>
+                    </div>`;
+                return;
+            }
+
+            // Hero: última noticia
+            const latest = news[0];
+            const hero = document.createElement('div');
+            hero.id = "news-" + latest.id;
+            hero.className = "news-hero animate__animated animate__fadeIn";
+            hero.style.cursor = "pointer";
+            hero.onclick = () => alertDetail(latest);
+            hero.innerHTML = `
+                <div class="hero-tag">Última noticia</div>
+                <div class="hero-content">
+                    <span class="hero-date">${formatDate(latest.fecha)}</span>
+                    <h2>${latest.titulo}</h2>
+                    <p class="hero-desc">${latest.desc}</p>
+                </div>
+            `;
+            feed.appendChild(hero);
+
+            // Resto
+            news.slice(1).forEach(n => {
+                const card = document.createElement('div');
+                card.id = "news-" + n.id;
+                card.className = "feed-card animate__animated animate__fadeInUp";
+                card.style.cursor = "pointer";
+                card.onclick = () => alertDetail(n);
+                card.innerHTML = `
+                    <span class="feed-date">${formatDate(n.fecha)}</span>
+                    <h3 class="feed-title">${n.titulo}</h3>
+                    <p class="feed-desc">${n.desc}</p>
+                `;
+                feed.appendChild(card);
+            });
+        }
+
+        function alertDetail(n) {
+            const res = document.getElementById('novedadDetailContent');
+            res.innerHTML = `
+                <div style="width: 70px; height: 70px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; flex-shrink: 0;">
+                    <i class="fa-solid fa-newspaper" style="font-size: 1.8rem; color: var(--stm-primary);"></i>
+                </div>
+                <div style="margin-bottom: 5px;">
+                    <span style="font-size:0.75rem; color:var(--stm-primary); font-weight:800; text-transform:uppercase; letter-spacing:1px">${formatDate(n.fecha)}</span>
+                    <h2 style="margin:10px 0 15px; font-weight:900; font-size:1.5rem; line-height:1.2; color:#1e293b">${n.titulo}</h2>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 24px; border: 1px solid #e2e8f0; text-align: left;">
+                        <p style="font-size:0.95rem; color:#475569; line-height:1.6; margin:0">${n.desc.replace(/\n/g, '<br>')}</p>
+                    </div>
+                </div>
+            `;
+            toggleNovedadModal(true);
+        }
+
+        function toggleNovedadModal(show) {
+            const modal = document.getElementById('modalNovedad');
+            const inner = modal.querySelector('.search-content');
+            if (show) {
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    inner.style.transform = 'scale(1)';
+                    inner.style.opacity = '1';
+                }, 50);
+            } else {
+                inner.style.transform = 'scale(0.5)';
+                inner.style.opacity = '0';
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 400);
+            }
+        }
+
+        const sitePages = [
+            { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
+            { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
+            { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
+            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
+            { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
+            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
+            { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
+            { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
+        ];
+
+
+
+        function toggleUser(show) {
+            const modal = document.getElementById('modalUser');
+            if (modal) {
+                modal.classList.toggle('active', show);
+                if (show) document.getElementById('newPass').focus();
+            }
+        }
+
+        async function changePassword() {
+            const p1 = document.getElementById('newPass').value;
+            const p2 = document.getElementById('confirmPass').value;
+            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
+            const usrID = localStorage.getItem('usrID');
+
+            if (!p1 || !p2) { showNotify("Por favor completa ambos campos.", "error"); return; }
+            if (p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
+
+            const originalText = btn.innerText;
+            btn.innerText = "Procesando...";
+            btn.style.pointerEvents = "none";
+
+            try {
+                await fetch(USER_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
+                });
+                localStorage.setItem('usrPass', p1);
+                showNotify("¡Contraseña actualizada!", "success");
+                btn.innerText = "¡Listo! ✓";
+                btn.style.background = "#10b981";
+                btn.style.color = "white";
+                setTimeout(() => {
+                    toggleUser(false);
+                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
+                    btn.style.pointerEvents = "auto";
+                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
+                }, 1500);
+            } catch (err) {
+                showNotify("Error de conexión", "error");
+                btn.innerText = originalText; btn.style.pointerEvents = "auto";
+            }
+        }
+
+        function showNotify(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = 'stm-notify';
+            const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
+            const bg = type === 'error' ? '#ef4444' : '#10b981';
+            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span style="font-weight:700; font-size:0.9rem">${msg}</span>`;
+            document.body.appendChild(div);
+            setTimeout(() => div.classList.add('show'), 10);
+            setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
+        }
+
+        function normalize(str) {
+            return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        }
+
+
+
+        function logout() {
+            sessionStorage.clear(); localStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        // Saludo y Usuario
+        const h = new Date().getHours();
+        const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+        document.getElementById('usrGreeting').innerText = greet;
+        document.getElementById('usrDisplayName').innerText = localStorage.getItem('usrName') || "Afiliado STM";
+
+        function toggleSettings(show) { 
+            const modal = document.getElementById('modalConfig');
+            if (modal) modal.classList.toggle('active', show); 
+        }
+
+        function applyConfig(type, value) {
+            localStorage.setItem('cfg_' + type, value);
+            if (type === 'dark') document.body.classList.toggle('dark-mode', value);
+        }
+
+        function loadSettings() {
+            const cfg = { dark: localStorage.getItem('cfg_dark') === 'true' };
+            document.body.classList.toggle('dark-mode', cfg.dark);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+        }
+
+        window.addEventListener('load', () => {
+            loadSettings();
+            loadNews();
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 600);
+        });
+    </script>
+
+    <script src="stm-bot.js"></script>
+</body>
+
+</html>
