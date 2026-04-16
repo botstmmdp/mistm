@@ -9,7 +9,10 @@
         { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
         { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
         { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-        { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+        { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "servicios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+        { t: "Préstamos", d: "Ayuda económica", f: "servicios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+        { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "servicios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+        { t: "Legal y Farmacia", d: "Asesoría y farmacia sindical", f: "servicios.html?id=asesoria", tags: "farmacia legal abogados asesoría", ico: "fa-briefcase-medical" },
         { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
         { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
         { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
@@ -35,9 +38,11 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 botNews = (json.table.rows || []).map(r => ({
+                    id: (r.c[0]?.v || "").toString(),
                     titulo: (r.c[1]?.v || "").toString(),
-                    desc:   (r.c[2]?.v || "").toString()
-                }));
+                    desc:   (r.c[2]?.v || "").toString(),
+                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                })).filter(n => n.activo);
             } catch (e) { console.warn("Bot: Error cargando Novedades dinámicas", e); }
         }
         
@@ -48,6 +53,7 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 botConvenios = (json.table.rows || []).map(r => ({
+                    id: (r.c[0]?.v || "").toString(),
                     rubro: (r.c[1]?.v || "").toString(),
                     titulo: (r.c[2]?.v || "").toString(),
                     desc: (r.c[3]?.v || "").toString(),
@@ -203,7 +209,7 @@
                     if (matchedConv.length > 0) {
                         res.innerHTML += `<div class="bot-results-title" style="font-size: 0.72rem; font-weight: 800; color: #10b981; text-transform: uppercase; letter-spacing: 0.5px; margin: 15px 0 10px 5px;">CONVENIOS ENCONTRADOS</div>`;
                         matchedConv.slice(0, 5).forEach(c => {
-                            res.innerHTML += `<a href="convenios.html" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; background:#ecfdf5; border:1px solid #d1fae5; display:block">
+                            res.innerHTML += `<a href="convenios.html?id=${c.id}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; background:#ecfdf5; border:1px solid #d1fae5; display:block">
                                 <div style="display:flex; align-items:center; gap:10px">
                                     <div style="width:30px; height:30px; border-radius:8px; background:#10b981; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-handshake"></i></div>
                                     <div><h4 style="margin:0; font-size:0.85rem">${c.titulo}</h4><p style="margin:0; font-size:0.7rem; color:#065f46">${c.rubro}</p></div>
@@ -216,7 +222,7 @@
                     if (matchedNews.length > 0) {
                         res.innerHTML += `<div class="bot-results-title" style="font-size: 0.72rem; font-weight: 800; color: #f59e0b; text-transform: uppercase; letter-spacing: 0.5px; margin: 15px 0 10px 5px;">NOVEDADES RECIENTES</div>`;
                         matchedNews.slice(0, 3).forEach(n => {
-                            res.innerHTML += `<a href="novedades.html" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; background:#fffbeb; border:1px solid #fef3c7; display:block">
+                            res.innerHTML += `<a href="novedades.html?id=${n.id}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; background:#fffbeb; border:1px solid #fef3c7; display:block">
                                 <div style="display:flex; align-items:center; gap:10px">
                                     <div style="width:30px; height:30px; border-radius:8px; background:#f59e0b; color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid fa-newspaper"></i></div>
                                     <div><h4 style="margin:0; font-size:0.85rem">${n.titulo}</h4></div>

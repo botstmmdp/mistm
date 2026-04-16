@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../logo nuevo.png" type="image/png">
+    <link rel="icon" href="logo nuevo.png" type="image/png">
     <title>STM | Tablero Administrador</title>
 
     <!-- Fonts & Frameworks -->
@@ -480,7 +480,7 @@
 
     <div class="loading-overlay" id="loadingOverlay">
         <div class="text-center">
-            <img src="../logo nuevo.png" class="loader-logo-spin" alt="Cargando...">
+            <img src="logo nuevo.png" class="loader-logo-spin" alt="Cargando...">
             <div class="loading-text mt-3 fw-bold">Aguarde un instante...</div>
         </div>
     </div>
@@ -489,13 +489,13 @@
 
     <aside class="sidebar">
         <div class="sidebar-brand">
-            <img src="../logo nuevo.png" alt="STM">
+            <img src="logo nuevo.png" alt="STM">
             <span>Gestor de aplicación web</span>
         </div>
 
         <nav class="nav-menu">
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard active" onclick="switchModule('inicio', this)">
+                <button class="nav-link-dashboard active" onclick="switchModule('inicio', this); loadData();">
                     <i class="fas fa-th-large"></i> Inicio
                 </button>
             </div>
@@ -526,27 +526,27 @@
                 </button>
             </div>
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('quincho', this)">
+                <button class="nav-link-dashboard" onclick="switchModule('quincho', this)">
                     <i class="fas fa-home"></i> Quincho
                 </button>
             </div>
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('deportes', this)">
+                <button class="nav-link-dashboard" onclick="switchModule('deportes', this)">
                     <i class="fas fa-running"></i> Deportes
                 </button>
             </div>
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('proveduria', this)">
+                <button class="nav-link-dashboard" onclick="switchModule('proveduria', this)">
                     <i class="fas fa-shopping-basket"></i> Proveduría
                 </button>
             </div>
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('farmacia', this)">
+                <button class="nav-link-dashboard" onclick="switchModule('farmacia', this)">
                     <i class="fas fa-briefcase-medical"></i> Farmacia
                 </button>
             </div>
             <div class="nav-item-dashboard">
-                <button class="nav-link-dashboard nav-link-dev" onclick="switchModule('capacitacion', this)">
+                <button class="nav-link-dashboard" onclick="switchModule('capacitacion', this)">
                     <i class="fas fa-chalkboard-teacher"></i> Capacitación
                 </button>
             </div>
@@ -565,7 +565,7 @@
             <div class="d-flex align-items-center gap-3">
                 <div class="text-end">
                     <div id="adminName" class="fw-black small text-slate-800">Cargando...</div>
-                    <div class="text-emerald-500 fw-bold" style="font-size: 10px;">ADMINISTRADOR</div>
+                    <div id="adminRole" class="text-emerald-500 fw-bold" style="font-size: 10px;">ADMINISTRADOR</div>
                 </div>
                 <img src="https://ui-avatars.com/api/?name=Admin&background=0f172a&color=fff" class="rounded-circle"
                     width="35">
@@ -978,12 +978,41 @@
             Afiliaciones: []
         };
 
+        // Protección de Ruta (Se ejecuta al cargar)
+        function verificarAcceso() {
+            const isLogged = sessionStorage.getItem('isLogged') === 'true';
+            const userPerm = sessionStorage.getItem('usrPermiso');
+            const allowedRoles = ['ADMIN', 'PROVEEDURIA', 'FARMACIA', 'DEPORTE', 'CAPACITACION'];
+            
+            if (!isLogged || !allowedRoles.includes(userPerm)) {
+                window.location.replace('index-dashboard.html');
+                return false;
+            }
+            return true;
+        }
+
+        // Validación inicial
+        verificarAcceso();
+
+        // Validación continua de seguridad (cada 2 segundos)
+        setInterval(() => {
+            if (!sessionStorage.getItem('isLogged')) {
+                window.location.replace('index-dashboard.html');
+            }
+        }, 2000);
+
         document.addEventListener('DOMContentLoaded', () => {
             updateClock();
             setInterval(updateClock, 1000);
+            applyPermissions();
 
             const usuarioLogueado = sessionStorage.getItem('usuario_nombre');
+            const userPermiso = sessionStorage.getItem('usrPermiso');
+            
             document.getElementById('adminName').innerText = usuarioLogueado ? usuarioLogueado.toUpperCase() : 'ADMINISTRADOR';
+            if (userPermiso) {
+                document.getElementById('adminRole').innerText = `PERMISO: ${userPermiso.toUpperCase()}`;
+            }
 
             modal = new bootstrap.Modal(document.getElementById('entityModal'));
             confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
@@ -993,6 +1022,42 @@
             document.getElementById('entityForm').onsubmit = (e) => { e.preventDefault(); saveEntry(); };
         });
 
+        function applyPermissions() {
+            const perm = sessionStorage.getItem('usrPermiso');
+            if (perm === 'ADMIN') return;
+
+            // Mapeo de perfiles a módulos permitidos (por texto del botón)
+            const permissions = {
+                'PROVEEDURIA': ['PROVEDURÍA'],
+                'FARMACIA': ['FARMACIA'],
+                'DEPORTE': ['DEPORTES'],
+                'CAPACITACION': ['CAPACITACIÓN']
+            };
+
+            const allowed = permissions[perm] || [];
+            
+            document.querySelectorAll('.nav-item-dashboard').forEach(item => {
+                const btn = item.querySelector('button');
+                if (!btn) return;
+                const text = btn.innerText.trim().toUpperCase();
+                
+                // Estos siempre son visibles o se manejan aparte
+                if (text === 'CERRAR SESIÓN') return;
+                
+                if (!allowed.includes(text)) {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Si no es admin y está en inicio, redirigir a su módulo
+            if (activeModule === 'inicio' && perm !== 'ADMIN') {
+                if (perm === 'PROVEEDURIA') switchModule('proveduria', document.querySelector('button[onclick*="proveduria"]'));
+                if (perm === 'FARMACIA') switchModule('farmacia', document.querySelector('button[onclick*="farmacia"]'));
+                if (perm === 'DEPORTE') switchModule('deportes', document.querySelector('button[onclick*="deportes"]'));
+                if (perm === 'CAPACITACION') switchModule('capacitacion', document.querySelector('button[onclick*="capacitacion"]'));
+            }
+        }
+
         function updateClock() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -1000,6 +1065,8 @@
         }
 
         function switchModule(moduleId, element) {
+            if (!verificarAcceso()) return; // Validar antes de cambiar de módulo
+
             document.querySelectorAll('.nav-link-dashboard').forEach(link => link.classList.remove('active'));
             element.classList.add('active');
 
@@ -1430,7 +1497,16 @@
                         <div class="col-6 mb-3"><label class="form-label fw-bold small">Nombre</label><input type="text" class="form-control" name="nombre" id="inputNombre" value="${data?.nombre || ''}" oninput="generateUsername()" required></div></div>
                         <div class="row"><div class="col-6 mb-3"><label class="form-label fw-bold small">Usuario</label><input type="text" class="form-control" name="usuario" id="inputUsuario" value="${data?.usuario || data?.user || ''}" required></div>
                         <div class="col-6 mb-3"><label class="form-label fw-bold small">Clave</label><input type="text" class="form-control" name="password" id="inputPassword" value="${data?.password || ''}" placeholder="" required></div></div>
-                        <div class="mb-3"><label class="form-label fw-bold small">Permiso</label><select class="form-select" name="permiso"><option value="USER">USER</option><option value="ADMIN" ${data?.permiso === 'ADMIN' ? 'selected' : ''}>ADMIN</option></select></div>`;
+                        <div class="mb-3"><label class="form-label fw-bold small">Permiso</label>
+                            <select class="form-select" name="permiso">
+                                <option value="USER" ${data?.permiso === 'USER' ? 'selected' : ''}>USER</option>
+                                <option value="ADMIN" ${data?.permiso === 'ADMIN' ? 'selected' : ''}>ADMIN</option>
+                                <option value="PROVEEDURIA" ${data?.permiso === 'PROVEEDURIA' ? 'selected' : ''}>PROVEEDURIA</option>
+                                <option value="FARMACIA" ${data?.permiso === 'FARMACIA' ? 'selected' : ''}>FARMACIA</option>
+                                <option value="DEPORTE" ${data?.permiso === 'DEPORTE' ? 'selected' : ''}>DEPORTE</option>
+                                <option value="CAPACITACION" ${data?.permiso === 'CAPACITACION' ? 'selected' : ''}>CAPACITACION</option>
+                            </select>
+                        </div>`;
             } else if (activeTab === 'Mensajes') {
                 const opts = dataStore.Usuarios.map(u => `<option value="${u.id}">${u.apellido}, ${u.nombre}</option>`).join('');
                 html = `<div class="mb-3"><label class="form-label fw-bold small">Usuario Destinatario</label><select class="form-select" name="id_user" required>${opts}</select></div>
@@ -1561,7 +1637,16 @@
         function showFeedback(msg, isSuccess) { const f = document.getElementById('feedbackMessage'); f.innerText = msg; f.className = `feedback show ${isSuccess ? 'success' : 'error'}`; setTimeout(() => f.classList.remove('show'), 3000); }
         function showConfirm(title, msg, onConfirm) { document.getElementById('confirmTitle').innerText = title; document.getElementById('confirmMessage').innerText = msg; const btn = document.getElementById('confirmBtnAction'); btn.onclick = () => { confirmModal.hide(); onConfirm(); }; confirmModal.show(); }
         function toggleLoader(show) { document.getElementById('loadingOverlay').classList.toggle('visible', show); }
-        function logout() { window.location.href = '../index.html'; }
+        function logout() { 
+            sessionStorage.clear();
+            localStorage.removeItem('isLogged');
+            localStorage.removeItem('usrID');
+            localStorage.removeItem('usrLogin');
+            localStorage.removeItem('usrName');
+            localStorage.removeItem('usrFullName');
+            localStorage.removeItem('usrPermiso');
+            window.location.href = 'index-dashboard.html'; 
+        }
         function formatDateForInput(ds) { if (!ds) return ""; const d = new Date(ds); return isNaN(d.getTime()) ? "" : d.toISOString().split('T')[0]; }
     </script>
 </body>

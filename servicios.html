@@ -469,7 +469,7 @@
     <div class="container">
 
         <!-- COMPLEJO SOCIAL -->
-        <div class="service-card" onclick="toggleDetail(this)">
+        <div class="service-card" id="srv-recreacion" onclick="toggleDetail(this)">
             <div class="service-header">
                 <div class="service-ico"><i class="fa-solid fa-umbrella-beach"></i></div>
                 <div class="service-info">
@@ -496,7 +496,7 @@
         </div>
 
         <!-- PRESTAMOS -->
-        <div class="service-card" onclick="toggleDetail(this)">
+        <div class="service-card" id="srv-prestamos" onclick="toggleDetail(this)">
             <div class="service-header">
                 <div class="service-ico"><i class="fa-solid fa-hand-holding-dollar"></i></div>
                 <div class="service-info">
@@ -517,7 +517,7 @@
         </div>
 
         <!-- SUBSIDIOS -->
-        <div class="service-card" onclick="toggleDetail(this)">
+        <div class="service-card" id="srv-subsidios" onclick="toggleDetail(this)">
             <div class="service-header">
                 <div class="service-ico"><i class="fa-solid fa-gift"></i></div>
                 <div class="service-info">
@@ -540,7 +540,7 @@
         </div>
 
         <!-- ASESORIA Y SALUD -->
-        <div class="service-card" onclick="toggleDetail(this)">
+        <div class="service-card" id="srv-asesoria" onclick="toggleDetail(this)">
             <div class="service-header">
                 <div class="service-ico"><i class="fa-solid fa-briefcase-medical"></i></div>
                 <div class="service-info">
@@ -632,7 +632,10 @@
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "servicios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+            { t: "Préstamos", d: "Ayuda económica", f: "servicios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+            { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "servicios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+            { t: "Legal y Farmacia", d: "Asesoría y farmacia sindical", f: "servicios.html?id=asesoria", tags: "farmacia legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
             { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
@@ -673,7 +676,7 @@
             }
         });
 
-        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
+        function logout() { sessionStorage.clear(); localStorage.clear(); window.location.href = 'index.html'; }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
@@ -683,6 +686,20 @@
             const h = new Date().getHours();
             const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
             if (document.getElementById('usrGreeting')) document.getElementById('usrGreeting').innerText = greet;
+            
+            // Foco de Bot
+            const urlParams = new URLSearchParams(window.location.search);
+            const focusId = urlParams.get('id');
+            if(focusId) {
+                setTimeout(() => {
+                    const el = document.getElementById('srv-' + focusId);
+                    if(el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => toggleDetail(el), 600);
+                    }
+                }, 800);
+            }
+
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
     </script>

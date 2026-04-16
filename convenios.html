@@ -767,12 +767,28 @@
                 const text = await res.text();
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 allConvenios = (json.table.rows || []).map(r => ({
+                    id: (r.c[0]?.v || "").toString(),
                     rubro: (r.c[1]?.v || "").toString(),
                     titulo: (r.c[2]?.v || "").toString(),
                     detalle: (r.c[3]?.v || "").toString(),
                     activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                 })).filter(c => c.activo).sort((a, b) => a.titulo.localeCompare(b.titulo));
                 renderConvenios(allConvenios);
+
+                // Manejo de foco directo desde el Bot
+                const urlParams = new URLSearchParams(window.location.search);
+                const focusId = urlParams.get('id');
+                if (focusId) {
+                    setTimeout(() => {
+                        const target = document.getElementById('conv-' + focusId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => {
+                                target.classList.add('is-flipped');
+                            }, 800);
+                        }
+                    }, 1000);
+                }
             } catch (e) { console.error("Error al cargar convenios:", e); }
         }
 
@@ -816,6 +832,7 @@
             grid.innerHTML = "";
             list.forEach((c, idx) => {
                 const card = document.createElement('div');
+                card.id = "conv-" + c.id;
                 card.className = "card-flip";
                 card.onclick = () => {
                     const wasFlipped = card.classList.contains('is-flipped');
@@ -950,7 +967,7 @@
             } catch (e) { showNotify("Error de conexión", "error"); }
         }
 
-        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
+        function logout() { sessionStorage.clear(); localStorage.clear(); window.location.href = 'index.html'; }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };

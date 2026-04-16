@@ -733,6 +733,7 @@
                 allNews = rows.map(r => {
                     const c = r.c;
                     return {
+                        id: (c[0]?.v || "").toString(),
                         titulo: (c[1]?.v || "").toString(),
                         desc: (c[2]?.v || "").toString(),
                         fecha: (c[3]?.f || c[3]?.v || "").toString(),
@@ -741,6 +742,21 @@
                 }).filter(n => n.activo).sort((a,b) => getRawDate(b.fecha) - getRawDate(a.fecha)); // activas más recientes primero por FECHA
 
                 renderFeed(allNews);
+
+                // Manejo de foco directo desde el Bot
+                const urlParams = new URLSearchParams(window.location.search);
+                const focusId = urlParams.get('id');
+                if (focusId) {
+                    setTimeout(() => {
+                        const target = document.getElementById('news-' + focusId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            setTimeout(() => {
+                                target.click();
+                            }, 800);
+                        }
+                    }, 1000);
+                }
             } catch (e) {
                 document.getElementById('newsFeed').innerHTML =
                     `<div style="text-align:center; padding:60px 20px; color:#94a3b8">
@@ -767,6 +783,7 @@
             // Hero: última noticia
             const latest = news[0];
             const hero = document.createElement('div');
+            hero.id = "news-" + latest.id;
             hero.className = "news-hero animate__animated animate__fadeIn";
             hero.style.cursor = "pointer";
             hero.onclick = () => alertDetail(latest);
@@ -783,6 +800,7 @@
             // Resto
             news.slice(1).forEach(n => {
                 const card = document.createElement('div');
+                card.id = "news-" + n.id;
                 card.className = "feed-card animate__animated animate__fadeInUp";
                 card.style.cursor = "pointer";
                 card.onclick = () => alertDetail(n);
@@ -968,7 +986,7 @@
         });
 
         function logout() {
-            localStorage.clear();
+            sessionStorage.clear(); localStorage.clear();
             window.location.href = 'index.html';
         }
 

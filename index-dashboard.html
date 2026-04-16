@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Acceso STM - Sindicato Trabajadores Municipales</title>
+    <title>Acceso Administrador - STM</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
@@ -79,15 +79,8 @@
         }
 
         @keyframes pulse-logo {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .logo-box img {
@@ -197,22 +190,11 @@
         }
 
         @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
-            }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        /* Loader inside button */
         .loader-dots {
             display: none;
             gap: 5px;
@@ -226,27 +208,14 @@
             animation: dot-blink 1s infinite;
         }
 
-        .loader-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .loader-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes dot-blink {
-
-            0%,
-            100% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
 
-        /* Custom Notification */
         .stm-notify {
             position: fixed;
             top: 30px;
@@ -284,15 +253,20 @@
         }
 
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .admin-label {
+            display: block;
+            text-align: center;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--stm-primary);
+            margin-bottom: 15px;
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -300,25 +274,26 @@
 <body>
 
     <div class="login-card">
+        <span class="admin-label">Panel de Control Administrativo</span>
         <div class="logo-box">
             <img src="logo nuevo.png" alt="STM Logo">
         </div>
-        <h1>Bienvenido</h1>
-        <p class="subtitle">Ingresá tus credenciales para acceder a la aplicación del STM</p>
+        <h1>Acceso Gestor</h1>
+        <p class="subtitle">Identifícate para gestionar la plataforma del STM</p>
 
         <div id="errorBox" class="error-msg"></div>
 
         <form id="loginForm">
             <div class="input-group">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" id="usrInput" placeholder="Usuario" required>
+                <i class="fa-solid fa-user-shield"></i>
+                <input type="text" id="usrInput" placeholder="Usuario Admin" required>
             </div>
             <div class="input-group">
                 <i class="fa-solid fa-lock"></i>
                 <input type="password" id="passInput" placeholder="Contraseña" required>
             </div>
             <button type="submit" id="loginBtn">
-                <span id="btnText">Iniciar Sesión</span>
+                <span id="btnText">Entrar al Tablero</span>
                 <div id="loader" class="loader-dots"><span></span><span></span><span></span></div>
             </button>
         </form>
@@ -334,6 +309,14 @@
         const btnText = document.getElementById('btnText');
         const loader = document.getElementById('loader');
         const errorBox = document.getElementById('errorBox');
+
+        // Redirección si ya hay sesión activa
+        const currentPerm = sessionStorage.getItem('usrPermiso');
+        const allowedRoles = ['ADMIN', 'PROVEEDURIA', 'FARMACIA', 'DEPORTE', 'CAPACITACION'];
+        
+        if (sessionStorage.getItem('isLogged') === 'true' && allowedRoles.includes(currentPerm)) {
+            window.location.href = 'dashboard.html';
+        }
 
         // Check dark mode
         const isDark = localStorage.getItem('cfg_dark') === 'true';
@@ -354,14 +337,13 @@
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
 
                 // Rows map to search credentials
-                // id (0), Apellido (1), Nombre (2), Usuario (3), Password (4), Permiso (5)
                 const users = json.table.rows.map(r => ({
                     id: r.c[0]?.v || "",
                     apellido: r.c[1]?.v || "",
                     nombre: r.c[2]?.v || "",
                     usuario: String(r.c[3]?.v || ""),
                     password: String(r.c[4]?.f || r.c[4]?.v || ""),
-                    permiso: r.c[5]?.v || "USER"
+                    permiso: (r.c[5]?.v || "USER").toUpperCase()
                 }));
 
                 const found = users.find(u =>
@@ -370,26 +352,38 @@
                 );
 
                 if (found) {
-                    // Success!
-                    localStorage.setItem('isLogged', 'true');
-                    localStorage.setItem('usrID', found.id);
-                    localStorage.setItem('usrLogin', found.usuario);
-                    localStorage.setItem('usrName', found.nombre);
-                    localStorage.setItem('usrFullName', `${found.nombre} ${found.apellido}`);
-                    localStorage.setItem('usrPermiso', found.permiso);
+                    const allowedRoles = ['ADMIN', 'PROVEEDURIA', 'FARMACIA', 'DEPORTE', 'CAPACITACION'];
+                    if (allowedRoles.includes(found.permiso)) {
+                        // Success!
+                        localStorage.setItem('isLogged', 'true');
+                        localStorage.setItem('usrID', found.id);
+                        localStorage.setItem('usrLogin', found.usuario);
+                        localStorage.setItem('usrName', found.nombre);
+                        localStorage.setItem('usrFullName', `${found.nombre} ${found.apellido}`);
+                        localStorage.setItem('usrPermiso', found.permiso);
 
-                    showNotify(`¡Hola ${found.nombre}! Entrando...`, 'success');
+                        sessionStorage.setItem('isLogged', 'true');
+                        sessionStorage.setItem('usrID', found.id);
+                        sessionStorage.setItem('usrLogin', found.usuario);
+                        sessionStorage.setItem('usrName', found.nombre);
+                        sessionStorage.setItem('usuario_nombre', `${found.nombre} ${found.apellido}`);
+                        sessionStorage.setItem('usrPermiso', found.permiso);
 
-                    setTimeout(() => {
-                        window.location.href = 'opciones.html';
-                    }, 1500);
+                        showNotify(`¡Hola ${found.nombre}! Entrando...`, 'success');
+
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1500);
+                    } else {
+                        showError("Acceso restringido. Solo cuentas de Gestión.");
+                    }
                 } else {
                     showError("Usuario o contraseña incorrectos.");
                 }
 
             } catch (err) {
                 console.error(err);
-                showError("Hubo un problema al conectar. Reintente.");
+                showError("Error de conexión. Reintente.");
             } finally {
                 setLoading(false);
             }
@@ -420,7 +414,6 @@
             }, 3000);
         }
     </script>
-
     <script src="stm-bot.js"></script>
 </body>
 
