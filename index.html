@@ -321,6 +321,9 @@
                 <span id="btnText">Iniciar Sesión</span>
                 <div id="loader" class="loader-dots"><span></span><span></span><span></span></div>
             </button>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="mailto:bot.stmmdp@gmail.com?subject=Recupero%20de%20Contraseña" style="color: var(--stm-primary); font-size: 0.9rem; text-decoration: none; font-weight: 700; transition: 0.3s; opacity: 0.9;"><i class="fa-solid fa-envelope"></i> ¿Olvidaste tu contraseña?</a>
+            </div>
         </form>
     </div>
 
@@ -402,7 +405,7 @@
         }
 
         function showError(msg) {
-            errorBox.innerText = msg;
+            errorBox.innerHTML = msg;
             errorBox.style.display = "block";
         }
 
@@ -421,7 +424,7 @@
         }
     </script>
 
-    <script src="stm-bot.js"></script>
+    <script src="stm-bot.js?v=2.2"></script>
 </body>
 
 </html>
