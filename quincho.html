@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Capacitación STM - Beneficio Estudiantil 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Reserva de Quincho - MiStm App</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
@@ -31,55 +30,34 @@
             --glass: rgba(30, 41, 59, 0.85);
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .nav-home-pulse i {
             animation: home-blink 2s infinite ease-in-out;
         }
 
         @keyframes home-blink {
-
-            0%,
-            100% {
-                color: #4b5563;
-                transform: scale(1);
-            }
-
-            50% {
-                color: white;
-                transform: scale(1.2);
-            }
+            0%, 100% { color: #4b5563; transform: scale(1); }
+            50% { color: white; transform: scale(1.2); }
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            color: var(--text-dark);
-            overflow-x: hidden;
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-dark); overflow-x: hidden;
         }
 
-        html {
-            height: 100%;
-        }
+        html { height: 100%; }
 
         header {
             padding: 40px 20px 20px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: sticky; top: 0; z-index: 100;
         }
 
         body.dark-mode header {
@@ -87,53 +65,23 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header-box {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+        .header-box { display: flex; align-items: center; gap: 15px; }
 
         .logo-box {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 14px;
-            padding: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 50px; height: 50px; background: white; border-radius: 14px;
+            padding: 6px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .logo-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
-        .welcome-msg h1 {
-            margin: 0;
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
+        .header-text h1 { font-size: 1.2rem; font-weight: 800; margin: 0; color: var(--stm-primary); }
+        .header-text p { font-size: 0.8rem; font-weight: 500; margin: 0; opacity: 0.7; }
 
-        .welcome-msg p {
-            margin: 0;
-            font-size: 1.05rem;
-            opacity: 0.8;
-            font-weight: 600;
-            color: var(--stm-primary);
-        }
+        .container { padding: 25px 20px 145px; max-width: 600px; margin: 0 auto; }
 
-        .container {
-            padding: 25px 20px 145px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* --- CARDS --- */
-        .card-edu {
+        /* --- TURISMO/QUINCHO CARDS --- */
+        .card-trip {
             background: var(--glass);
             backdrop-filter: blur(10px);
             border-radius: 28px;
@@ -143,239 +91,88 @@
             margin-bottom: 25px;
         }
 
-        .edu-banner {
-            width: 100%;
-            height: 160px;
-            border-radius: 20px;
-            background: linear-gradient(rgba(79, 70, 229, 0.1), rgba(79, 70, 229, 0.05));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            overflow: hidden;
-            position: relative;
+        .trip-header { margin-bottom: 25px; }
+
+        .trip-badge {
+            display: inline-block; background: #eef2ff; color: #4f46e5;
+            padding: 6px 14px; border-radius: 10px; font-size: 0.75rem; font-weight: 700;
+            margin-bottom: 8px; text-transform: uppercase;
         }
 
-        .edu-banner i {
-            font-size: 4rem;
-            color: var(--stm-primary);
-            opacity: 0.2;
+        body.dark-mode .trip-badge { background: rgba(79, 70, 229, 0.2); color: #818cf8; }
+
+        .trip-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 10px; }
+
+        .trip-info-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+
+        .info-pill {
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600;
+            opacity: 0.8; background: rgba(0, 0, 0, 0.03); padding: 8px 12px; border-radius: 12px;
         }
 
-        .edu-header {
-            margin-bottom: 25px;
+        body.dark-mode .info-pill { background: rgba(255, 255, 255, 0.05); }
+
+        .itinerary-box {
+            background: rgba(255, 255, 255, 0.5); border-radius: 20px; padding: 20px;
+            margin-bottom: 25px; border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .edu-badge {
-            display: inline-block;
-            background: #eef2ff;
-            color: #4f46e5;
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            text-transform: uppercase;
+        body.dark-mode .itinerary-box { background: rgba(0, 0, 0, 0.2); border-color: rgba(255,255,255,0.1); }
+
+        .itinerary-day { margin-bottom: 20px; }
+
+        .day-title {
+            font-weight: 800; font-size: 0.95rem; color: var(--stm-primary);
+            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
         }
 
-        body.dark-mode .edu-badge {
-            background: rgba(79, 70, 229, 0.2);
-            color: #818cf8;
+        .itinerary-list { margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.8; }
+        .itinerary-list li { margin-bottom: 8px; list-style-type: none; position: relative; }
+        .itinerary-list li::before { content: "•"; color: var(--stm-primary); position: absolute; left: -15px; font-weight: bold; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
+            border: 1px solid #fde68a; padding: 20px; border-radius: 20px; margin: 20px 0; color: #92400e;
         }
 
-        .edu-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin: 0 0 10px;
-            color: var(--stm-primary);
-        }
-
-        .req-box {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        body.dark-mode .req-box {
-            background: rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .req-title {
-            font-weight: 800;
-            font-size: 0.95rem;
-            color: var(--stm-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .req-list {
-            margin: 0;
-            padding-left: 20px;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-
-        .req-list li {
-            margin-bottom: 8px;
-            list-style-type: none;
-            position: relative;
-        }
-
-        .req-list li::before {
-            content: "✓";
-            color: #10b981;
-            position: absolute;
-            left: -20px;
-            font-weight: bold;
-        }
-
-        .info-panel {
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-            border: 1px solid #bae6fd;
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            color: #0369a1;
-        }
-
-        body.dark-mode .info-panel {
-            background: linear-gradient(135deg, #0c4a6e 0%, #082f49 100%);
-            border-color: #0c4a6e;
-            color: #e0f2fe;
-        }
+        body.dark-mode .highlight-box { background: linear-gradient(135deg, #78350f 0%, #451a03 100%); border-color: #92400e; color: #fef3c7; }
 
         .form-btn {
-            display: block;
-            width: 100%;
-            background: var(--stm-primary);
-            color: white;
-            text-align: center;
-            padding: 18px;
-            border-radius: 18px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1rem;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
-            margin-top: 15px;
+            display: block; width: 100%; background: var(--stm-primary); color: white;
+            text-align: center; padding: 18px; border-radius: 18px; text-decoration: none;
+            font-weight: 800; font-size: 1rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3); margin-top: 15px;
         }
 
         /* --- BOT & NAV (STRICT) --- */
         .fab-bot {
-            position: fixed;
+            position: fixed; 
             bottom: 20px;
             bottom: calc(env(safe-area-inset-bottom, 0px) + 98px);
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #6366f1 !important;
-            color: white !important;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            right: 20px; 
+            width: 60px; height: 60px;
+            background: #6366f1 !important; color: white !important; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            cursor: pointer; z-index: 1001; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
             animation: bounceBot 3s infinite;
         }
-
-        @keyframes bounceBot {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-        }
+        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
         .bot-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
-            visibility: hidden;
-            opacity: 0;
-            transition: 0.3s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+            z-index: 9999; visibility: hidden; opacity: 0; transition: 0.3s;
         }
-
-        .bot-modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-
+        .bot-modal.active { visibility: visible; opacity: 1; }
         
-
-        
-
-        
-
-        
-
-        .nav-home-pulse i {
-            animation: home-blink 3s infinite ease-in-out;
-        }
-
-        @keyframes home-blink {
-
-            0%,
-            100% {
-                color: #64748b;
-                transform: scale(1);
-            }
-
-            50% {
-                color: white;
-                transform: scale(1.1);
-            }
-        }
-
         /* Loader */
         #loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: 0.5s;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white;
+            display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.5s;
         }
-
-        body.dark-mode #loader-wrapper {
-            background: #0f172a;
-        }
-
-        .loader-logo {
-            width: 80px;
-            animation: logo-spin 2s linear infinite;
-        }
-
-        @keyframes logo-spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
+        body.dark-mode #loader-wrapper { background: #0f172a; }
+        .loader-logo { width: 80px; animation: logo-spin 2s linear infinite; }
+        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
         .bot-input {
             width: 100%;
             padding: 15px 20px 15px 50px;
@@ -389,38 +186,21 @@
             outline: none;
             transition: 0.3s;
         }
-
         .bot-input:focus {
             border-color: var(--stm-primary);
             background: white;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
         }
-
         body.dark-mode .bot-input {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
-
         body.dark-mode .bot-input:focus {
             border-color: var(--stm-primary);
             background: #0f172a;
         }
-
-        .bot-search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .bot-search-box>i {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--stm-primary);
-            font-size: 1.1rem;
-        }
-
+        
         .bot-content {
             position: absolute;
             bottom: 0;
@@ -434,23 +214,12 @@
             max-height: 85vh;
             overflow-y: auto;
         }
-
         body.dark-mode .bot-content {
             background: #1e293b;
             color: #f1f5f9;
         }
-
         .bot-modal.active .bot-content {
             transform: translateY(0);
-        }
-
-        .bot-results-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--stm-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0 0 10px;
         }
     
         .bottom-nav {
@@ -510,73 +279,52 @@
             <div class="logo-box">
                 <img src="logo nuevo.png" alt="STM Logo">
             </div>
-            <div class="welcome-msg">
-                <h1 id="usrGreeting">¡Hola!</h1>
-                <p id="usrDisplayName">Cargando...</p>
+            <div class="header-text">
+                <h1>Reserva de Quincho</h1>
+                <p id="usrDisplayName">Afiliado STM</p>
             </div>
         </div>
     </header>
 
     <main class="container animate__animated animate__fadeIn">
-
-        <div class="card-edu">
-            <div class="edu-header">
-                <span class="edu-badge">Beneficio Educativo 2026</span>
-                <h2 class="edu-title">KIT Y VOUCHER TERCIARIO/UNIVERSITARIO</h2>
-                <p style="font-size: 0.9rem; opacity: 0.8;">Para el afiliado o hijos/as que se encuentren cursando
-                    estudios superiores o universitarios.</p>
-            </div>
-
-            <div class="req-box">
-                <div class="req-title"><i class="fa-solid fa-file-signature"></i> REQUISITOS</div>
-                <ul class="req-list">
-                    <li>Planilla de inscripción completa.</li>
-                    <li>Certificado de Alumno Regular.</li>
-                    <li>Certificado de aprobación de 2 materias (para alumnos que NO inician carrera).</li>
-                    <li>Último recibo de sueldo del afiliado.</li>
-                </ul>
-            </div>
-
-            <div class="info-panel">
-                <div style="font-weight: 800; font-size: 1rem; margin-bottom: 5px;"><i
-                        class="fa-solid fa-calendar-check"></i> FECHA DE ENTREGA</div>
-                <div style="font-size: 0.95rem;">Martes 19 de Mayo de 2026</div>
-                <div style="font-size: 0.85rem; opacity: 0.8; margin-top: 5px;"><i class="fa-solid fa-location-dot"></i>
-                    Moreno 4359 - Sede Gremial</div>
-            </div>
-
-            <div style="margin-top: 25px;">
-                <h4 style="font-weight: 800; margin-bottom: 15px;">EL BENEFICIO INCLUYE:</h4>
-                <div style="display: grid; grid-template-rows: 1fr 1fr; gap: 12px;">
-                    <div
-                        style="display: flex; align-items: flex-start; gap: 12px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 15px;">
-                        <i class="fa-solid fa-pen-nib" style="color: var(--stm-primary); margin-top: 4px;"></i>
-                        <div>
-                            <div style="font-weight: 800; font-size: 0.9rem;">Kit de Útiles Específicos</div>
-                            <div style="font-size: 0.75rem; opacity: 0.7;">Elementos seleccionados para nivel superior.
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        style="display: flex; align-items: flex-start; gap: 12px; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 15px;">
-                        <i class="fa-solid fa-ticket" style="color: var(--stm-primary); margin-top: 4px;"></i>
-                        <div>
-                            <div style="font-weight: 800; font-size: 0.9rem;">Voucher de Librería</div>
-                            <div style="font-size: 0.75rem; opacity: 0.7;">Para canje en librerías adheridas por
-                                material de estudio.</div>
-                        </div>
-                    </div>
+        
+        <div class="card-trip">
+            <div class="trip-header">
+                <span class="trip-badge">Sábados, Domingos y Feriados</span>
+                <h2 class="trip-title">RESERVA DE QUINCHOS</h2>
+                <div class="trip-info-row">
+                    <div class="info-pill"><i class="fa-solid fa-users"></i> Capacidad hasta 60 personas</div>
+                    <div class="info-pill"><i class="fa-solid fa-house-user"></i> Solo afiliados/as</div>
                 </div>
             </div>
 
-            <a href="https://forms.gle/9EmMeovY29sGw9WC6" target="_blank" class="form-btn">Inscripción Online <i
-                    class="fa-solid fa-arrow-right"></i></a>
+            <div class="highlight-box">
+                <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 5px;">VALOR: 150.000 pesos</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">Incluye servicio de limpieza y vajilla completa.</div>
+            </div>
+
+            <div class="itinerary-box">
+                <div class="itinerary-day" style="margin-bottom: 5px;">
+                    <div class="day-title"><i class="fa-solid fa-clock"></i> HORARIOS DE ALQUILER</div>
+                    <ul class="itinerary-list">
+                        <li><strong>Mayo a Agosto:</strong> 11 a 17 hs.</li>
+                        <li><strong>Septiembre a Abril:</strong> 12 a 18 hs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="font-size: 0.9rem; margin-bottom: 25px; border-left: 4px solid var(--stm-primary); padding-left: 15px;">
+                <strong>Importante:</strong> Pensado para reuniones familiares. No se permite música fuerte, ni fiestas infantiles.
+            </p>
+
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px;">
+                <i class="fa-solid fa-person-digging" style="color: var(--stm-accent); font-size: 1.5rem; margin-bottom: 8px;"></i>
+                <p style="margin: 0; font-size: 0.9rem; font-weight: 600; color: #b45309;">Estamos trabajando en esta nueva sección para brindarle un mejor servicio próximamente.</p>
+            </div>
+            
         </div>
 
     </main>
-
-    <!-- FAB BOT -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
 
     <!-- TAB BAR NAV (STRICT) -->
         <nav class="bottom-nav">
@@ -585,6 +333,9 @@
         <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
+
+    <!-- FAB BOT -->
+    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
 
     <!-- BOT MODAL -->
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
@@ -601,25 +352,16 @@
     <!-- MODAL USER -->
     <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
         <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
-            </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
-            </h2>
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
-                    style="padding-left:20px">
-                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
-                    style="padding-left:20px">
-                <button onclick="changePassword()"
-                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar
-                    Contraseña</button>
+                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña" style="padding-left:20px">
+                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña" style="padding-left:20px">
+                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar Contraseña</button>
             </div>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
-                <button onclick="logout()"
-                    style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar
-                    Sesión</button>
-                <button onclick="toggleUser(false)"
-                    style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
+                <button onclick="logout()" style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar Sesión</button>
+                <button onclick="toggleUser(false)" style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
             </div>
         </div>
     </div>
@@ -627,28 +369,19 @@
     <!-- MODAL CONFIG -->
     <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
         <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
-            </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">
-                Configuración</h2>
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">Configuración</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span
-                        style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark"
-                        onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span
-                        style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot"
-                        onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
             </div>
-            <button onclick="toggleSettings(false)"
-                style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
+            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
         </div>
     </div>
 
     <script>
-        // Auth Check
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
-        // Bot Search Data
         const sitePages = [
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
@@ -662,13 +395,12 @@
             { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
             ,
             { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
         const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
-
-
-        // --- NOVEDADES PARA EL BOT ---
+        
         const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
         const NEWS_GID = "195669740";
         const NEWS_URL = `https://docs.google.com/spreadsheets/d/${NEWS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${NEWS_GID}`;
@@ -682,18 +414,15 @@
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 allNews = (json.table.rows || []).map(r => ({
                     titulo: (r.c[1]?.v || "").toString(),
-                    desc: (r.c[2]?.v || "").toString(),
-                    fecha: (r.c[3]?.f || r.c[3]?.v || "").toString(),
+                    desc:   (r.c[2]?.v || "").toString(),
+                    fecha:  (r.c[3]?.f || r.c[3]?.v || "").toString(),
                     activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                 })).filter(n => n.activo).reverse();
             } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
         }
 
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
-        function toggleBot(show) {
-            document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus();
-            fetchNews();
-        }
+        function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus(); fetchNews(); }
         function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if (show) document.getElementById('newPass').focus(); }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
 
@@ -718,8 +447,8 @@
             const p2 = document.getElementById('confirmPass').value;
             const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
             const usrID = localStorage.getItem('usrID');
-            if (!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
-            if (p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
+            if(!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
+            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
             if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
             const originalText = btn.innerText; btn.innerText = "Procesando..."; btn.style.pointerEvents = "none";
             try {
@@ -769,19 +498,14 @@
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
-            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
-            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if(document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if(document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if(document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
-            const h = new Date().getHours();
-            const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
-            if (document.getElementById('usrGreeting')) document.getElementById('usrGreeting').innerText = greet;
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
     </script>
-
     <script src="stm-bot.js"></script>
 </body>
-
 </html>

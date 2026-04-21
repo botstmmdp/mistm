@@ -1112,11 +1112,11 @@
         </a>
 
         <!-- 11. Reserva de Quincho -->
-        <a href="#" class="action-card" onclick="toggleProximamente(true)">
+        <a href="quincho.html" class="action-card">
             <div class="ico-box g-1"><i class="fa-solid fa-house-user"></i></div>
             <div class="card-info">
                 <h3>Reserva de Quincho</h3>
-                <p>Próximamente disponible</p>
+                <p>Reuniones familiares</p>
             </div>
         </a>
 
@@ -1217,13 +1217,13 @@
                 <!-- GENERO Y DIVERSIDAD -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver género y diversidad</span>
-                    <input type="checkbox" id="checkGen" onchange="applyConfig('gen', this.checked)" checked
+                    <input type="checkbox" id="checkGen" onchange="applyConfig('gen', this.checked)"
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
                 <!-- MARCADOR TELEFONICO -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver marcador telefónico</span>
-                    <input type="checkbox" id="checkPhone" onchange="applyConfig('phone', this.checked)" checked
+                    <input type="checkbox" id="checkPhone" onchange="applyConfig('phone', this.checked)"
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
                 <!-- MODO OSCURO -->
@@ -1449,7 +1449,9 @@
             { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
             { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
-            { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
+            ,
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
@@ -1750,11 +1752,11 @@
             const cfg = {
                 dark: localStorage.getItem('cfg_dark') === 'true',
                 bot: localStorage.getItem('cfg_bot') !== 'false',
-                gen: localStorage.getItem('cfg_gen') !== 'false',
+                gen: localStorage.getItem('cfg_gen') === 'true',
                 act: localStorage.getItem('cfg_act') === 'true',
                 cred: localStorage.getItem('cfg_cred') !== 'false',
                 nov: localStorage.getItem('cfg_nov') !== 'false',
-                phone: localStorage.getItem('cfg_phone') !== 'false',
+                phone: localStorage.getItem('cfg_phone') === 'true',
                 msg: localStorage.getItem('cfg_msg') !== 'false'
             };
 
