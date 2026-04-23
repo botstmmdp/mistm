@@ -149,6 +149,15 @@
             }
         }
 
+        .filter-legend {
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
         /* Convenios Grid & Cards */
         .convenios-grid {
             display: grid;
@@ -368,11 +377,11 @@
         }
 
         /* --- NAVIGATION --- */
-        
 
-        
 
-        
+
+
+
 
         .nav-home-pulse i {
             animation: home-blink 3s infinite ease-in-out;
@@ -575,7 +584,7 @@
         .hidden {
             display: none !important;
         }
-    
+
         .bottom-nav {
             position: fixed;
             bottom: 25px;
@@ -596,6 +605,7 @@
             padding: 0 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .nav-btn {
             text-decoration: none;
             color: #64748b;
@@ -649,6 +659,7 @@
                 Filtrar por Rubros
                 <div id="filterDot" class="filter-active-indicator hidden"></div>
             </button>
+            <div class="filter-legend">Los convenios pueden variar sin previo aviso</div>
         </div>
 
         <div class="convenios-grid" id="conveniosList">
@@ -665,7 +676,8 @@
             </div>
             <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
                     style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
-                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch" style="box-sizing: border-box; width: 100%;"></div>
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch"
+                    style="box-sizing: border-box; width: 100%;"></div>
             <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
         </div>
     </div>
@@ -682,7 +694,7 @@
         </div>
     </div>
 
-        <nav class="bottom-nav">
+    <nav class="bottom-nav">
         <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
         <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
