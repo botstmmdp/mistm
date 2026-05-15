@@ -107,6 +107,59 @@
                 opacity: 1;
             }
         }
+
+        /* Footer Style */
+        .footer {
+            padding: 4rem 2rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 5rem;
+        }
+
+        .footer-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            background: #f8fafc;
+            padding: 8px;
+            border-radius: 12px;
+        }
+
+        .footer-nav {
+            display: flex;
+            gap: 1.5rem;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        .footer-nav a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--stm-purple);
+        }
+
+        .footer-copy {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 
@@ -218,6 +271,28 @@
         </form>
 
     </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <img src="logo nuevo.png" alt="STM">
+                <div class="text-start">
+                    <p class="m-0 fw-black fs-5" style="color: #0f172a; font-weight: 900;">STM MUNICIPALES</p>
+                    <p class="m-0 text-muted small fw-bold text-uppercase" style="letter-spacing: 1px;">Sindicato Oficial</p>
+                </div>
+            </div>
+            <div class="footer-nav">
+                <a href="../sitioweb/sitiostm.html#inicio">Inicio</a>
+                <a href="../sitioweb/sitiostm.html#servicios">Servicios</a>
+                <a href="../sitioweb/sitiostm.html#novedades">Novedades</a>
+                <a href="../sitioweb/sitiostm.html#app">La App</a>
+            </div>
+            <div class="footer-copy">
+                <p class="mb-1">&copy; 2026 STM. Todos los derechos reservados.</p>
+                <p class="small text-uppercase fw-bold" style="font-size: 10px; letter-spacing: 2px;">Desarrollado por Simplex</p>
+            </div>
+        </div>
+    </footer>
 
     <!-- Modal para Mensajes de Feedback -->
     <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">

@@ -65,10 +65,7 @@
         .logo-box {
             width: 50px;
             height: 50px;
-            background: white;
-            border-radius: 14px;
-            padding: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -107,8 +104,14 @@
             position: sticky;
             top: 110px;
             z-index: 50;
-            background: var(--bg-body);
-            padding: 10px 0;
+            background: transparent;
+            padding: 15px 0;
+            border-bottom: none;
+        }
+
+        body.dark-mode .filter-container {
+            background: transparent;
+            border-color: transparent;
         }
 
         .btn-filter-main {
@@ -127,35 +130,11 @@
             gap: 15px;
             cursor: pointer;
             transition: 0.4s;
-            box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3);
-            animation: pulse-filter 2.5s infinite;
+            box-shadow: none;
         }
 
         .btn-filter-main:active {
             transform: scale(0.95);
-        }
-
-        @keyframes pulse-filter {
-            0% {
-                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.6);
-            }
-
-            70% {
-                box-shadow: 0 0 0 20px rgba(79, 70, 229, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
-            }
-        }
-
-        .filter-legend {
-            text-align: center;
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-top: 15px;
-            font-weight: 600;
-            color: var(--text-dark);
         }
 
         /* Convenios Grid & Cards */
@@ -199,8 +178,33 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-filter-main.active {
+            background: #1e40af !important;
+            border: 2px solid #60a5fa;
+        }
+
+        .proveeduria-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: #059669;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            margin-top: 12px;
+            text-transform: uppercase;
+            border: 1px solid #d1fae5;
+        }
+
+        body.dark-mode .proveeduria-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.2);
         }
 
         .card-front {
@@ -402,24 +406,82 @@
         }
 
         /* --- BOT & MODALS --- */
-        .fab-bot {
-            position: fixed;
-            bottom: 20px;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 98px);
-            right: 20px;
+        /* --- FAB BOT CONTAINER --- */
+        .fab-bot-container {
+            position: relative;
             width: 60px;
             height: 60px;
-            background: #6366f1 !important;
-            color: white !important;
-            border-radius: 50%;
+            animation: botBreathe 3s infinite ease-in-out;
+        }
+
+        /* --- FAB BOT (Estilo Banco Provincia) --- */
+        .fab-bot {
+            width: 60px;
+            height: 60px;
+            background: transparent !important;
+            border-radius: 14px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             cursor: pointer;
-            z-index: 6000;
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            animation: bounceBot 3s infinite;
+            box-shadow: none;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fab-bot:active {
+            transform: scale(0.9);
+        }
+
+        .fab-bot img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+        }
+
+        /* Pulse rings */
+        .fab-bot-pulse {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 2.5px solid rgba(99, 102, 241, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fab-bot-pulse:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .fab-bot-pulse:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes botBreathe {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         @keyframes bounceBot {
@@ -451,6 +513,54 @@
         .bot-modal.active {
             visibility: visible;
             opacity: 1;
+        }
+
+        /* --- MODAL INFORMATIVO (CENTERED) --- */
+        .search-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 20000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .search-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .search-content {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            border-radius: 35px;
+            padding: 40px 25px;
+            position: relative;
+            transform: scale(0.6);
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .search-modal.active .search-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        body.dark-mode .search-content {
+            background: #1e293b;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .bot-content {
@@ -654,12 +764,18 @@
     <div class="container">
 
         <div class="filter-container">
+            <button id="btnFilterProv" class="btn-filter-main" onclick="toggleProveeduriaFilter()" style="background: #10b981; margin-bottom: 15px;">
+                <i class="fa-solid fa-basket-shopping"></i>
+                Filtrar por Convenio
+            </button>
             <button class="btn-filter-main" onclick="toggleFilters(true)">
                 <i class="fa-solid fa-tags"></i>
                 Filtrar por Rubros
                 <div id="filterDot" class="filter-active-indicator hidden"></div>
             </button>
-            <div class="filter-legend">Los convenios pueden variar sin previo aviso</div>
+            <p style="text-align: center; font-size: 0.85rem; color: #64748b; margin-top: 8px; font-weight: 600;">
+                Los convenios pueden variar sin previo aviso
+            </p>
         </div>
 
         <div class="convenios-grid" id="conveniosList">
@@ -669,7 +785,17 @@
     </div>
 
     <!-- BOT & NAV -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
+    <!-- BOT & NAV -->
+    <div id="fabBotIcon" style="position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 98px); right: 20px; z-index: 1001;">
+        <div class="fab-bot-container">
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <div class="fab-bot" onclick="toggleBot(true)">
+                <img src="logo_bot..png" alt="Bot STM">
+            </div>
+        </div>
+    </div>
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
@@ -695,9 +821,9 @@
     </div>
 
     <nav class="bottom-nav">
-        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn nav-home-pulse"
+            onclick="window.location.href='opciones.html'; return false;"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
@@ -721,28 +847,19 @@
         </div>
     </div>
 
-    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
-        <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+    <!-- MODAL PROXIMAMENTE -->
+    <div class="search-modal" id="modalProx" onclick="if(event.target == this) toggleProximamente(false)">
+        <div class="search-content">
+            <div
+                style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fa-solid fa-clock" style="font-size: 1.5rem; color: var(--stm-primary);"></i>
             </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
+            <h2 style="font-weight: 900; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 10px;">¡En breve!
             </h2>
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
-                    style="padding-left:20px">
-                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
-                    style="padding-left:20px">
-                <button onclick="changePassword()"
-                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar
-                    Contraseña</button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
-                <button onclick="logout()"
-                    style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar
-                    Sesión</button>
-                <button onclick="toggleUser(false)"
-                    style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
-            </div>
+            <p style="color: #64748b; font-size: 1rem; line-height: 1.5; margin-bottom: 30px;">Estamos trabajando en
+                esta nueva sección para brindarle un mejor servicio próximamente.</p>
+            <button onclick="toggleProximamente(false)"
+                style="width: 100%; padding: 18px; border-radius: 20px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.2);">Entendido</button>
         </div>
     </div>
 
@@ -750,27 +867,55 @@
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
         const sitePages = [
+            { t: "Deporte, Cultura y Recreación", d: "Grilla completa de actividades", f: "deporte.html", tags: "deporte cultura actividades talleres inscripción", ico: "fa-person-running" },
+            { t: "Yoga", d: "Horarios de Yoga en el sindicato", f: "deporte.html?id=yoga", tags: "yoga relax estiramiento", ico: "fa-spa" },
+            { t: "Stretching", d: "Horarios de Stretching", f: "deporte.html?id=stretching", tags: "stretching elongacion estiramiento", ico: "fa-child-reaching" },
+            { t: "Taekwondo", d: "Clases de Taekwondo", f: "deporte.html?id=taekwondo", tags: "taekwondo artes marciales defensa personal", ico: "fa-hand-fist" },
+            { t: "Fútbol Femenino", d: "Prácticas de fútbol femenino", f: "deporte.html?id=futbol", tags: "futbol femenino pelota cancha", ico: "fa-futbol" },
+            { t: "Zumba", d: "Clases de Zumba", f: "deporte.html?id=zumba", tags: "zumba baile ritmo", ico: "fa-music" },
+            { t: "Danza", d: "Clases de Danza para niños", f: "deporte.html?id=danza", tags: "danza baile niños coreografia", ico: "fa-person-dots-from-line" },
+            { t: "Funcional", d: "Entrenamiento funcional", f: "deporte.html?id=funcional", tags: "funcional entrenamiento gimnasio pesas", ico: "fa-dumbbell" },
+            { t: "Ajedrez", d: "Taller de Ajedrez", f: "deporte.html?id=ajedrez", tags: "ajedrez mente juego tablero", ico: "fa-chess" },
+            { t: "Rugby", d: "Convenios deportivos", f: "deporte.html?id=rugby", tags: "rugby deporte convenio pelota", ico: "fa-football" },
+            { t: "Hockey", d: "Convenios deportivos", f: "deporte.html?id=hockey", tags: "hockey deporte convenio palo", ico: "fa-hockey-puck" },
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
+            { t: "Farmacia Sindical", d: "Medicamentos y beneficios", f: "farmacia.html", tags: "farmacia medicamentos remedios recetas pami ioma osecac omint salud obra social prepaga", ico: "fa-prescription-bottle-medical" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "beneficios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+            { t: "Préstamos", d: "Ayuda económica", f: "beneficios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+            { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "beneficios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+            { t: "Legal y Asesoría", d: "Asesoría legal para afiliados", f: "beneficios.html?id=asesoria", tags: "legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
-            { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Paritarias", d: "Acuerdos salariales y actas", f: "paritarias.html", tags: "paritarias sueldo salario aumento paritaria acuerdos actas gremio", ico: "fa-comments-dollar" },
+            { t: "Memoria y Balance", d: "Informes anuales y estados contables", f: "memoria.html", tags: "memoria balance contable informe anual finanzas transparencia balance", ico: "fa-chart-pie" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
-            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar mujer acompañamiento protocolo", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
-            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion curso capacitacion capacitaciones talleres", ico: "fa-graduation-cap" },
+            { t: "Inglés Nivel 1", d: "Curso de Inglés - Principiante", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller inicial", ico: "fa-language" },
+            { t: "Inglés Nivel 2", d: "Curso de Inglés - Avanzado", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller perfeccionamiento", ico: "fa-graduation-cap" },
+            { t: "Operador de Máquina Vial", d: "Capacitación Vial - Convenio", f: "capacitacion.html", tags: "maquina vial capacitación curso vialidad taller operador", ico: "fa-tractor" },
+            { t: "Hidráulica Aplicada", d: "Convenio UNMDP - Ingeniería", f: "capacitacion.html", tags: "hidraulica capacitación curso ingeniería unmdp taller técnica", ico: "fa-gears" },
+            { t: "Ley 14.656 Jóvenes", d: "Derechos y Deberes Laborales", f: "capacitacion.html", tags: "ley 14656 jóvenes capacitación curso laboral derechos taller legal", ico: "fa-gavel" },
+            { t: "Inteligencia Artificial", d: "Herramientas de Productividad", f: "capacitacion.html", tags: "ia inteligencia artificial capacitación curso unmdp taller tecnología", ico: "fa-robot" },
+            { t: "Desempeño Eficaz", d: "Fortalecimiento Profesional", f: "capacitacion.html", tags: "desempeño eficaz capacitación curso unmdp profesional taller habilidades", ico: "fa-chart-line" },
+            { t: "Violencia de Género", d: "Encuentros Virtuales - Secretaría de Género", f: "capacitacion.html", tags: "violencia genero mujer diversidad taller proteccion ayuda encuentros virtuales", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
-            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reclamo EDUCACION", d: "Triunfo histórico docentes municipales", f: "reclamoeducacion.html", tags: "educación docentes educacion triunfo judicial maestros incentivo fonid", ico: "fa-graduation-cap" },
+            { t: "Presentación Judicial", d: "Trámites y reclamos judiciales", f: "judicial.html", tags: "judicial reclamo antigüedad ganancias trámites abogados demanda", ico: "fa-gavel" },
+            { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
+            { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
         const SPREADSHEET_ID = '16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc';
         const GID_CONVENIOS = '1025588963';
         const DATA_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&gid=${GID_CONVENIOS}`;
-        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
+
 
         let allConvenios = [];
 
@@ -784,12 +929,18 @@
                     rubro: (r.c[1]?.v || "").toString(),
                     titulo: (r.c[2]?.v || "").toString(),
                     detalle: (r.c[3]?.v || "").toString(),
-                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
+                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI",
+                    adheridoproveeduria: (r.c[5]?.v || "").toString().trim().toUpperCase() === "SI"
                 })).filter(c => c.activo).sort((a, b) => a.titulo.localeCompare(b.titulo));
                 renderConvenios(allConvenios);
 
-                // Manejo de foco directo desde el Bot
+                // Manejo de foco directo o filtros desde el exterior
                 const urlParams = new URLSearchParams(window.location.search);
+                
+                if (urlParams.get('filter') === 'prov') {
+                    toggleProveeduriaFilter();
+                }
+
                 const focusId = urlParams.get('id');
                 if (focusId) {
                     setTimeout(() => {
@@ -805,7 +956,8 @@
             } catch (e) { console.error("Error al cargar convenios:", e); }
         }
 
-        let currentFilter = "TODOS";
+        let currentRubro = "TODOS";
+        let isProvOnly = false;
 
         function toggleFilters(show) {
             document.getElementById('modalFilters').classList.toggle('active', show);
@@ -819,11 +971,11 @@
             cont.innerHTML = "";
             rubros.forEach(r => {
                 const opt = document.createElement('div');
-                opt.className = `filter-option ${currentFilter === r ? 'active' : ''}`;
+                opt.className = `filter-option ${currentRubro === r ? 'active' : ''}`;
                 opt.innerHTML = `<span>${r}</span><i class="fa-solid fa-check"></i>`;
                 opt.onclick = () => {
-                    currentFilter = r;
-                    applyFilters(""); // No search value anymore
+                    currentRubro = r;
+                    applyFilters("");
                     document.getElementById('filterDot').classList.toggle('hidden', r === "TODOS");
                     toggleFilters(false);
                 };
@@ -834,10 +986,25 @@
         function applyFilters(searchVal) {
             const filtered = allConvenios.filter(c => {
                 const matchesSearch = normalize(c.titulo + " " + c.rubro + " " + c.detalle).includes(searchVal);
-                const matchesRubro = currentFilter === "TODOS" || c.rubro.toUpperCase() === currentFilter;
-                return matchesSearch && matchesRubro;
+                const matchesRubro = currentRubro === "TODOS" || c.rubro.toUpperCase() === currentRubro;
+                const matchesProv = !isProvOnly || c.adheridoproveeduria;
+                return matchesSearch && matchesRubro && matchesProv;
             });
             renderConvenios(filtered);
+        }
+
+        function toggleProveeduriaFilter() {
+            const btn = document.getElementById('btnFilterProv');
+            isProvOnly = !isProvOnly;
+            btn.classList.toggle('active', isProvOnly);
+            
+            if (isProvOnly) {
+                btn.innerHTML = `<i class="fa-solid fa-eye"></i> Ver todos`;
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-basket-shopping"></i> Filtrar por Convenio`;
+            }
+            
+            applyFilters("");
         }
 
         function renderConvenios(list) {
@@ -859,6 +1026,12 @@
                         <div class="card-front">
                             <span class="rubro-tag">${c.rubro}</span>
                             <h3 class="card-title">${c.titulo}</h3>
+                            ${c.adheridoproveeduria ? `
+                                <div class="proveeduria-badge">
+                                    <i class="fa-solid fa-basket-shopping"></i>
+                                    Adherido a Proveeduría
+                                </div>
+                            ` : ''}
                             <span class="tap-hint"><i class="fa-solid fa-rotate"></i> Ver detalle</span>
                         </div>
                         <div class="card-back">
@@ -871,7 +1044,6 @@
         }
 
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
-
 
         // --- NOVEDADES PARA EL BOT ---
         const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
@@ -902,7 +1074,7 @@
             }
         }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
-        function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); }
+        function toggleProximamente(show) { document.getElementById('modalProx').classList.toggle('active', show); }
 
         let botTimer = null;
         document.getElementById('botSearch').addEventListener('input', (e) => {
@@ -956,36 +1128,15 @@
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
         }
 
-        function showNotify(msg, type = 'info') {
-            const div = document.createElement('div');
-            div.className = 'stm-notify';
-            div.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-triangle-exclamation' : 'fa-check'}" style="background:${type === 'error' ? '#ef4444' : '#10b981'}"></i> <span>${msg}</span>`;
-            document.body.appendChild(div);
-            setTimeout(() => div.classList.add('show'), 10);
-            setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
-        }
 
-        async function changePassword() {
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            const usrID = localStorage.getItem('usrID');
-            if (!p1 || p1 !== p2) { showNotify("Verifica las contraseñas", "error"); return; }
-            try {
-                await fetch(USER_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
-                });
-                showNotify("Contraseña actualizada", "success");
-                toggleUser(false);
-            } catch (e) { showNotify("Error de conexión", "error"); }
-        }
-
-        function logout() { sessionStorage.clear(); localStorage.clear(); window.location.href = 'index.html'; }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             const h = new Date().getHours();
             const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
@@ -1000,3 +1151,4 @@
 </body>
 
 </html>
+

@@ -322,7 +322,9 @@
                 <div id="loader" class="loader-dots"><span></span><span></span><span></span></div>
             </button>
             <div style="text-align: center; margin-top: 20px;">
-                <a href="mailto:bot.stmmdp@gmail.com?subject=Recupero%20de%20Contraseña" style="color: var(--stm-primary); font-size: 0.9rem; text-decoration: none; font-weight: 700; transition: 0.3s; opacity: 0.9;"><i class="fa-solid fa-envelope"></i> ¿Olvidaste tu contraseña?</a>
+                <a href="mailto:bot.stmmdp@gmail.com?subject=Recupero%20de%20Contraseña"
+                    style="color: var(--stm-primary); font-size: 0.9rem; text-decoration: none; font-weight: 700; transition: 0.3s; opacity: 0.9;"><i
+                        class="fa-solid fa-envelope"></i> ¿Olvidaste tu contraseña?</a>
             </div>
         </form>
     </div>
@@ -364,7 +366,10 @@
                     nombre: r.c[2]?.v || "",
                     usuario: String(r.c[3]?.v || ""),
                     password: String(r.c[4]?.f || r.c[4]?.v || ""),
-                    permiso: r.c[5]?.v || "USER"
+                    permiso: r.c[5]?.v || "USER",
+                    legajo: r.c[7]?.v || "",
+                    documento: r.c[8]?.v || "",
+                    telefono: r.c[9]?.v || ""
                 }));
 
                 const found = users.find(u =>
@@ -378,8 +383,12 @@
                     localStorage.setItem('usrID', found.id);
                     localStorage.setItem('usrLogin', found.usuario);
                     localStorage.setItem('usrName', found.nombre);
+                    localStorage.setItem('usrLastName', found.apellido);
                     localStorage.setItem('usrFullName', `${found.nombre} ${found.apellido}`);
                     localStorage.setItem('usrPermiso', found.permiso);
+                    localStorage.setItem('usrLegajo', found.legajo);
+                    localStorage.setItem('usrDocumento', found.documento);
+                    localStorage.setItem('usrTelefono', found.telefono);
 
                     showNotify(`¡Hola ${found.nombre}! Entrando...`, 'success');
 
@@ -422,6 +431,7 @@
                 setTimeout(() => div.remove(), 500);
             }, 3000);
         }
+
     </script>
 
     <script src="stm-bot.js"></script>

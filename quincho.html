@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Reserva de Quincho - MiStm App</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
@@ -12,6 +13,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         :root {
@@ -30,34 +32,55 @@
             --glass: rgba(30, 41, 59, 0.85);
         }
 
-        .hidden { display: none !important; }
+        .hidden {
+            display: none !important;
+        }
 
         .nav-home-pulse i {
             animation: home-blink 2s infinite ease-in-out;
         }
 
         @keyframes home-blink {
-            0%, 100% { color: #4b5563; transform: scale(1); }
-            50% { color: white; transform: scale(1.2); }
+
+            0%,
+            100% {
+                color: #4b5563;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.2);
+            }
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
         body {
             font-family: 'Outfit', sans-serif;
             background: var(--bg-body);
-            margin: 0; padding: 0; min-height: 100vh;
-            color: var(--text-dark); overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        html { height: 100%; }
+        html {
+            height: 100%;
+        }
 
         header {
             padding: 40px 20px 20px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            position: sticky; top: 0; z-index: 100;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         body.dark-mode header {
@@ -65,20 +88,70 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header-box { display: flex; align-items: center; gap: 15px; }
-
-        .logo-box {
-            width: 50px; height: 50px; background: white; border-radius: 14px;
-            padding: 6px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            display: flex; align-items: center; justify-content: center;
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .logo-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .logo-box {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .header-text h1 { font-size: 1.2rem; font-weight: 800; margin: 0; color: var(--stm-primary); }
-        .header-text p { font-size: 0.8rem; font-weight: 500; margin: 0; opacity: 0.7; }
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
 
-        .container { padding: 25px 20px 145px; max-width: 600px; margin: 0 auto; }
+        .welcome-msg h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-msg p {
+            margin: 0;
+            font-size: 1.05rem;
+            opacity: 0.8;
+            font-weight: 600;
+            color: var(--stm-primary);
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            background: rgba(79, 70, 229, 0.08);
+            padding: 12px 20px;
+            border-radius: 15px;
+            color: var(--stm-primary);
+            font-weight: 800;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .back-btn:active {
+            transform: scale(0.95);
+            background: rgba(79, 70, 229, 0.15);
+        }
+
+        .container {
+            padding: 25px 20px 200px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
         /* --- TURISMO/QUINCHO CARDS --- */
         .card-trip {
@@ -91,88 +164,379 @@
             margin-bottom: 25px;
         }
 
-        .trip-header { margin-bottom: 25px; }
+        .trip-header {
+            margin-bottom: 25px;
+        }
 
         .trip-badge {
-            display: inline-block; background: #eef2ff; color: #4f46e5;
-            padding: 6px 14px; border-radius: 10px; font-size: 0.75rem; font-weight: 700;
-            margin-bottom: 8px; text-transform: uppercase;
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
-        body.dark-mode .trip-badge { background: rgba(79, 70, 229, 0.2); color: #818cf8; }
+        body.dark-mode .trip-badge {
+            background: rgba(79, 70, 229, 0.2);
+            color: #818cf8;
+        }
 
-        .trip-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 10px; }
+        .trip-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 10px;
+        }
 
-        .trip-info-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .trip-info-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
         .info-pill {
-            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600;
-            opacity: 0.8; background: rgba(0, 0, 0, 0.03); padding: 8px 12px; border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0.8;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 8px 12px;
+            border-radius: 12px;
         }
 
-        body.dark-mode .info-pill { background: rgba(255, 255, 255, 0.05); }
+        body.dark-mode .info-pill {
+            background: rgba(255, 255, 255, 0.05);
+        }
 
         .itinerary-box {
-            background: rgba(255, 255, 255, 0.5); border-radius: 20px; padding: 20px;
-            margin-bottom: 25px; border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        body.dark-mode .itinerary-box { background: rgba(0, 0, 0, 0.2); border-color: rgba(255,255,255,0.1); }
+        body.dark-mode .itinerary-box {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
 
-        .itinerary-day { margin-bottom: 20px; }
+        .itinerary-day {
+            margin-bottom: 20px;
+        }
 
         .day-title {
-            font-weight: 800; font-size: 0.95rem; color: var(--stm-primary);
-            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: var(--stm-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
-        .itinerary-list { margin: 0; padding-left: 20px; font-size: 0.9rem; line-height: 1.8; }
-        .itinerary-list li { margin-bottom: 8px; list-style-type: none; position: relative; }
-        .itinerary-list li::before { content: "•"; color: var(--stm-primary); position: absolute; left: -15px; font-weight: bold; }
+        .itinerary-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .itinerary-list li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+        }
+
+        .itinerary-list li::before {
+            content: "•";
+            color: var(--stm-primary);
+            position: absolute;
+            left: -15px;
+            font-weight: bold;
+        }
 
         .highlight-box {
             background: linear-gradient(135deg, #fef3c7 0%, #fffbeb 100%);
-            border: 1px solid #fde68a; padding: 20px; border-radius: 20px; margin: 20px 0; color: #92400e;
+            border: 1px solid #fde68a;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px 0;
+            color: #92400e;
         }
 
-        body.dark-mode .highlight-box { background: linear-gradient(135deg, #78350f 0%, #451a03 100%); border-color: #92400e; color: #fef3c7; }
+        body.dark-mode .highlight-box {
+            background: linear-gradient(135deg, #78350f 0%, #451a03 100%);
+            border-color: #92400e;
+            color: #fef3c7;
+        }
 
         .form-btn {
-            display: block; width: 100%; background: var(--stm-primary); color: white;
-            text-align: center; padding: 18px; border-radius: 18px; text-decoration: none;
-            font-weight: 800; font-size: 1rem; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3); margin-top: 15px;
+            display: block;
+            width: 100%;
+            background: #d3e27e;
+            color: #4338ca;
+            text-align: center;
+            padding: 18px;
+            border-radius: 22px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.05);
+            margin-top: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(79, 70, 229, 0.15);
+        }
+
+        .form-btn:active {
+            transform: scale(0.96);
+            background: #e0e7ff;
+        }
+
+        .btn-group-fixed {
+            position: fixed;
+            bottom: 105px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 105px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 4999;
+        }
+
+        .btn-group-fixed .form-btn {
+            margin-top: 0;
+            flex: 1;
+            padding: 15px 10px;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 4px;
+            line-height: 1.1;
+        }
+
+        .btn-sede {
+            background: #d3e27e !important;
+            color: #000000 !important;
+            animation: btn-pulse-sede 2s infinite ease-in-out;
+        }
+
+        .btn-complejo {
+            background: var(--stm-accent) !important;
+            color: #000000 !important;
+            animation: btn-pulse-complejo 2s infinite ease-in-out;
+            animation-delay: 1s;
+        }
+
+        @keyframes btn-pulse-sede {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(163, 178, 62, 0.1);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 8px 25px rgba(163, 178, 62, 0.35);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(163, 178, 62, 0.1);
+            }
+        }
+
+        @keyframes btn-pulse-complejo {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+            }
+        }
+
+        .btn-disabled {
+            background: #f1f5f9 !important;
+            color: #94a3b8 !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: none !important;
+            cursor: default;
         }
 
         /* --- BOT & NAV (STRICT) --- */
-        .fab-bot {
-            position: fixed; 
-            bottom: 20px;
-            bottom: calc(env(safe-area-inset-bottom, 0px) + 98px);
-            right: 20px; 
-            width: 60px; height: 60px;
-            background: #6366f1 !important; color: white !important; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-            cursor: pointer; z-index: 1001; box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            animation: bounceBot 3s infinite;
+        /* --- FAB BOT CONTAINER --- */
+        .fab-bot-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            animation: botBreathe 3s infinite ease-in-out;
         }
-        @keyframes bounceBot { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        /* --- FAB BOT (Estilo Banco Provincia) --- */
+        .fab-bot {
+            width: 60px;
+            height: 60px;
+            background: transparent !important;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: none;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fab-bot:active {
+            transform: scale(0.9);
+        }
+
+        .fab-bot img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+        }
+
+        /* Pulse rings */
+        .fab-bot-pulse {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 2.5px solid rgba(99, 102, 241, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fab-bot-pulse:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .fab-bot-pulse:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes botBreathe {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes bounceBot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
 
         .bot-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
-            z-index: 9999; visibility: hidden; opacity: 0; transition: 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .bot-modal.active { visibility: visible; opacity: 1; }
-        
+
+        .bot-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
         /* Loader */
         #loader-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white;
-            display: flex; align-items: center; justify-content: center; z-index: 9999; transition: 0.5s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: 0.5s;
         }
-        body.dark-mode #loader-wrapper { background: #0f172a; }
-        .loader-logo { width: 80px; animation: logo-spin 2s linear infinite; }
-        @keyframes logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
+
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
+
+        .loader-logo {
+            width: 80px;
+            animation: logo-spin 2s linear infinite;
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
         .bot-input {
             width: 100%;
             padding: 15px 20px 15px 50px;
@@ -186,21 +550,43 @@
             outline: none;
             transition: 0.3s;
         }
+
         .bot-input:focus {
             border-color: var(--stm-primary);
             background: white;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
         }
+
         body.dark-mode .bot-input {
             background: #0f172a;
             border-color: #334155;
             color: #f1f5f9;
         }
+
         body.dark-mode .bot-input:focus {
             border-color: var(--stm-primary);
             background: #0f172a;
         }
-        
+
+        .bot-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .bot-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
         .bot-content {
             position: absolute;
             bottom: 0;
@@ -213,15 +599,50 @@
             transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             max-height: 85vh;
             overflow-y: auto;
+            box-sizing: border-box;
         }
-        body.dark-mode .bot-content {
-            background: #1e293b;
-            color: #f1f5f9;
-        }
+
         .bot-modal.active .bot-content {
             transform: translateY(0);
         }
-    
+
+        body.dark-mode .bot-content {
+            background: #1e293b;
+            color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* SweetAlert Customization */
+        .swal2-popup {
+            border-radius: 35px !important;
+            padding: 2rem !important;
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        .swal2-title {
+            font-weight: 800 !important;
+            font-size: 1.5rem !important;
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode .swal2-title {
+            color: #f1f5f9 !important;
+        }
+
+        .swal2-html-container {
+            font-size: 1rem !important;
+            color: #64748b !important;
+        }
+
+        .swal2-confirm {
+            border-radius: 20px !important;
+            padding: 15px 30px !important;
+            font-weight: 800 !important;
+            width: 100% !important;
+            background-color: var(--stm-primary) !important;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3) !important;
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 25px;
@@ -242,6 +663,7 @@
             padding: 0 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .nav-btn {
             text-decoration: none;
             color: #64748b;
@@ -265,6 +687,10 @@
         .nav-btn:active {
             transform: scale(0.9);
         }
+
+        .swal2-container {
+            z-index: 10000 !important;
+        }
     </style>
 </head>
 
@@ -277,17 +703,17 @@
     <header>
         <div class="header-box">
             <div class="logo-box">
-                <img src="logo nuevo.png" alt="STM Logo">
+                <img src="logo nuevo.png" alt="STM">
             </div>
-            <div class="header-text">
-                <h1>Reserva de Quincho</h1>
-                <p id="usrDisplayName">Afiliado STM</p>
+            <div class="welcome-msg">
+                <h1 id="usrGreeting">¡Hola!</h1>
+                <p id="usrDisplayName">Cargando...</p>
             </div>
         </div>
     </header>
 
     <main class="container animate__animated animate__fadeIn">
-        
+
         <div class="card-trip">
             <div class="trip-header">
                 <span class="trip-badge">Sábados, Domingos y Feriados</span>
@@ -313,69 +739,90 @@
                 </div>
             </div>
 
-            <p style="font-size: 0.9rem; margin-bottom: 25px; border-left: 4px solid var(--stm-primary); padding-left: 15px;">
-                <strong>Importante:</strong> Pensado para reuniones familiares. No se permite música fuerte, ni fiestas infantiles.
-            </p>
-
-            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 15px; text-align: center; margin-top: 15px;">
-                <i class="fa-solid fa-person-digging" style="color: var(--stm-accent); font-size: 1.5rem; margin-bottom: 8px;"></i>
-                <p style="margin: 0; font-size: 0.9rem; font-weight: 600; color: #b45309;">Estamos trabajando en esta nueva sección para brindarle un mejor servicio próximamente.</p>
+            <div
+                style="background: rgba(79, 70, 229, 0.05); border-left: 4px solid var(--stm-primary); padding: 15px; border-radius: 0 15px 15px 0; margin-bottom: 25px;">
+                <p style="font-size: 0.95rem; margin: 0; line-height: 1.8;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--stm-primary); margin-right: 8px;"></i>
+                    <strong>Importante:</strong> Pensado para reuniones familiares.<br>
+                    <span style="color: #ef4444; font-weight: 800;"><i class="fa-solid fa-circle-xmark"></i> NO</span>
+                    se permite música a alto volumen.<br>
+                    En la sede <span style="color: #ef4444; font-weight: 800;"><i class="fa-solid fa-circle-xmark"></i>
+                        NO</span> están permitidas las fiestas infantiles.<br>
+                    En el complejo <span style="color: #10b981; font-weight: 800;"><i
+                            class="fa-solid fa-circle-check"></i> SI</span> se permiten fiestas infantiles.
+                </p>
             </div>
-            
+
         </div>
 
     </main>
 
+    <div class="btn-group-fixed">
+        <a href="turno_quincho.html?sede=Sede" class="form-btn btn-sede">
+            <i class="fa-solid fa-building"></i>
+            <span>RESERVA EN<br>SEDE</span>
+        </a>
+        <a href="turno_quincho.html?sede=Complejo" class="form-btn btn-complejo">
+            <i class="fa-solid fa-tree-city"></i>
+            <span>RESERVA EN<br>COMPLEJO</span>
+        </a>
+    </div>
+
     <!-- TAB BAR NAV (STRICT) -->
-        <nav class="bottom-nav">
-        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+    <nav class="bottom-nav">
+        <a href="opciones.html" class="nav-btn nav-home-pulse"
+            onclick="window.location.href='opciones.html'; return false;"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
     <!-- FAB BOT -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
+    <!-- FAB BOT -->
+    <div id="fabBotIcon"
+        style="position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 185px); right: 20px; z-index: 1001;">
+        <div class="fab-bot-container">
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <div class="fab-bot" onclick="toggleBot(true)">
+                <img src="logo_bot..png" alt="Bot STM">
+            </div>
+        </div>
+    </div>
 
-    <!-- BOT MODAL -->
+    <!-- MODAL ASISTENTE -->
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
             <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
                     style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
-                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch" style="box-sizing: border-box; width: 100%;"></div>
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch"
+                    style="box-sizing: border-box; width: 100%;"></div>
             <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
-        </div>
-    </div>
-
-    <!-- MODAL USER -->
-    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
-        <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta</h2>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña" style="padding-left:20px">
-                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña" style="padding-left:20px">
-                <button onclick="changePassword()" style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);">Actualizar Contraseña</button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
-                <button onclick="logout()" style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar Sesión</button>
-                <button onclick="toggleUser(false)" style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
-            </div>
         </div>
     </div>
 
     <!-- MODAL CONFIG -->
     <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
         <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;"></div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">Configuración</h2>
-            <div style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div
+                    style="width: 70px; height: 70px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fa-solid fa-gear" style="font-size: 1.8rem; color: var(--stm-primary);"></i>
+                </div>
+                <h2 style="font-weight: 900; font-size: 1.5rem; color: var(--text-dark); margin: 0;">Configuración</h2>
             </div>
-            <button onclick="toggleSettings(false)" style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span
+                        style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark"
+                        onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center;"><span
+                        style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot"
+                        onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
+            </div>
+            <button onclick="toggleSettings(false)"
+                style="margin-top: 30px; width: 100%; padding: 20px; border-radius: 20px; border: none; background: #f1f5f9; color: #64748b; font-weight: 800; cursor: pointer; transition: 0.3s;">Cerrar</button>
         </div>
     </div>
 
@@ -383,23 +830,53 @@
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
         const sitePages = [
+            { t: "Deporte, Cultura y Recreación", d: "Grilla completa de actividades", f: "deporte.html", tags: "deporte cultura actividades talleres inscripción", ico: "fa-person-running" },
+            { t: "Yoga", d: "Horarios de Yoga en el sindicato", f: "deporte.html?id=yoga", tags: "yoga relax estiramiento", ico: "fa-spa" },
+            { t: "Stretching", d: "Horarios de Stretching", f: "deporte.html?id=stretching", tags: "stretching elongacion estiramiento", ico: "fa-child-reaching" },
+            { t: "Taekwondo", d: "Clases de Taekwondo", f: "deporte.html?id=taekwondo", tags: "taekwondo artes marciales defensa personal", ico: "fa-hand-fist" },
+            { t: "Fútbol Femenino", d: "Prácticas de fútbol femenino", f: "deporte.html?id=futbol", tags: "futbol femenino pelota cancha", ico: "fa-futbol" },
+            { t: "Zumba", d: "Clases de Zumba", f: "deporte.html?id=zumba", tags: "zumba baile ritmo", ico: "fa-music" },
+            { t: "Danza", d: "Clases de Danza para niños", f: "deporte.html?id=danza", tags: "danza baile niños coreografia", ico: "fa-person-dots-from-line" },
+            { t: "Funcional", d: "Entrenamiento funcional", f: "deporte.html?id=funcional", tags: "funcional entrenamiento gimnasio pesas", ico: "fa-dumbbell" },
+            { t: "Ajedrez", d: "Taller de Ajedrez", f: "deporte.html?id=ajedrez", tags: "ajedrez mente juego tablero", ico: "fa-chess" },
+            { t: "Rugby", d: "Convenios deportivos", f: "deporte.html?id=rugby", tags: "rugby deporte convenio pelota", ico: "fa-football" },
+            { t: "Hockey", d: "Convenios deportivos", f: "deporte.html?id=hockey", tags: "hockey deporte convenio palo", ico: "fa-hockey-puck" },
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
+            { t: "Farmacia Sindical", d: "Medicamentos y beneficios", f: "farmacia.html", tags: "farmacia medicamentos remedios recetas pami ioma osecac omint salud obra social prepaga", ico: "fa-prescription-bottle-medical" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "beneficios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+            { t: "Préstamos", d: "Ayuda económica", f: "beneficios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+            { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "beneficios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+            { t: "Legal y Asesoría", d: "Asesoría legal para afiliados", f: "beneficios.html?id=asesoria", tags: "legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
-            { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Paritarias", d: "Acuerdos salariales y actas", f: "paritarias.html", tags: "paritarias sueldo salario aumento paritaria acuerdos actas gremio", ico: "fa-comments-dollar" },
+            { t: "Memoria y Balance", d: "Informes anuales y estados contables", f: "memoria.html", tags: "memoria balance contable informe anual finanzas transparencia balance", ico: "fa-chart-pie" },
+            { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar mujer acompañamiento protocolo", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
-            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion curso capacitacion capacitaciones talleres", ico: "fa-graduation-cap" },
+            { t: "Inglés Nivel 1", d: "Curso de Inglés - Principiante", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller inicial", ico: "fa-language" },
+            { t: "Inglés Nivel 2", d: "Curso de Inglés - Avanzado", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller perfeccionamiento", ico: "fa-graduation-cap" },
+            { t: "Operador de Máquina Vial", d: "Capacitación Vial - Convenio", f: "capacitacion.html", tags: "maquina vial capacitación curso vialidad taller operador", ico: "fa-tractor" },
+            { t: "Hidráulica Aplicada", d: "Convenio UNMDP - Ingeniería", f: "capacitacion.html", tags: "hidraulica capacitación curso ingeniería unmdp taller técnica", ico: "fa-gears" },
+            { t: "Ley 14.656 Jóvenes", d: "Derechos y Deberes Laborales", f: "capacitacion.html", tags: "ley 14656 jóvenes capacitación curso laboral derechos taller legal", ico: "fa-gavel" },
+            { t: "Inteligencia Artificial", d: "Herramientas de Productividad", f: "capacitacion.html", tags: "ia inteligencia artificial capacitación curso unmdp taller tecnología", ico: "fa-robot" },
+            { t: "Desempeño Eficaz", d: "Fortalecimiento Profesional", f: "capacitacion.html", tags: "desempeño eficaz capacitación curso unmdp profesional taller habilidades", ico: "fa-chart-line" },
+            { t: "Violencia de Género", d: "Encuentros Virtuales - Secretaría de Género", f: "capacitacion.html", tags: "violencia genero mujer diversidad taller proteccion ayuda encuentros virtuales", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
-            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reclamo EDUCACION", d: "Triunfo histórico docentes municipales", f: "reclamoeducacion.html", tags: "educación docentes educacion triunfo judicial maestros incentivo fonid", ico: "fa-graduation-cap" },
+            { t: "Presentación Judicial", d: "Trámites y reclamos judiciales", f: "judicial.html", tags: "judicial reclamo antigüedad ganancias trámites abogados demanda", ico: "fa-gavel" },
+            { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
+            { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
-        
+
+
         const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
         const NEWS_GID = "195669740";
         const NEWS_URL = `https://docs.google.com/spreadsheets/d/${NEWS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${NEWS_GID}`;
@@ -413,8 +890,8 @@
                 const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
                 allNews = (json.table.rows || []).map(r => ({
                     titulo: (r.c[1]?.v || "").toString(),
-                    desc:   (r.c[2]?.v || "").toString(),
-                    fecha:  (r.c[3]?.f || r.c[3]?.v || "").toString(),
+                    desc: (r.c[2]?.v || "").toString(),
+                    fecha: (r.c[3]?.f || r.c[3]?.v || "").toString(),
                     activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
                 })).filter(n => n.activo).reverse();
             } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
@@ -422,52 +899,12 @@
 
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
         function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus(); fetchNews(); }
-        function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if (show) document.getElementById('newPass').focus(); }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
-
-        function showNotify(msg, type = 'info') {
-            const div = document.createElement('div'); div.className = 'stm-notify';
-            const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
-            const bg = type === 'error' ? '#ef4444' : '#10b981';
-            div.style = "position:fixed; top:20px; left:50%; transform:translateX(-50%) translateY(-100px); background:white; padding:15px 25px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.1); z-index:10000; display:flex; align-items:center; gap:10px; transition:0.4s; opacity:0;";
-            div.innerHTML = `<i class="fa-solid ${ico}" style="width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:${bg}; color:white; font-size:0.8rem"></i> <span style="font-weight:600; font-size:0.9rem">${msg}</span>`;
-            document.body.appendChild(div); setTimeout(() => { div.style.transform = 'translateX(-50%) translateY(0)'; div.style.opacity = '1'; }, 10);
-            setTimeout(() => { div.style.transform = 'translateX(-50%) translateY(-100px)'; div.style.opacity = '0'; setTimeout(() => div.remove(), 500); }, 3000);
-        }
 
         function applyConfig(type, value) {
             localStorage.setItem('cfg_' + type, value);
             if (type === 'dark') document.body.classList.toggle('dark-mode', value);
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
-        }
-
-        async function changePassword() {
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
-            const usrID = localStorage.getItem('usrID');
-            if(!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
-            if(p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
-            const originalText = btn.innerText; btn.innerText = "Procesando..."; btn.style.pointerEvents = "none";
-            try {
-                await fetch(USER_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
-                });
-                localStorage.setItem('usrPass', p1);
-                showNotify("¡Contraseña actualizada!", "success");
-                btn.innerText = "¡Listo! ✓"; btn.style.background = "#10b981";
-                setTimeout(() => {
-                    toggleUser(false);
-                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
-                    btn.style.pointerEvents = "auto";
-                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
-                }, 1500);
-            } catch (err) {
-                showNotify("Error de conexión", "error");
-                btn.innerText = originalText; btn.style.pointerEvents = "auto";
-            }
         }
 
         let searchTimer = null;
@@ -492,19 +929,93 @@
             }, 500);
         });
 
-        function logout() { sessionStorage.clear(); localStorage.clear(); window.location.href = 'index.html'; }
+
+
+        async function checkExistingBooking() {
+
+            // URL DE DASHBOARD
+            const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwWKS8Nbx8-TFJMmsXV6nQXs6Jinvh5TdVRom7v7aTIvsTC_RRXYoPq9_lN5IeItzCBZg/exec";
+            const myUserId = localStorage.getItem('usrID');
+            if (!myUserId) return;
+
+            try {
+                const params = new URLSearchParams({
+                    sections: 'SOLICITUD_QUINCHO',
+                    userId: myUserId,
+                    skipClean: 'true',
+                    _: Date.now()
+                });
+                const res = await fetch(`${URL_SCRIPT}?${params.toString()}`);
+                const data = await res.json();
+
+                if (data.SOLICITUD_QUINCHO) {
+                    const myRequest = data.SOLICITUD_QUINCHO.find(s => {
+                        return s.id_user && s.id_user.toString() === myUserId.toString() &&
+                            (s.pendiente.toString().toUpperCase() === 'SI' ||
+                                (s.pendiente.toString().toUpperCase() === 'NO' && qParseDate(s.fecha_solicitada) >= new Date().setHours(0, 0, 0, 0)));
+                    });
+
+                    if (myRequest) {
+                        const isPending = myRequest.pendiente.toString().toUpperCase() === 'SI';
+                        const solLugar = (myRequest.Lugar || myRequest.lugar || 'Sede').toUpperCase();
+                        const fechaFormatted = qFormatSheetDate(myRequest.fecha_solicitada);
+
+                        Swal.fire({
+                            title: '¡Reserva Detectada!',
+                            html: `Ya tienes una reserva <b>${isPending ? 'PENDIENTE' : 'CONFIRMADA'}</b><br>
+                                   Fecha: <b>${fechaFormatted}</b><br>
+                                   Lugar: <b>${solLugar}</b><br><br>
+                                   <small>Para cambiarla o anularla, ingresa a la sede correspondiente.</small>`,
+                            icon: 'info',
+                            confirmButtonColor: 'var(--stm-primary)',
+                            confirmButtonText: 'Entendido'
+                        });
+                    }
+                }
+            } catch (e) {
+                console.warn("Error al verificar reservas previas:", e);
+            }
+        }
+
+        // Helpers de fecha para el check
+        function qParseDate(val) {
+            if (!val) return new Date(NaN);
+            if (val instanceof Date) return val;
+            const s = val.toString().trim();
+            const p1 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (p1) return new Date(parseInt(p1[3]), parseInt(p1[2]) - 1, parseInt(p1[1]));
+            const p2 = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+            if (p2) return new Date(parseInt(p2[1]), parseInt(p2[2]) - 1, parseInt(p2[3]));
+            return new Date(s);
+        }
+
+        function qFormatSheetDate(date) {
+            const d = qParseDate(date);
+            if (isNaN(d.getTime())) return "";
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            return `${day}/${month}/${d.getFullYear()}`;
+        }
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            if(document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
-            if(document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
-            if(document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
+            const h = new Date().getHours();
+            const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+            if (document.getElementById('usrGreeting')) document.getElementById('usrGreeting').innerText = greet;
+
+            // Verificación proactiva de reservas
+            checkExistingBooking();
+
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
     </script>
     <script src="stm-bot.js"></script>
 </body>
+
 </html>

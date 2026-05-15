@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Deporte, Cultura y Recreación - MiStm App</title>
+    <link rel="icon" type="image/png" href="logo nuevo.png">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        :root {
+            --stm-primary: #4f46e5;
+            --stm-accent: #f59e0b;
+            --nav-bg: #111827;
+            --text-dark: #1e293b;
+            --glass: rgba(255, 255, 255, 0.85);
+            --bg-body: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        body.dark-mode {
+            --stm-primary: #818cf8;
+            --text-dark: #f1f5f9;
+            --bg-body: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass: rgba(30, 41, 59, 0.85);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 40px 20px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        body.dark-mode header {
+            background: rgba(15, 23, 42, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-box {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 14px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .welcome-msg h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-msg p {
+            margin: 0;
+            font-size: 1.05rem;
+            opacity: 0.8;
+            font-weight: 600;
+            color: var(--stm-primary);
+        }
+
+        .container {
+            padding: 25px 20px 180px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--stm-primary);
+            margin-bottom: 10px;
+        }
+
+        /* --- FLIP CARDS GRID --- */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .card-flip {
+            height: 180px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card-flip.is-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .card-front {
+            background: white;
+            background: radial-gradient(circle at top left, white, #f8fafc);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, var(--stm-primary), #6366f1);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        body.dark-mode .card-front {
+            background: #1e293b;
+            border-color: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--stm-primary);
+            margin-bottom: 12px;
+        }
+
+        .card-yellow .card-front {
+            background: #fde68a;
+            border-color: #fcd34d;
+        }
+
+        body.dark-mode .card-yellow .card-front {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .card-yellow .card-front .card-icon,
+        .card-yellow .card-front .card-title {
+            color: #b45309;
+        }
+
+        body.dark-mode .card-yellow .card-front .card-icon,
+        body.dark-mode .card-yellow .card-front .card-title {
+            color: #fbbf24;
+        }
+
+        .card-yellow .card-back {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+        }
+
+        .card-yellow .tap-hint {
+            font-size: 0.85rem !important;
+            font-weight: 900 !important;
+            opacity: 1 !important;
+            color: #b45309 !important;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .card-yellow .tap-hint {
+            color: #fbbf24 !important;
+        }
+
+        body.dark-mode .card-icon {
+            color: var(--stm-primary);
+        }
+
+        .card-back .card-icon {
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .card-info-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 8px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .tap-hint {
+            font-size: 0.6rem;
+            opacity: 0.4;
+            margin-top: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* --- PRICE & CONTACT CARDS --- */
+        .info-section {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-weight: 600;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        body.dark-mode .price-row {
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-group {
+            background: var(--stm-primary);
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .contact-link:active {
+            opacity: 0.8;
+            transform: scale(0.98);
+        }
+
+        .contact-link i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-slogan {
+            text-align: center;
+            padding: 30px 20px;
+            font-weight: 800;
+            font-style: italic;
+            color: var(--stm-primary);
+            font-size: 1.1rem;
+        }
+
+        /* --- NAV & BOT --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 25px;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 380px;
+            height: 72px;
+            background: rgba(17, 24, 39, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            z-index: 5000;
+            padding: 0 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: #64748b;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: 0.4s;
+        }
+
+        .nav-btn.active {
+            color: white;
+            background: var(--stm-primary);
+            border-radius: 50%;
+            transform: translateY(-12px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .nav-home-pulse i {
+            animation: home-blink 2s infinite ease-in-out;
+        }
+
+        @keyframes home-blink {
+
+            0%,
+            100% {
+                color: #64748b;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.2);
+            }
+        }
+
+        /* --- FAB BOT CONTAINER --- */
+        .fab-bot-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            animation: botBreathe 3s infinite ease-in-out;
+        }
+
+        /* --- FAB BOT (Estilo Banco Provincia) --- */
+        .fab-bot {
+            width: 60px;
+            height: 60px;
+            background: transparent !important;
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: none;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fab-bot:active {
+            transform: scale(0.9);
+        }
+
+        .fab-bot img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+        }
+
+        /* Pulse rings */
+        .fab-bot-pulse {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 2.5px solid rgba(99, 102, 241, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fab-bot-pulse:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .fab-bot-pulse:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes botBreathe {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes bounceBot {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: 0.5s;
+        }
+
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
+
+        .loader-logo {
+            width: 80px;
+            animation: logo-spin 2s linear infinite;
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .bot-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .bot-modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .bot-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 30px 20px 40px;
+            transform: translateY(100%);
+            transition: 0.4s;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        body.dark-mode .bot-content {
+            background: #1e293b;
+            color: white;
+        }
+
+        .bot-modal.active .bot-content {
+            transform: translateY(0);
+        }
+
+        .bot-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 18px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        body.dark-mode .bot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loader-wrapper">
+        <img src="logo nuevo.png" class="loader-logo" alt="STM">
+    </div>
+
+    <header>
+        <div class="header-box">
+            <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
+            <div class="welcome-msg">
+                <h1 id="usrGreeting">¡Hola!</h1>
+                <p id="usrDisplayName">Cargando...</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container animate__animated animate__fadeIn">
+
+        <div class="activities-grid">
+            <!-- Yoga -->
+            <div class="card-flip" id="sport-yoga" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-spa card-icon"></i>
+                        <h3 class="card-title">Yoga</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Lunes y Miércoles<br>16:00 a 17:00 hs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stretching -->
+            <div class="card-flip" id="sport-stretching" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-child-reaching card-icon"></i>
+                        <h3 class="card-title">Stretching</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text"><b>Tarde:</b> Lun y Mié 17:15 - 18:15<br><b>Mañana:</b> Mar y Jue
+                            09:30 - 10:30</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Taekwondo -->
+            <div class="card-flip" id="sport-taekwondo" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-hand-fist card-icon"></i>
+                        <h3 class="card-title">Taekwondo</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Lunes y Miércoles<br>18:30 a 19:30 hs<br><small>A partir de 7
+                                años</small></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fútbol Femenino -->
+            <div class="card-flip" id="sport-futbol" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-futbol card-icon"></i>
+                        <h3 class="card-title">Fútbol Femenino</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Lunes y Viernes<br>19:30 a 20:30 hs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zumba -->
+            <div class="card-flip" id="sport-zumba" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-music card-icon"></i>
+                        <h3 class="card-title">Zumba</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Martes y Jueves<br>16:00 a 17:00 hs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danza -->
+            <div class="card-flip" id="sport-danza" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-person-dots-from-line card-icon"></i>
+                        <h3 class="card-title">Danza</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Martes y Jueves<br>17:15 a 18:15 hs<br><small>5 a 13 años</small></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Funcional -->
+            <div class="card-flip" id="sport-funcional" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-dumbbell card-icon"></i>
+                        <h3 class="card-title">Funcional</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Martes y Jueves<br>18:30 a 19:30 hs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ajedrez -->
+            <div class="card-flip" id="sport-ajedrez" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-chess card-icon"></i>
+                        <h3 class="card-title">Ajedrez</h3>
+                        <span class="tap-hint">Ver horarios</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Horarios</h3>
+                        <p class="card-info-text">Viernes<br>17:30 a 19:30 hs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rugby -->
+            <div class="card-flip card-yellow" id="sport-rugby" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <i class="fa-solid fa-football card-icon" style="font-size: 2.2rem;"></i>
+                        <h3 class="card-title">Rugby</h3>
+                        <span class="tap-hint">CONVENIO</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Convenio</h3>
+                        <p class="card-info-text">Más información en Secretaría</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hockey -->
+            <div class="card-flip card-yellow" id="sport-hockey" onclick="handleFlip(this)">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <svg viewBox="0 0 512 512" class="card-icon"
+                            style="width: 2.2rem; height: 2.2rem; margin-bottom: 12px; fill: currentColor;">
+                            <path
+                                d="M416 352c-26.5 0-48 21.5-48 48s21.5 48 48 48 48-21.5 48-48-21.5-48-48-48zm-82.3-209.7c-6.2-6.2-16.4-6.2-22.6 0L44.1 409.3c-15.2 15.2-14 40.5 3.3 53.6 12.1 9.1 28.5 9.1 40.6 0l21.3-16c6.2-4.7 15-3.5 19.7 2.7 4.7 6.2 3.5 15-2.7 19.7l-21.3 16c-24.2 18.2-58.4 18.2-82.6 0-33-24.8-35.3-73.4-6.1-102.6L283.7 115.7c6.2-6.2 16.4-6.2 22.6 0l83.7 83.7c6.2 6.2 6.2 16.4 0 22.6s-16.4 6.2-22.6 0l-33.7-33.7z" />
+                        </svg>
+                        <h3 class="card-title">Hockey</h3>
+                        <span class="tap-hint">CONVENIO</span>
+                    </div>
+                    <div class="card-back">
+                        <h3 class="card-title">Convenio</h3>
+                        <p class="card-info-text">Más información en Secretaría</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 style="font-weight: 800; color: var(--stm-primary); margin-top: 0;"><i class="fa-solid fa-tags"></i>
+                Valores Mensuales</h3>
+            <div class="price-row"><span>Afiliados Activos</span> <span>$12.000</span></div>
+            <div class="price-row"><span>Jubilados</span> <span>$9.000</span></div>
+            <div class="price-row"><span>Familiares Directos</span> <span>$12.000</span></div>
+            <div class="price-row"><span>Público en General</span> <span>$23.000</span></div>
+        </div>
+
+        <div class="info-section">
+            <h3 style="font-weight: 800; color: var(--stm-primary); margin-top: 0;"><i
+                    class="fa-solid fa-circle-info"></i> Consultas e Inscripción en Departamento de Deportes</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 20px;"><b>Sede:</b> Moreno 4359 1er Piso<br>
+                <b>Atención:</b> Lun, Mié y Vie de 09:30-12:00 / 16:30-19:00 hs.
+            </p>
+
+            <div class="contact-group">
+                <a href="tel:02234723756" class="contact-link"><i class="fa-solid fa-phone"></i> 472-3756 / 472-9815
+                    (Int. 126)</a>
+                <a href="mailto:deportesyrecreacion.stm@gmail.com" class="contact-link"><i
+                        class="fa-solid fa-envelope"></i> deportesyrecreacion.stm@gmail.com</a>
+            </div>
+            <a href="https://wa.me/542235504796" class="contact-link"
+                style="background: #25D366; border-radius: 24px; padding: 15px 20px; margin-top: 15px; box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3); justify-content: center; font-size: 1.1rem;"><i
+                    class="fa-brands fa-whatsapp" style="font-size: 1.3rem;"></i> WhatsApp: 223 550-4796</a>
+        </div>
+
+        <div class="footer-slogan">"Pensamos en tu bienestar y el de tu familia"</div>
+    </main>
+
+    <!-- TAB BAR NAV (STRICT) -->
+    <nav class="bottom-nav">
+        <a href="opciones.html" class="nav-btn nav-home-pulse"
+            onclick="window.location.href='opciones.html'; return false;"><i class="fa-solid fa-house"></i></a>
+        <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
+    </nav>
+
+    <!-- FAB BOT -->
+    <!-- BOT & NAV -->
+    <div id="fabBotIcon" style="position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 98px); right: 20px; z-index: 1001;">
+        <div class="fab-bot-container">
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <div class="fab-bot" onclick="toggleBot(true)">
+                <img src="logo_bot..png" alt="Bot STM">
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ASISTENTE -->
+    <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <div style="position:relative; margin-bottom:15px;"><i class="fa-solid fa-robot"
+                    style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i>
+                <input type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch">
+            </div>
+            <div id="botRes"></div>
+        </div>
+    </div>
+
+    <!-- MODAL CONFIG -->
+    <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
+            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">
+                Configuración</h2>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600;">Modo Oscuro</span>
+                    <input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)"
+                        style="width: 20px; height: 20px;">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600;">Ver Asistente Bot</span>
+                    <input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked
+                        style="width: 20px; height: 20px;">
+                </div>
+            </div>
+            <button onclick="toggleSettings(false)"
+                style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
+
+
+        function handleFlip(card) {
+            const isFlipped = card.classList.contains('is-flipped');
+            document.querySelectorAll('.card-flip').forEach(c => c.classList.remove('is-flipped'));
+            if (!isFlipped) card.classList.add('is-flipped');
+        }
+
+        function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
+
+        function applyConfig(type, value) {
+            localStorage.setItem('cfg_' + type, value);
+            if (type === 'dark') document.body.classList.toggle('dark-mode', value);
+            if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
+        }
+
+
+        window.addEventListener('load', () => {
+            const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
+            document.body.classList.toggle('dark-mode', cfg.dark);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+
+            const savedName = localStorage.getItem('usrName') || "Afiliado STM";
+            document.getElementById('usrDisplayName').innerText = savedName;
+            const h = new Date().getHours();
+            const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+            if (document.getElementById('usrGreeting')) document.getElementById('usrGreeting').innerText = greet;
+            const urlParams = new URLSearchParams(window.location.search);
+            const focusId = urlParams.get('id');
+            if (focusId) {
+                setTimeout(() => {
+                    const el = document.getElementById('sport-' + focusId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => handleFlip(el), 800);
+                    }
+                }, 800);
+            }
+
+            setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
+        });
+    </script>
+    <script src="stm-bot.js"></script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Autoridades STM - Cuerpo Directivo</title>
+    <title>Memoria y Balance STM - Transparencia</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
 
     <!-- Fonts & Icons -->
@@ -35,27 +35,6 @@
             display: none !important;
         }
 
-        .nav-footer,
-        .nav-bar,
-
-        .nav-home-pulse i {
-            animation: home-blink 2s infinite ease-in-out;
-        }
-
-        @keyframes home-blink {
-
-            0%,
-            100% {
-                color: #4b5563;
-                transform: scale(1);
-            }
-
-            50% {
-                color: white;
-                transform: scale(1.2);
-            }
-        }
-
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -69,10 +48,6 @@
             min-height: 100vh;
             color: var(--text-dark);
             overflow-x: hidden;
-        }
-
-        html {
-            height: 100%;
         }
 
         header {
@@ -127,7 +102,6 @@
             margin: 0 auto;
         }
 
-        /* --- AUTHORITIES LIST --- */
         .section-title {
             font-size: 0.8rem;
             font-weight: 800;
@@ -148,16 +122,12 @@
             opacity: 0.2;
         }
 
-        .auth-card {
+        .info-card {
             background: white;
             border-radius: 22px;
-            padding: 18px 20px;
-            margin-bottom: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.8);
             animation: fadeIn 0.5s ease-out forwards;
         }
@@ -174,52 +144,71 @@
             }
         }
 
-        body.dark-mode .auth-card {
+        body.dark-mode .info-card {
             background: #1e293b;
             border-color: #334155;
         }
 
-        .auth-ico {
-            width: 45px;
-            height: 45px;
-            border-radius: 14px;
+        body.dark-mode #textGradient {
+            background: linear-gradient(transparent, #1e293b) !important;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .info-ico {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             background: #f1f5f9;
             color: var(--stm-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.1rem;
-            flex-shrink: 0;
         }
 
-        body.dark-mode .auth-ico {
+        body.dark-mode .info-ico {
             background: #334155;
         }
 
-        .auth-info {
-            flex: 1;
-        }
-
-        .auth-pos {
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-
-        .auth-name {
-            font-size: 1.05rem;
+        .info-title {
+            font-size: 1rem;
             font-weight: 800;
-            color: #334155;
             margin: 0;
         }
 
-        body.dark-mode .auth-name {
-            color: white;
+        .info-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin: 0;
         }
 
-        /* --- BOT STYLES --- */
+        .btn-doc {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--stm-primary);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-doc:active {
+            transform: scale(0.95);
+        }
+
+        /* --- BOT & NAV (Standard) --- */
         /* --- FAB BOT CONTAINER --- */
         .fab-bot-container {
             position: relative;
@@ -298,22 +287,6 @@
             }
         }
 
-        .fab-bot i {
-            color: white !important;
-        }
-
-        @keyframes bounceBot {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-5px);
-            }
-        }
-
         .bot-modal {
             position: fixed;
             top: 0;
@@ -331,140 +304,6 @@
         .bot-modal.active {
             visibility: visible;
             opacity: 1;
-        }
-
-        .res-item-bot {
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-            transition: 0.3s;
-        }
-
-        body.dark-mode .res-item-bot {
-            background: #0f172a !important;
-            border-color: #334155 !important;
-            color: white !important;
-        }
-
-        body.dark-mode .res-item-bot p {
-            color: #94a3b8 !important;
-        }
-
-        /* --- NAVIGATION --- */
-
-        /* --- NOTIFICATION & UTILS --- */
-        .stm-notify {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            border: 1px solid #e2e8f0;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.5s;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .stm-notify.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        .stm-notify i {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--stm-primary);
-            color: white;
-            font-size: 0.8rem;
-        }
-
-        #loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        body.dark-mode #loader-wrapper {
-            background: #0f172a;
-        }
-
-        .loader-logo {
-            width: 100px;
-            height: auto;
-            animation: logo-spin 2s linear infinite;
-        }
-
-        @keyframes logo-spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .bot-input {
-            width: 100%;
-            padding: 15px 20px 15px 50px;
-            border-radius: 18px;
-            border: 2px solid #f1f5f9;
-            background: #f8fafc;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--text-dark);
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .bot-input:focus {
-            border-color: var(--stm-primary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08);
-        }
-
-        body.dark-mode .bot-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: #f1f5f9;
-        }
-
-        body.dark-mode .bot-input:focus {
-            border-color: var(--stm-primary);
-            background: #0f172a;
-        }
-
-        .bot-search-box {
-            position: relative;
-            margin-bottom: 15px;
-        }
-
-        .bot-search-box>i {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--stm-primary);
-            font-size: 1.1rem;
         }
 
         .bot-content {
@@ -490,18 +329,25 @@
             transform: translateY(0);
         }
 
-        .bot-results-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--stm-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0 0 10px;
+        .bot-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 18px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        body.dark-mode .bot-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
         }
 
         .bottom-nav {
             position: fixed;
-            bottom: 25px;
             bottom: calc(env(safe-area-inset-bottom, 0px) + 25px);
             left: 50%;
             transform: translateX(-50%);
@@ -514,9 +360,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             z-index: 5000;
-            padding: 0 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -529,19 +373,54 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .nav-btn.active {
-            color: white;
-            background: var(--stm-primary);
-            border-radius: 50%;
-            transform: translateY(-12px);
-            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+        #loader-wrapper {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
         }
 
-        .nav-btn:active {
-            transform: scale(0.9);
+        body.dark-mode #loader-wrapper {
+            background: #0f172a;
+        }
+
+        .loader-logo {
+            width: 100px;
+            animation: logo-spin 2s linear infinite;
+        }
+
+        @keyframes logo-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .nav-home-pulse i {
+            animation: home-blink 3s infinite ease-in-out;
+        }
+
+        @keyframes home-blink {
+
+            0%,
+            100% {
+                color: #64748b;
+                transform: scale(1);
+            }
+
+            50% {
+                color: white;
+                transform: scale(1.1);
+            }
         }
     </style>
 </head>
@@ -550,142 +429,40 @@
 
     <div id="loader-wrapper">
         <img src="logo nuevo.png" class="loader-logo" alt="Cargando...">
-        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">AUTORIDADES STM</div>
+        <div style="font-weight:700; color:var(--stm-primary); margin-top:20px">MEMORIA Y BALANCE</div>
     </div>
 
     <header>
         <div class="header-box">
             <div class="logo-box"><img src="logo nuevo.png" alt="STM"></div>
             <div class="welcome-msg">
-                <h1 id="usrGreeting">Autoridades</h1>
-                <p id="usrDisplayName">Cuerpo Directivo</p>
+                <h1 id="usrGreeting">Memoria y Balance</h1>
+                <p id="usrDisplayName">Gestión y Transparencia</p>
             </div>
         </div>
     </header>
 
     <div class="container animate__animated animate__fadeIn">
-        <h2 class="section-title">Secretariado General</h2>
 
-        <div class="auth-card" style="animation-delay: 0.1s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Secretario General</div>
-                <h3 class="auth-name">Daniel Alberto ZACARIAS</h3>
+        <div class="info-card">
+            <div class="info-header" style="margin-bottom: 5px;">
+                <div class="info-ico"><i class="fa-solid fa-book-open"></i></div>
+                <h2 class="info-title">MEMORIA Y BALANCE 2025</h2>
             </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.2s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Secretario Adjunto</div>
-                <h3 class="auth-name">Cristian Gabriel MILASINCIC</h3>
+            <p style="font-size: 0.8rem; opacity: 0.6; font-weight: 600; margin-bottom: 15px; margin-top: 0;">Sindicato de Trabajadores Municipales de General Pueyrredon</p>
+            
+            <div id="textContainer" style="font-size: 0.95rem; line-height: 1.6; opacity: 0.85; max-height: 140px; overflow: hidden; transition: max-height 0.4s ease; position: relative;">
+                <h3 style="font-size: 1rem; color: var(--stm-primary); font-weight: 800; margin: 10px 0 5px;">INTRODUCCIÓN INSTITUCIONAL</h3>
+                <p style="margin-top: 0; margin-bottom: 15px;">La Comisión Directiva del Sindicato de Trabajadores Municipales de General Pueyrredon eleva a consideración de las afiliadas, los afiliados y de la Honorable Asamblea General Ordinaria la presente Memoria y Balance correspondiente al ejercicio comprendido entre el 1° de enero y el 31 de diciembre de 2025.</p>
+                <p style="margin-bottom: 15px;">El año 2025 estuvo signado por una intensa actividad gremial, institucional y territorial, en un contexto económico, social y político complejo, que exigió una presencia permanente del Sindicato en la defensa de los derechos laborales, salariales, previsionales y humanos de las trabajadoras y los trabajadores municipales, así como en el acompañamiento cotidiano de sus familias.</p>
+                <p style="margin-bottom: 15px;">La acción sindical desarrollada durante el período se caracterizó por una mirada integral del trabajo municipal, articulando la defensa del salario y de las condiciones laborales con políticas activas de acción social, capacitación, recreación, turismo social, género, derechos humanos y previsión social, fortaleciendo el rol histórico del STM como organización representativa, solidaria y profundamente comprometida con la justicia social.</p>
+                <p style="margin-bottom: 15px;">La presente Memoria refleja, de manera cronológica y sistematizada, el conjunto de actividades desarrolladas durante el ejercicio 2025, incorporando posteriormente un desarrollo específico de cada área, conforme el modelo institucional del Sindicato.</p>
+                <div id="textGradient" style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(transparent, white);"></div>
             </div>
-        </div>
-
-        <h2 class="section-title">Secretarías</h2>
-
-        <div class="auth-card" style="animation-delay: 0.3s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Finanzas</div>
-                <h3 class="auth-name">Carolina Inda</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.4s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Organización</div>
-                <h3 class="auth-name">Luis A. MARCHESANI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.5s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Gremial</div>
-                <h3 class="auth-name">María Soledad LEIVA</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.6s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Administrativa y de Actas</div>
-                <h3 class="auth-name">María de los Angeles IRAZABAL</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.7s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Acción Social y Obras</div>
-                <h3 class="auth-name">Fernando N. SALOME</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.8s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Previsión Social</div>
-                <h3 class="auth-name">Sebastián G. MENDEZ</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 0.9s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Prensa y Difusión</div>
-                <h3 class="auth-name">Nicolas A. LOZZI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.0s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Relac. Públicas y Sindicales</div>
-                <h3 class="auth-name">Ricardo A. PIGNATARO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.1s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Mujer</div>
-                <h3 class="auth-name">Cecilia M. GAUDIOSO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.2s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Docente</div>
-                <h3 class="auth-name">Alejandra S. AYEK</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.3s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Personal Jerárquico</div>
-                <h3 class="auth-name">Claudio J. CAMBARERI</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.4s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Higiene y Seguridad</div>
-                <h3 class="auth-name">María V. MAIO</h3>
-            </div>
-        </div>
-
-        <div class="auth-card" style="animation-delay: 1.5s">
-            <div class="auth-ico"><i class="fa-solid fa-user"></i></div>
-            <div class="auth-info">
-                <div class="auth-pos">Personal Profesional</div>
-                <h3 class="auth-name">María Laura VILLALBA</h3>
-            </div>
+            
+            <button id="btnReadMore" onclick="toggleReadMore()" style="width: 100%; margin-top: 15px; background: rgba(79, 70, 229, 0.1); color: var(--stm-primary); border: none; padding: 12px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span>Ver Completo</span> <i class="fa-solid fa-chevron-down"></i>
+            </button>
         </div>
     </div>
 
@@ -705,11 +482,10 @@
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
-            <div style="position:relative; margin-bottom:15px; box-sizing: border-box;"><i class="fa-solid fa-robot"
+            <div style="position:relative; margin-bottom:15px;"><i class="fa-solid fa-robot"
                     style="position:absolute; left:18px; top:50%; transform:translateY(-50%); color:var(--stm-primary)"></i><input
-                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch"
-                    style="box-sizing: border-box; width: 100%;"></div>
-            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto; box-sizing: border-box;"></div>
+                    type="text" class="bot-input" placeholder="¿En qué puedo ayudarte?" id="botSearch"></div>
+            <div id="botRes" style="margin-top: 15px; max-height: 40vh; overflow-y:auto;"></div>
         </div>
     </div>
 
@@ -720,7 +496,7 @@
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
-    <!-- MODALS CONFIG & USER -->
+    <!-- MODAL CONFIG -->
     <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
@@ -728,22 +504,23 @@
             <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:20px; color: var(--stm-primary);">
                 Configuración</h2>
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span
-                        style="font-weight: 600;">Modo Oscuro</span><input type="checkbox" id="checkDark"
-                        onchange="applyConfig('dark', this.checked)" style="width: 20px; height: 20px;"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center;"><span
-                        style="font-weight: 600;">Ver Asistente Bot</span><input type="checkbox" id="checkBot"
-                        onchange="applyConfig('bot', this.checked)" checked style="width: 20px; height: 20px;"></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Modo Oscuro</span>
+                    <input type="checkbox" id="checkDark" onchange="applyConfig('dark', this.checked)"
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
+                    <span style="font-weight: 600;">Ver Asistente Bot</span>
+                    <input type="checkbox" id="checkBot" onchange="applyConfig('bot', this.checked)" checked
+                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
+                </div>
             </div>
             <button onclick="toggleSettings(false)"
                 style="margin-top: 30px; width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f1f5f9; font-weight: 800; cursor: pointer;">Cerrar</button>
         </div>
     </div>
 
-    </div>
-
     <script>
-        // Verificación de Acceso
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
         const sitePages = [
@@ -792,85 +569,70 @@
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-
-
-        // --- NOVEDADES PARA EL BOT ---
-        const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
-        const NEWS_GID = "195669740";
-        const NEWS_URL = `https://docs.google.com/spreadsheets/d/${NEWS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${NEWS_GID}`;
-        let allNews = [];
-
-        async function fetchNews() {
-            if (allNews.length > 0) return;
-            try {
-                const res = await fetch(NEWS_URL);
-                const text = await res.text();
-                const json = JSON.parse(text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1));
-                allNews = (json.table.rows || []).map(r => ({
-                    titulo: (r.c[1]?.v || "").toString(),
-                    desc: (r.c[2]?.v || "").toString(),
-                    fecha: (r.c[3]?.f || r.c[3]?.v || "").toString(),
-                    activo: (r.c[4]?.v || "").toString().trim().toUpperCase() === "SI"
-                })).filter(n => n.activo).reverse();
-            } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
-        }
-
         function normalize(str) { return (str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
-        function toggleBot(show) {
-            document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus();
-            fetchNews();
-        }
+        function toggleBot(show) { document.getElementById('modalBot').classList.toggle('active', show); if (show) document.getElementById('botSearch').focus(); }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
-
         function applyConfig(type, value) {
             localStorage.setItem('cfg_' + type, value);
             if (type === 'dark') document.body.classList.toggle('dark-mode', value);
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
         }
 
-        let searchTimer = null;
         document.getElementById('botSearch').addEventListener('input', (e) => {
             const val = normalize(e.target.value).trim();
             const res = document.getElementById('botRes');
-            if (searchTimer) clearTimeout(searchTimer);
-
-            if (val.length <= 2) {
-                res.innerHTML = "";
-                return;
-            }
-
-            res.innerHTML = `<div style="padding:20px; text-align:center; color:#94a3b8; font-size:0.85rem;" class="animate__animated animate__pulse animate__infinite">Buscando en el STM...</div>`;
-
-            searchTimer = setTimeout(() => {
-                res.innerHTML = "";
-                const words = val.split(" ").filter(w => w.length > 2);
-                sitePages.filter(p => {
-                    const target = normalize(p.t + " " + p.tags);
-                    return words.some(w => target.includes(w)) || target.includes(val);
-                }).forEach(p => {
-                    res.innerHTML += `<a href="${p.f}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit; display:block">
-                        <div style="display:flex; align-items:center; gap:10px">
-                            <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center; font-size:0.8rem"><i class="fa-solid ${p.ico}"></i></div>
-                            <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
-                        </div>
-                    </a>`;
-                });
-            }, 500);
+            if (val.length <= 2) { res.innerHTML = ""; return; }
+            const words = val.split(" ").filter(w => w.length > 2);
+            res.innerHTML = "";
+            sitePages.filter(p => {
+                const target = normalize(p.t + " " + p.tags);
+                return words.some(w => target.includes(w)) || target.includes(val);
+            }).forEach(p => {
+                res.innerHTML += `<a href="${p.f}" class="res-item-bot" style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:15px; margin-bottom:8px; text-decoration:none; color:inherit;">
+                    <div style="width:30px; height:30px; border-radius:8px; background:var(--stm-primary); color:white; display:flex; align-items:center; justify-content:center;"><i class="fa-solid ${p.ico}"></i></div>
+                    <div><h4 style="margin:0; font-size:0.85rem">${p.t}</h4><p style="margin:0; font-size:0.7rem; opacity:0.7">${p.d}</p></div>
+                </a>`;
+            });
         });
-
-
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
+            
+            const h = new Date().getHours();
+            const greet = h < 12 ? "¡Buen día!" : h < 20 ? "¡Buenas tardes!" : "¡Buenas noches!";
+            const greetingEl = document.getElementById('usrGreeting');
+            if (greetingEl) greetingEl.innerText = greet;
+
             setTimeout(() => { document.getElementById('loader-wrapper').style.opacity = '0'; setTimeout(() => document.getElementById('loader-wrapper').style.display = 'none', 500); }, 600);
         });
-    </script>
 
-    <script src="stm-bot.js"></script>
+        function toggleReadMore() {
+            const container = document.getElementById('textContainer');
+            const gradient = document.getElementById('textGradient');
+            const btn = document.getElementById('btnReadMore');
+            const span = btn.querySelector('span');
+            const icon = btn.querySelector('i');
+            
+            if (container.style.maxHeight === '140px' || container.style.maxHeight === '') {
+                container.style.maxHeight = '2000px';
+                gradient.style.display = 'none';
+                span.innerText = 'Ver Menos';
+                icon.className = 'fa-solid fa-chevron-up';
+            } else {
+                container.style.maxHeight = '140px';
+                gradient.style.display = 'block';
+                span.innerText = 'Ver Completo';
+                icon.className = 'fa-solid fa-chevron-down';
+            }
+        }
+    </script>
 </body>
 
 </html>

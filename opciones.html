@@ -7,12 +7,17 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>MiStm App</title>
     <link rel="icon" type="image/png" href="logo nuevo.png">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
     <style>
         :root {
@@ -118,10 +123,7 @@
         .logo-container {
             width: 50px;
             height: 50px;
-            background: white;
-            border-radius: 14px;
-            padding: 6px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -382,7 +384,7 @@
         }
 
         .g-3 {
-            background: linear-gradient(135deg, #64748b, #475569);
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
         }
 
         .g-4 {
@@ -440,27 +442,131 @@
             pointer-events: none;
         }
 
-        /* --- FAB BOT --- */
+        /* --- FAB BOT CONTAINER --- */
+        .fab-bot-container {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            animation: botBreathe 3s infinite ease-in-out;
+        }
+
+        /* --- FAB BOT (Estilo Banco Provincia) --- */
         .fab-bot {
             width: 60px;
             height: 60px;
-            background: rgba(99, 102, 241, 0.85) !important;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: white !important;
-            border-radius: 50%;
+            background: transparent !important;
+            border-radius: 14px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            transition: 0.3s;
-            animation: jumpBot 2.5s infinite ease-in-out;
+            box-shadow: none;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
-        .fab-bot i {
-            color: white !important;
+        .fab-bot:active {
+            transform: scale(0.9);
+        }
+
+        .fab-bot img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+        }
+
+        /* Pulse rings */
+        .fab-bot-pulse {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 2.5px solid rgba(99, 102, 241, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fab-bot-pulse:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .fab-bot-pulse:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes botBreathe {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* Tooltip bubble */
+        .fab-bot-tooltip {
+            position: absolute;
+            right: 75px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.8);
+            background: white;
+            color: #1e293b;
+            padding: 10px 16px;
+            border-radius: 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 3;
+        }
+
+        .fab-bot-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -7px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 7px solid transparent;
+            border-left-color: white;
+            border-right: none;
+        }
+
+        .fab-bot-tooltip.show {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+
+        body.dark-mode .fab-bot-tooltip {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .fab-bot-tooltip::after {
+            border-left-color: #334155;
         }
 
         @keyframes jumpBot {
@@ -503,7 +609,7 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             color: white !important;
-            border-radius: 50%;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -573,13 +679,53 @@
             filter: brightness(0.95);
         }
 
-        /* --- ASISTENTE OVERLAY --- */
+        /* --- MODAL CHATBOT/CONFIG (BOTTOM SHEET) --- */
+        .bot-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .bot-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .bot-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 30px 20px 40px;
+            transform: translateY(100%);
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+            box-sizing: border-box;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .bot-modal.active .bot-content {
+            transform: translateY(0);
+        }
+
+        /* --- MODAL INFORMATIVO (CENTERED) --- */
         .search-modal {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(10px);
-            z-index: 10000;
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 20000;
             display: none;
             align-items: center;
             justify-content: center;
@@ -596,15 +742,13 @@
         .search-content {
             background: white;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             border-radius: 35px;
-            padding: 40px 25px 30px;
+            padding: 40px 25px;
             position: relative;
             transform: scale(0.6);
             opacity: 0;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             max-height: 90vh;
@@ -616,10 +760,11 @@
             opacity: 1;
         }
 
-        body.dark-mode .search-content {
+        body.dark-mode .search-content,
+        body.dark-mode .bot-content {
             background: #1e293b;
             color: white;
-            border: 1px solid #334155;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .search-bar-box {
@@ -954,6 +1099,40 @@
             border-color: #334155 !important;
             color: white !important;
         }
+
+        @keyframes blink-red {
+
+            0%,
+            100% {
+                opacity: 1;
+                color: #fca5a5;
+            }
+
+            50% {
+                opacity: 0.3;
+                color: #ef4444;
+            }
+        }
+
+        .blink-alert {
+            animation: blink-red 1.5s infinite;
+        }
+
+        @keyframes blink-simple {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        .blink-v2 {
+            animation: blink-simple 1s infinite;
+        }
     </style>
 </head>
 
@@ -1021,12 +1200,12 @@
     </a>
 
     <main class="main-grid" id="mainMenu">
-        <!-- 1. Autoridades -->
+        <!-- 1. Secretarías -->
         <a href="autoridades.html" class="action-card">
             <div class="ico-box g-1"><i class="fa-solid fa-users-gear"></i></div>
             <div class="card-info">
-                <h3>Autoridades</h3>
-                <p>Gestión directiva</p>
+                <h3>Secretarías</h3>
+                <p>Comisión Directiva</p>
             </div>
         </a>
 
@@ -1039,7 +1218,7 @@
             </div>
         </a>
 
-        <!-- 3. Contacto -->
+        <!-- 3. Contactos -->
         <a href="contactos.html" class="action-card">
             <div class="ico-box g-2"><i class="fa-solid fa-phone-volume"></i></div>
             <div class="card-info">
@@ -1057,25 +1236,7 @@
             </div>
         </a>
 
-        <!-- 5. Deportes -->
-        <a href="#" class="action-card" onclick="toggleProximamente(true)">
-            <div class="ico-box g-3"><i class="fa-solid fa-volleyball"></i></div>
-            <div class="card-info">
-                <h3>Deportes</h3>
-                <p>Próximamente disponible</p>
-            </div>
-        </a>
-
-        <!-- 6. Farmacia Sindical -->
-        <a href="#" class="action-card" onclick="toggleProximamente(true)">
-            <div class="ico-box g-6"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
-            <div class="card-info">
-                <h3>Farmacia Sindical</h3>
-                <p>Próximamente disponible</p>
-            </div>
-        </a>
-
-        <!-- 7. Mini-Turismo -->
+        <!-- 5. Mini-Turismo -->
         <a href="miniturismo.html" class="action-card">
             <div class="ico-box g-8"><i class="fa-solid fa-map-location-dot"></i></div>
             <div class="card-info">
@@ -1084,48 +1245,75 @@
             </div>
         </a>
 
-        <!-- 8. Proveeduría -->
-        <a href="#" class="action-card" onclick="toggleProximamente(true)">
-            <div class="ico-box g-2"><i class="fa-solid fa-basket-shopping"></i></div>
+        <!-- 6. Presentación Judicial -->
+        <a href="judicial.html" class="action-card">
+            <div class="ico-box g-5"><i class="fa-solid fa-gavel"></i></div>
             <div class="card-info">
-                <h3>Proveeduría</h3>
-                <p>Próximamente disponible</p>
+                <h3>Presentación Judicial</h3>
+                <p>Trámites y Reclamos</p>
             </div>
         </a>
 
-        <!-- 9. Reclamos ANTIGÜEDAD -->
-        <a href="reclamoantiguedad.html" class="action-card">
-            <div class="ico-box g-5"><i class="fa-solid fa-clock-rotate-left"></i></div>
-            <div class="card-info">
-                <h3>Reclamos ANTIGÜEDAD</h3>
-                <p>Judicial 1995-2014</p>
-            </div>
-        </a>
-
-        <!-- 10. Reclamos GANANCIAS -->
-        <a href="reclamoganancias.html" class="action-card">
-            <div class="ico-box g-4"><i class="fa-solid fa-scale-balanced"></i></div>
-            <div class="card-info">
-                <h3>Reclamos GANANCIAS</h3>
-                <p>Judicial e Impuestos</p>
-            </div>
-        </a>
-
-        <!-- 11. Reserva de Quincho -->
+        <!-- 8. Reserva de Quincho -->
         <a href="quincho.html" class="action-card">
             <div class="ico-box g-1"><i class="fa-solid fa-house-user"></i></div>
             <div class="card-info">
                 <h3>Reserva de Quincho</h3>
-                <p>Reuniones familiares</p>
+                <p>Gestión de Turnos</p>
             </div>
         </a>
 
-        <!-- 12. Servicios STM -->
-        <a href="servicios.html" class="action-card">
-            <div class="ico-box g-3"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <!-- 9. Beneficios STM -->
+        <a href="beneficios.html" class="action-card">
+            <div class="ico-box g-3"><i class="fa-solid fa-hands-holding"></i></div>
             <div class="card-info">
-                <h3>Servicios STM</h3>
-                <p>Beneficios y Trámites</p>
+                <h3>Beneficios STM</h3>
+                <p>Subsidios y Beneficios</p>
+            </div>
+        </a>
+
+        <!-- 10. Deporte, Cultura y Recreación -->
+        <a href="deporte.html" class="action-card">
+            <div class="ico-box g-6"><i class="fa-solid fa-person-running"></i></div>
+            <div class="card-info">
+                <h3>Departamento de deporte, cultura y recreación</h3>
+                <p>Actividades y Talleres</p>
+            </div>
+        </a>
+
+        <!-- 11. Paritarias -->
+        <a href="paritarias.html" class="action-card">
+            <div class="ico-box g-5"><i class="fa-solid fa-comments-dollar"></i></div>
+            <div class="card-info">
+                <h3>Paritarias</h3>
+                <p>Acuerdos Salariales</p>
+            </div>
+        </a>
+
+        <!-- 12. Memoria y Balance -->
+        <a href="memoria.html" class="action-card">
+            <div class="ico-box g-4"><i class="fa-solid fa-chart-pie"></i></div>
+            <div class="card-info">
+                <h3>Memoria y Balance</h3>
+                <p>Gestión y Transparencia</p>
+            </div>
+        </a>
+
+        <!-- 11. Farmacia Sindical -->
+        <a href="farmacia.html" class="action-card">
+            <div class="ico-box g-6"><i class="fa-solid fa-prescription-bottle-medical"></i></div>
+            <div class="card-info">
+                <h3>Farmacia Sindical</h3>
+                <p>Ahora más cerca tuyo</p>
+            </div>
+        </a>
+
+        <!-- 12. Proveeduría -->
+        <a href="proveduria.html" class="action-card">
+            <div class="ico-box g-2"><i class="fa-solid fa-basket-shopping"></i></div>
+            <div class="card-info">
+                <h3>Proveeduría</h3>
+                <p>Beneficios y Convenios</p>
             </div>
         </a>
     </main>
@@ -1134,14 +1322,20 @@
     <div class="fab-wrapper">
         <!-- BOT: Se ordena de abajo hacia arriba -->
         <div class="fab-item-wrapper" id="fabBotIcon">
-            <div class="fab-bot" onclick="toggleBot(true)">
-                <i class="fa-solid fa-robot"></i>
+            <div class="fab-bot-container">
+                <span class="fab-bot-pulse"></span>
+                <span class="fab-bot-pulse"></span>
+                <span class="fab-bot-pulse"></span>
+                <div class="fab-bot" onclick="toggleBot(true)">
+                    <img src="logo_bot..png" alt="Bot STM">
+                </div>
+                <div class="fab-bot-tooltip" id="botTooltip">¿Necesitás ayuda? 🤖</div>
             </div>
         </div>
 
         <!-- CREDENCIAL -->
         <div class="fab-item-wrapper" id="fabCred">
-            <div class="fab-credencial" onclick="toggleProximamente(true)">
+            <div class="fab-credencial" onclick="toggleCredencial(true)">
                 <i class="fa-solid fa-address-card"></i>
             </div>
         </div>
@@ -1176,15 +1370,16 @@
     </div>
 
     <nav class="bottom-nav">
-        <a href="opciones.html" class="nav-btn active"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn active" onclick="location.reload()"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
+        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"
+                style="color: #ffca28;"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
-    <!-- MODAL CONFIGURACIÓN -->
-    <div class="search-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
-        <div class="search-content">
+    <!-- MODAL CONFIGURACIÓN - COMPORTAMIENTO BOTTOM SHEET RESTAURADO -->
+    <div class="bot-modal" id="modalConfig" onclick="if(event.target == this) toggleSettings(false)">
+        <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
             </div>
             <h2 style="font-weight: 800; font-size: 1.3rem; margin: 0 0 20px 5px; color: var(--stm-primary);">
@@ -1205,13 +1400,13 @@
                 <!-- ENVIAR MENSAJE -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver botón mensaje</span>
-                    <input type="checkbox" id="checkMsg" onchange="applyConfig('msg', this.checked)" checked
+                    <input type="checkbox" id="checkMsg" onchange="applyConfig('msg', this.checked)"
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
                 <!-- CREDENCIAL DIGITAL -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver credencial Digital</span>
-                    <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)" checked
+                    <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)"
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
                 <!-- GENERO Y DIVERSIDAD -->
@@ -1245,9 +1440,11 @@
         </div>
     </div>
 
-    <!-- MODAL PERFIL/CONTRASEÑA - DISEÑO CENTRADO PREMIUM -->
-    <div class="search-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
-        <div class="search-content">
+    <!-- MODAL PERFIL/CONTRASEÑA - COMPORTAMIENTO BOTTOM SHEET RESTAURADO -->
+    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
+        <div class="bot-content">
+            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
+            </div>
             <div
                 style="width: 70px; height: 70px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                 <i class="fa-solid fa-user-shield" style="font-size: 1.8rem; color: var(--stm-primary);"></i>
@@ -1259,13 +1456,13 @@
                 <div style="position: relative;">
                     <i class="fa-solid fa-lock"
                         style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-                    <input type="password" id="newPass" class="search-input" placeholder="Nueva Contraseña"
+                    <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
                         style="padding-left: 50px;">
                 </div>
                 <div style="position: relative;">
                     <i class="fa-solid fa-shield-check"
                         style="position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-                    <input type="password" id="confirmPass" class="search-input" placeholder="Confirmar contraseña"
+                    <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar contraseña"
                         style="padding-left: 50px;">
                 </div>
 
@@ -1285,9 +1482,97 @@
         </div>
     </div>
 
+    <!-- MODAL CREDENCIAL DIGITAL - DISEÑO PREMIUM MÓVIL -->
+    <div class="search-modal" id="modalCredencial" style="display: none;"
+        onclick="if(event.target == this) toggleCredencial(false)">
+        <div class="search-content credencial-container"
+            style="padding: 0; overflow: hidden; background: #f1f5f9; max-width: 380px; width: 92%; opacity: 0; transform: scale(0.5); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); border-radius: 28px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <div id="credencialCard"
+                style="width: 100%; background: white; padding: 20px; position: relative; display: flex; flex-direction: column; color: #1e293b; box-sizing: border-box; border-radius: 28px 28px 0 0;">
+                <!-- Header con logo y título -->
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px;">
+                    <div style="flex-grow: 1;">
+                        <h2
+                            style="margin: 0; font-size: 0.95rem; font-weight: 800; color: #1e293b; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.2px;">
+                            Sindicato de Trabajadores Municipales</h2>
+                        <h3 style="margin: 0; font-size: 0.85rem; font-weight: 600; color: #64748b;">Gral. Pueyrredón
+                        </h3>
+                    </div>
+                    <div
+                        style="width: 85px; height: 85px; flex-shrink: 0; background: #fff; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-left: 10px;">
+                        <img src="logo nuevo.png" alt="STM" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                </div>
+
+                <!-- Datos Principales -->
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 18px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div style="flex-grow: 1;">
+                            <span
+                                style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">Nombre
+                                del Afiliado</span>
+                            <h2 id="credFullName"
+                                style="margin: 0; font-size: 1.35rem; font-weight: 900; color: #1e293b; line-height: 1.1; word-break: break-word;">
+                                ---</h2>
+                        </div>
+                        <div style="text-align: right; padding-left: 10px;">
+                            <span
+                                style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">Legajo</span>
+                            <span id="credLegajo"
+                                style="font-size: 1.05rem; font-weight: 800; color: #4f46e5; background: rgba(79, 70, 229, 0.08); padding: 5px 12px; border-radius: 8px; white-space: nowrap;">---</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 15px; border-radius: 20px; border: 1px solid #f1f5f9;">
+                        <div style="text-align: left;">
+                            <span
+                                style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">Documento
+                                Nacional de Identidad</span>
+                            <span id="credDNI" style="font-size: 1.15rem; font-weight: 800; color: #1e293b;">---</span>
+                        </div>
+                        <!-- QR Code Container -->
+                        <div
+                            style="background: white; padding: 8px; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+                            <canvas id="qrcanvas" style="width: 85px; height: 85px; display: block;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer del Carnet -->
+                <div style="text-align: center; background: #37306b; margin: 0 -20px; padding: 15px 20px;">
+                    <h4
+                        style="margin: 0 0 4px; font-size: 1.05rem; font-weight: 900; color: white; letter-spacing: 0.5px; text-transform: uppercase;">
+                        CREDENCIAL DIGITAL DEL AFILIADO</h4>
+                    <p style="margin: 0; font-size: 0.65rem; font-weight: 500; color: rgba(255,255,255,0.7);">Moreno
+                        4359 • (223) 4723756 • Mar del Plata</p>
+                    <p class="blink-v2"
+                        style="margin: 10px 0 0; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; background: white; color: #ff0000; padding: 6px 12px; border-radius: 10px; display: inline-block;">
+                        Carece de validez si no se exhibe con DNI</p>
+                </div>
+            </div>
+            <div style="background: white; padding-top: 10px; text-align: center;">
+                <p style="margin: 0; font-size: 0.85rem; font-weight: 600; color: #94a3b8; font-family: inherit;">
+                    Restan <span id="credCountdown"
+                        style="color: #4f46e5; font-weight: 800; min-width: 20px; display: inline-block;">30</span>
+                    segundos
+                </p>
+            </div>
+            <div style="background: white; padding: 15px 20px 25px; display: flex; justify-content: center;">
+                <button onclick="toggleCredencial(false)"
+                    style="width: 55px; height: 55px; border: none; background: #f1f5f9; color: #475569; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
     <!-- MODAL PROXIMAMENTE -->
     <div class="search-modal" id="modalProx" onclick="if(event.target == this) toggleProximamente(false)">
-        <div class="search-content" style="text-align: center; padding: 40px 25px;">
+        <div class="search-content">
             <div
                 style="width: 60px; height: 60px; background: rgba(79, 70, 229, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
                 <i class="fa-solid fa-clock" style="font-size: 1.5rem; color: var(--stm-primary);"></i>
@@ -1364,7 +1649,7 @@
             </div>
 
             <div id="msgModalBody"
-                style="background: #f8fafc; padding: 5px 15px; border-radius: 24px; border: 1px solid #e2e8f0; color: #1e293b; margin-bottom: 25px; max-height: 250px; overflow-y: auto;">
+                style="background: #f8fafc; padding: 5px 15px; border-radius: 24px; border: 1px solid #e2e8f0; color: #1e293b; margin-bottom: 25px; max-height: 250px; overflow-y: auto; text-align: left;">
                 Cargando...
             </div>
 
@@ -1437,29 +1722,57 @@
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
         const sitePages = [
+            { t: "Deporte, Cultura y Recreación", d: "Grilla completa de actividades", f: "deporte.html", tags: "deporte cultura actividades talleres inscripción", ico: "fa-person-running" },
+            { t: "Yoga", d: "Horarios de Yoga en el sindicato", f: "deporte.html?id=yoga", tags: "yoga relax estiramiento", ico: "fa-spa" },
+            { t: "Stretching", d: "Horarios de Stretching", f: "deporte.html?id=stretching", tags: "stretching elongacion estiramiento", ico: "fa-child-reaching" },
+            { t: "Taekwondo", d: "Clases de Taekwondo", f: "deporte.html?id=taekwondo", tags: "taekwondo artes marciales defensa personal", ico: "fa-hand-fist" },
+            { t: "Fútbol Femenino", d: "Prácticas de fútbol femenino", f: "deporte.html?id=futbol", tags: "futbol femenino pelota cancha", ico: "fa-futbol" },
+            { t: "Zumba", d: "Clases de Zumba", f: "deporte.html?id=zumba", tags: "zumba baile ritmo", ico: "fa-music" },
+            { t: "Danza", d: "Clases de Danza para niños", f: "deporte.html?id=danza", tags: "danza baile niños coreografia", ico: "fa-person-dots-from-line" },
+            { t: "Funcional", d: "Entrenamiento funcional", f: "deporte.html?id=funcional", tags: "funcional entrenamiento gimnasio pesas", ico: "fa-dumbbell" },
+            { t: "Ajedrez", d: "Taller de Ajedrez", f: "deporte.html?id=ajedrez", tags: "ajedrez mente juego tablero", ico: "fa-chess" },
+            { t: "Rugby", d: "Convenios deportivos", f: "deporte.html?id=rugby", tags: "rugby deporte convenio pelota", ico: "fa-football" },
+            { t: "Hockey", d: "Convenios deportivos", f: "deporte.html?id=hockey", tags: "hockey deporte convenio palo", ico: "fa-hockey-puck" },
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
+            { t: "Farmacia Sindical", d: "Medicamentos y beneficios", f: "farmacia.html", tags: "farmacia medicamentos remedios recetas pami ioma osecac omint salud obra social prepaga", ico: "fa-prescription-bottle-medical" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "beneficios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+            { t: "Préstamos", d: "Ayuda económica", f: "beneficios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+            { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "beneficios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+            { t: "Legal y Asesoría", d: "Asesoría legal para afiliados", f: "beneficios.html?id=asesoria", tags: "legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
-            { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Paritarias", d: "Acuerdos salariales y actas", f: "paritarias.html", tags: "paritarias sueldo salario aumento paritaria acuerdos actas gremio", ico: "fa-comments-dollar" },
+            { t: "Memoria y Balance", d: "Informes anuales y estados contables", f: "memoria.html", tags: "memoria balance contable informe anual finanzas transparencia balance", ico: "fa-chart-pie" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
-            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar mujer acompañamiento protocolo", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
-            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion curso capacitacion capacitaciones talleres", ico: "fa-graduation-cap" },
+            { t: "Inglés Nivel 1", d: "Curso de Inglés - Principiante", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller inicial", ico: "fa-language" },
+            { t: "Inglés Nivel 2", d: "Curso de Inglés - Avanzado", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller perfeccionamiento", ico: "fa-graduation-cap" },
+            { t: "Operador de Máquina Vial", d: "Capacitación Vial - Convenio", f: "capacitacion.html", tags: "maquina vial capacitación curso vialidad taller operador", ico: "fa-tractor" },
+            { t: "Hidráulica Aplicada", d: "Convenio UNMDP - Ingeniería", f: "capacitacion.html", tags: "hidraulica capacitación curso ingeniería unmdp taller técnica", ico: "fa-gears" },
+            { t: "Ley 14.656 Jóvenes", d: "Derechos y Deberes Laborales", f: "capacitacion.html", tags: "ley 14656 jóvenes capacitación curso laboral derechos taller legal", ico: "fa-gavel" },
+            { t: "Inteligencia Artificial", d: "Herramientas de Productividad", f: "capacitacion.html", tags: "ia inteligencia artificial capacitación curso unmdp taller tecnología", ico: "fa-robot" },
+            { t: "Desempeño Eficaz", d: "Fortalecimiento Profesional", f: "capacitacion.html", tags: "desempeño eficaz capacitación curso unmdp profesional taller habilidades", ico: "fa-chart-line" },
+            { t: "Violencia de Género", d: "Encuentros Virtuales - Secretaría de Género", f: "capacitacion.html", tags: "violencia genero mujer diversidad taller proteccion ayuda encuentros virtuales", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
-            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reclamo EDUCACION", d: "Triunfo histórico docentes municipales", f: "reclamoeducacion.html", tags: "educación docentes educacion triunfo judicial maestros incentivo fonid", ico: "fa-graduation-cap" },
+            { t: "Presentación Judicial", d: "Trámites y reclamos judiciales", f: "judicial.html", tags: "judicial reclamo antigüedad ganancias trámites abogados demanda", ico: "fa-gavel" },
+            { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
+            { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-        // CAMBIAR POR EL URL DEL SCRIPT DE ADMINISTRACIÓN - esto se agrego con los mensajes campanita
-        const ADMIN_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzuxst6AukDqEOH36tLRZlIY2T_bzPZuIgdVQAkfc4L8vTeS0aw8DreuisQASBQoOU/exec';
+        // URL DE DASHBOARD
+        const ADMIN_BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwWKS8Nbx8-TFJMmsXV6nQXs6Jinvh5TdVRom7v7aTIvsTC_RRXYoPq9_lN5IeItzCBZg/exec';
 
 
-        // CAMBIAR ESTE URL QUE ES EL QUE VA CON LA APP
-        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaxfCHCLrRICzQB33-sB1HpxMgVlDKLBSm1y0R9uDRrv8pDa-8quJ4WYV7FLchLQMY6Q/exec';
+        // URL DE OPCIONES
+        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWf_xUl8Oax6Hy2YxF7v9t9WIBhTpL39Afz4HZeWyCbOKvr4WahpWkoLbGRwAqgEfVmw/exec';
 
         // --- NOVEDADES PARA EL BOT ---
         const NEWS_SHEET_ID = "16Y723omF3l38Ntq0MUSh-ZMYnRIvYmctrscidox5ktc";
@@ -1528,6 +1841,100 @@
 
         function toggleProximamente(show) {
             document.getElementById('modalProx').classList.toggle('active', show);
+        }
+
+        let qrcodeInstance = null;
+        let credTimerInterval = null;
+        function toggleCredencial(show, isAuto = false) {
+            const modal = document.getElementById('modalCredencial');
+            if (!modal) return;
+
+            if (show) {
+                // Iniciar contador de cierre automático
+                let timeLeft = 30;
+                const countdownEl = document.getElementById('credCountdown');
+                if (countdownEl) countdownEl.innerText = timeLeft;
+
+                clearInterval(credTimerInterval);
+                credTimerInterval = setInterval(() => {
+                    timeLeft--;
+                    if (countdownEl) countdownEl.innerText = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(credTimerInterval);
+                        toggleCredencial(false, true);
+                    }
+                }, 1000);
+
+                let nombre = localStorage.getItem('usrName');
+                let apellido = localStorage.getItem('usrLastName');
+
+                // Fallback: si no hay apellido guardado por separado, intentar extraerlo del nombre completo
+                if (!apellido && localStorage.getItem('usrFullName')) {
+                    const full = localStorage.getItem('usrFullName').trim();
+                    const spaceIdx = full.indexOf(' ');
+                    if (spaceIdx !== -1) {
+                        nombre = full.substring(0, spaceIdx);
+                        apellido = full.substring(spaceIdx + 1);
+                    }
+                }
+
+                nombre = (nombre || "AFILIADO").trim();
+                apellido = (apellido || "STM").trim();
+                const fullName = `${nombre} ${apellido}`.toUpperCase();
+                const legajo = localStorage.getItem('usrLegajo') || "NO ASIGNADO";
+                const dni = localStorage.getItem('usrDocumento') || "NO ASIGNADO";
+
+                document.getElementById('credFullName').innerText = fullName;
+                document.getElementById('credLegajo').innerText = legajo;
+                document.getElementById('credDNI').innerText = dni;
+
+                modal.style.display = 'flex';
+
+                setTimeout(() => {
+                    modal.classList.add('active');
+                    const inner = modal.querySelector('.search-content');
+                    if (inner) {
+                        inner.style.transform = 'scale(1)';
+                        inner.style.opacity = '1';
+                    }
+
+                    // Generar QR usando QRious (Librería moderna basada en Canvas)
+                    try {
+                        // Formato final solicitado: apellido//nombre//documento//legajo
+                        const qrText = `${apellido}//${nombre}//${dni}//${legajo}`;
+                        const canvas = document.getElementById('qrcanvas');
+
+                        new QRious({
+                            element: canvas,
+                            value: qrText,
+                            size: 180,
+                            level: 'M', // Subimos a M para mayor robustez
+                            foreground: '#000000',
+                            background: '#ffffff'
+                        });
+
+                        // Ajustar tamaño del canvas para que encaje
+                        canvas.style.width = "100%";
+                        canvas.style.height = "100%";
+                        canvas.style.maxWidth = "100px";
+                        canvas.style.maxHeight = "100px";
+
+                    } catch (e) {
+                        console.error("Error QR:", e);
+                    }
+                }, 200);
+            } else {
+                clearInterval(credTimerInterval);
+                modal.classList.remove('active');
+                const inner = modal.querySelector('.search-content');
+                if (inner) {
+                    inner.style.transform = 'scale(0.5)';
+                    inner.style.opacity = '0';
+                }
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 400);
+            }
         }
 
         function toggleBot(show) {
@@ -1753,10 +2160,10 @@
                 bot: localStorage.getItem('cfg_bot') !== 'false',
                 gen: localStorage.getItem('cfg_gen') === 'true',
                 act: localStorage.getItem('cfg_act') === 'true',
-                cred: localStorage.getItem('cfg_cred') !== 'false',
+                cred: localStorage.getItem('cfg_cred') === 'true',
                 nov: localStorage.getItem('cfg_nov') !== 'false',
                 phone: localStorage.getItem('cfg_phone') === 'true',
-                msg: localStorage.getItem('cfg_msg') !== 'false'
+                msg: localStorage.getItem('cfg_msg') === 'true'
             };
 
             document.body.classList.toggle('dark-mode', cfg.dark);
@@ -1857,9 +2264,9 @@
                     const msgDate = formatDisplayDate(m.fecha);
                     const isNewest = index === 0;
                     return `
-                    <div style="padding: 15px 5px; ${index !== sortedMsgs.length - 1 ? 'border-bottom: 1px solid #f1f5f9;' : ''}">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
-                            <h4 style="margin:0; font-size:0.95rem; font-weight:900; color:var(--text-dark)">${m.titulo || 'Sin Título'}</h4>
+                    <div style="padding: 15px 5px; ${index !== sortedMsgs.length - 1 ? 'border-bottom: 1px solid #f1f5f9;' : ''}; text-align: left;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; text-align: left;">
+                            <h4 style="margin:0; font-size:0.95rem; font-weight:900; color:var(--text-dark); text-align: left;">${m.titulo || 'Sin Título'}</h4>
                             <small style="color: #6366f1; font-weight: 800; font-size: 0.75rem;">${msgDate}</small>
                         </div>
                         <p style="margin: 0; color: #1e293b; font-size: 1rem; line-height: 1.4; font-weight: ${isNewest ? '600' : '400'}; text-align: left;">${m.mensaje}</p>
@@ -2098,6 +2505,21 @@
                 loader.style.opacity = '0';
                 setTimeout(() => loader.style.display = 'none', 500);
             }, 800);
+
+
+            const botTooltip = document.getElementById('botTooltip');
+            if (botTooltip) {
+                function showBotTooltip() {
+                    botTooltip.classList.add('show');
+                    setTimeout(() => {
+                        botTooltip.classList.remove('show');
+                    }, 4000);
+                }
+                // Primera aparición a los 3 segundos
+                setTimeout(showBotTooltip, 3000);
+                // Luego cada 15 segundos
+                setInterval(showBotTooltip, 15000);
+            }
         });
     </script>
 

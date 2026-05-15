@@ -318,23 +318,82 @@
         }
 
         /* --- BOT STYLES --- */
-        .fab-bot {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
+        /* --- FAB BOT CONTAINER --- */
+        .fab-bot-container {
+            position: relative;
             width: 60px;
             height: 60px;
-            background: #6366f1 !important;
-            color: white !important;
-            border-radius: 50%;
+            animation: botBreathe 3s infinite ease-in-out;
+        }
+
+        /* --- FAB BOT (Estilo Banco Provincia) --- */
+        .fab-bot {
+            width: 60px;
+            height: 60px;
+            background: transparent !important;
+            border-radius: 14px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-            animation: bounceBot 3s infinite;
+            box-shadow: none;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .fab-bot:active {
+            transform: scale(0.9);
+        }
+
+        .fab-bot img {
+            width: 130%;
+            height: 130%;
+            object-fit: cover;
+        }
+
+        /* Pulse rings */
+        .fab-bot-pulse {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            border: 2.5px solid rgba(99, 102, 241, 0.5);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            animation: pulseRing 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .fab-bot-pulse:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .fab-bot-pulse:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        @keyframes pulseRing {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes botBreathe {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         .fab-bot i {
@@ -371,7 +430,6 @@
             visibility: visible;
             opacity: 1;
         }
-
 
         /* --- NAVIGATION --- */
         
@@ -736,7 +794,17 @@
     </div>
 
     <!-- BOT & NAV -->
-    <div class="fab-bot" id="fabBotIcon" onclick="toggleBot(true)"><i class="fa-solid fa-robot"></i></div>
+    <!-- BOT & NAV -->
+    <div id="fabBotIcon" style="position: fixed; bottom: calc(env(safe-area-inset-bottom, 0px) + 98px); right: 20px; z-index: 1001;">
+        <div class="fab-bot-container">
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <span class="fab-bot-pulse"></span>
+            <div class="fab-bot" onclick="toggleBot(true)">
+                <img src="logo_bot..png" alt="Bot STM">
+            </div>
+        </div>
+    </div>
     <div class="bot-modal" id="modalBot" onclick="if(event.target == this) toggleBot(false)">
         <div class="bot-content">
             <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
@@ -749,9 +817,8 @@
     </div>
 
         <nav class="bottom-nav">
-        <a href="opciones.html" class="nav-btn nav-home-pulse"><i class="fa-solid fa-house"></i></a>
+        <a href="opciones.html" class="nav-btn nav-home-pulse" onclick="window.location.href='opciones.html'; return false;"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
-        <a href="#" class="nav-btn" onclick="toggleUser(true)"><i class="fa-solid fa-user"></i></a>
         <a href="#" class="nav-btn" onclick="toggleSettings(true)"><i class="fa-solid fa-gear"></i></a>
     </nav>
 
@@ -775,29 +842,6 @@
         </div>
     </div>
 
-    <div class="bot-modal" id="modalUser" onclick="if(event.target == this) toggleUser(false)">
-        <div class="bot-content">
-            <div style="width: 40px; height: 5px; background: #e2e8f0; border-radius: 10px; margin: -10px auto 20px;">
-            </div>
-            <h2 style="font-weight: 800; font-size: 1.3rem; margin-bottom:10px; color: var(--stm-primary);">Mi Cuenta
-            </h2>
-            <div style="display: flex; flex-direction: column; gap: 20px;">
-                <input type="password" id="newPass" class="bot-input" placeholder="Nueva Contraseña"
-                    style="padding-left:20px">
-                <input type="password" id="confirmPass" class="bot-input" placeholder="Confirmar Nueva Contraseña"
-                    style="padding-left:20px">
-                <button onclick="changePassword()"
-                    style="padding: 18px; border-radius: 18px; border: none; background: var(--stm-primary); color: white; font-weight: 800; cursor: pointer;">Actualizar
-                    Contraseña</button>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; margin-top:20px;">
-                <button onclick="logout()"
-                    style="padding: 15px; border-radius: 18px; border: 2px solid #ef4444; background: transparent; color: #ef4444; font-weight: 800; cursor: pointer;">Cerrar
-                    Sesión</button>
-                <button onclick="toggleUser(false)"
-                    style="padding: 15px; border: none; background: transparent; color: #64748b; font-weight: 600; cursor: pointer;">Cancelar</button>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -805,24 +849,52 @@
         if (localStorage.getItem('isLogged') !== 'true') { window.location.href = 'index.html'; }
 
         const sitePages = [
+            { t: "Deporte, Cultura y Recreación", d: "Grilla completa de actividades", f: "deporte.html", tags: "deporte cultura actividades talleres inscripción", ico: "fa-person-running" },
+            { t: "Yoga", d: "Horarios de Yoga en el sindicato", f: "deporte.html?id=yoga", tags: "yoga relax estiramiento", ico: "fa-spa" },
+            { t: "Stretching", d: "Horarios de Stretching", f: "deporte.html?id=stretching", tags: "stretching elongacion estiramiento", ico: "fa-child-reaching" },
+            { t: "Taekwondo", d: "Clases de Taekwondo", f: "deporte.html?id=taekwondo", tags: "taekwondo artes marciales defensa personal", ico: "fa-hand-fist" },
+            { t: "Fútbol Femenino", d: "Prácticas de fútbol femenino", f: "deporte.html?id=futbol", tags: "futbol femenino pelota cancha", ico: "fa-futbol" },
+            { t: "Zumba", d: "Clases de Zumba", f: "deporte.html?id=zumba", tags: "zumba baile ritmo", ico: "fa-music" },
+            { t: "Danza", d: "Clases de Danza para niños", f: "deporte.html?id=danza", tags: "danza baile niños coreografia", ico: "fa-person-dots-from-line" },
+            { t: "Funcional", d: "Entrenamiento funcional", f: "deporte.html?id=funcional", tags: "funcional entrenamiento gimnasio pesas", ico: "fa-dumbbell" },
+            { t: "Ajedrez", d: "Taller de Ajedrez", f: "deporte.html?id=ajedrez", tags: "ajedrez mente juego tablero", ico: "fa-chess" },
+            { t: "Rugby", d: "Convenios deportivos", f: "deporte.html?id=rugby", tags: "rugby deporte convenio pelota", ico: "fa-football" },
+            { t: "Hockey", d: "Convenios deportivos", f: "deporte.html?id=hockey", tags: "hockey deporte convenio palo", ico: "fa-hockey-puck" },
             { t: "Actividades STM", d: "Beneficios de temporada y eventos", f: "actividades.html", tags: "libros bolsa tiles guardapolvos escolares mochilas canasta educacion hijos accion social escolaridad beneficio primaria secundaria", ico: "fa-calendar-check" },
+            { t: "Farmacia Sindical", d: "Medicamentos y beneficios", f: "farmacia.html", tags: "farmacia medicamentos remedios recetas pami ioma osecac omint salud obra social prepaga", ico: "fa-prescription-bottle-medical" },
             { t: "Reclamo Ganancias", d: "Información judicial y trámites", f: "reclamoganancias.html", tags: "ganancias impuesto afip arca ips documentos cronograma", ico: "fa-scale-balanced" },
             { t: "Reclamo Antigüedad", d: "Reclamos judiciales 1995-2014", f: "reclamoantiguedad.html", tags: "antiguedad reclamo judicial abogados demanda activos jubilados", ico: "fa-clock-rotate-left" },
-            { t: "Servicios STM", d: "Beneficios, camping, subsidios y más", f: "servicios.html", tags: "camping quinchos piletas préstamos proveeduría casamiento nacimiento útiles libros guardapolvos farmacia legal asesoría", ico: "fa-screwdriver-wrench" },
+            { t: "Complejo Social y Deportivo", d: "Camping, quinchos, piletas", f: "beneficios.html?id=recreacion", tags: "camping quinchos piletas complejo recreacion", ico: "fa-umbrella-beach" },
+            { t: "Préstamos", d: "Ayuda económica", f: "beneficios.html?id=prestamos", tags: "prestamos ayuda economica dinero plata", ico: "fa-hand-holding-dollar" },
+            { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "beneficios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
+            { t: "Legal y Asesoría", d: "Asesoría legal para afiliados", f: "beneficios.html?id=asesoria", tags: "legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
-            { t: "Autoridades", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Paritarias", d: "Acuerdos salariales y actas", f: "paritarias.html", tags: "paritarias sueldo salario aumento paritaria acuerdos actas gremio", ico: "fa-comments-dollar" },
+            { t: "Memoria y Balance", d: "Informes anuales y estados contables", f: "memoria.html", tags: "memoria balance contable informe anual finanzas transparencia balance", ico: "fa-chart-pie" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
-            { t: "Consulta de Trámite", d: "Estado de tus gestiones y expedientes", f: "consulta.html", tags: "ver estado proceso seguimiento expediente trámite", ico: "fa-magnifying-glass-chart" },
             { t: "Contactos e Internos", d: "Directorio de internos y secretarías", f: "contactos.html", tags: "teléfono oficina directivos secretario ayuda interno llamar", ico: "fa-address-book" },
-            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar", ico: "fa-hand-holding-heart" },
+            { t: "Género y Diversidad", d: "Protección y bienestar integral", f: "generoydiversidad.html", tags: "ayuda derechos protección género diversidad violencia bienestar mujer acompañamiento protocolo", ico: "fa-hand-holding-heart" },
             { t: "Mini Turismo", d: "Viajes y escapadas para afiliados", f: "miniturismo.html", tags: "viaje turismo miramar escapada fin de semana costa hotel", ico: "fa-umbrella-beach" },
-            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion", ico: "fa-graduation-cap" },
+            { t: "Capacitación", d: "Formación y becas para estudiantes", f: "capacitacion.html", tags: "estudio terciario universitario beca kit utiles voucher formacion curso capacitacion capacitaciones talleres", ico: "fa-graduation-cap" },
+            { t: "Inglés Nivel 1", d: "Curso de Inglés - Principiante", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller inicial", ico: "fa-language" },
+            { t: "Inglés Nivel 2", d: "Curso de Inglés - Avanzado", f: "capacitacion.html", tags: "ingles capacitación curso idiomas taller perfeccionamiento", ico: "fa-graduation-cap" },
+            { t: "Operador de Máquina Vial", d: "Capacitación Vial - Convenio", f: "capacitacion.html", tags: "maquina vial capacitación curso vialidad taller operador", ico: "fa-tractor" },
+            { t: "Hidráulica Aplicada", d: "Convenio UNMDP - Ingeniería", f: "capacitacion.html", tags: "hidraulica capacitación curso ingeniería unmdp taller técnica", ico: "fa-gears" },
+            { t: "Ley 14.656 Jóvenes", d: "Derechos y Deberes Laborales", f: "capacitacion.html", tags: "ley 14656 jóvenes capacitación curso laboral derechos taller legal", ico: "fa-gavel" },
+            { t: "Inteligencia Artificial", d: "Herramientas de Productividad", f: "capacitacion.html", tags: "ia inteligencia artificial capacitación curso unmdp taller tecnología", ico: "fa-robot" },
+            { t: "Desempeño Eficaz", d: "Fortalecimiento Profesional", f: "capacitacion.html", tags: "desempeño eficaz capacitación curso unmdp profesional taller habilidades", ico: "fa-chart-line" },
+            { t: "Violencia de Género", d: "Encuentros Virtuales - Secretaría de Género", f: "capacitacion.html", tags: "violencia genero mujer diversidad taller proteccion ayuda encuentros virtuales", ico: "fa-hand-holding-heart" },
             { t: "Novedades STM", d: "Últimas noticias y comunicados", f: "novedades.html", tags: "noticias novedad aviso boletin comunicado sorteos informacion ultimo", ico: "fa-newspaper" },
-            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia", ico: "fa-house-user" },
+            { t: "Reclamo EDUCACION", d: "Triunfo histórico docentes municipales", f: "reclamoeducacion.html", tags: "educación docentes educacion triunfo judicial maestros incentivo fonid", ico: "fa-graduation-cap" },
+            { t: "Presentación Judicial", d: "Trámites y reclamos judiciales", f: "judicial.html", tags: "judicial reclamo antigüedad ganancias trámites abogados demanda", ico: "fa-gavel" },
+            { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
+            { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
+            { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
-        const USER_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbznHgKBFeFZMc8IVRHLrTr9RcRROqB4DasbNFPyD3XDxFt9JYT9uzN0tqKNfRTTpOlqBg/exec';
+
 
         function toggleCard(card) { card.classList.toggle('open'); }
 
@@ -853,56 +925,11 @@
             fetchNews();
         }
         function toggleSettings(show) { document.getElementById('modalConfig').classList.toggle('active', show); }
-        function toggleUser(show) { document.getElementById('modalUser').classList.toggle('active', show); if (show) document.getElementById('newPass').focus(); }
-
-        function showNotify(msg, type = 'info') {
-            const div = document.createElement('div'); div.className = 'stm-notify';
-            const ico = type === 'error' ? 'fa-triangle-exclamation' : 'fa-check';
-            const bg = type === 'error' ? '#ef4444' : '#10b981';
-            div.innerHTML = `<i class="fa-solid ${ico}" style="background:${bg}"></i> <span>${msg}</span>`;
-            document.body.appendChild(div); setTimeout(() => div.classList.add('show'), 10);
-            setTimeout(() => { div.classList.remove('show'); setTimeout(() => div.remove(), 500); }, 3000);
-        }
 
         function applyConfig(type, value) {
             localStorage.setItem('cfg_' + type, value);
             if (type === 'dark') document.body.classList.toggle('dark-mode', value);
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
-        }
-
-        async function changePassword() {
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            const btn = document.querySelector('#modalUser button[onclick="changePassword()"]');
-            const usrID = localStorage.getItem('usrID');
-
-            if (!p1 || !p2) { showNotify("Completa todos los campos.", "error"); return; }
-            if (p1 !== p2) { showNotify("Las contraseñas no coinciden.", "error"); return; }
-            if (!usrID) { showNotify("Sesión inválida, reingresa", "error"); return; }
-
-            const originalText = btn.innerText;
-            btn.innerText = "Procesando...";
-            btn.style.pointerEvents = "none";
-
-            try {
-                await fetch(USER_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'UPDATE_PASSWORD', id: usrID, newPass: p1 })
-                });
-                localStorage.setItem('usrPass', p1);
-                showNotify("¡Contraseña actualizada en la nube!", "success");
-                btn.innerText = "¡Listo! ✓";
-                btn.style.background = "#10b981";
-                setTimeout(() => {
-                    toggleUser(false);
-                    btn.innerText = originalText; btn.style.background = "var(--stm-primary)";
-                    btn.style.pointerEvents = "auto";
-                    document.getElementById('newPass').value = ""; document.getElementById('confirmPass').value = "";
-                }, 1500);
-            } catch (err) {
-                showNotify("Error de conexión", "error");
-                btn.innerText = originalText; btn.style.pointerEvents = "auto";
-            }
         }
 
         let searchTimer = null;
@@ -934,15 +961,15 @@
                 });
             }, 500);
         });
-        function logout() {
-            sessionStorage.clear(); localStorage.clear();
-            window.location.href = 'index.html';
-        }
+
 
         window.addEventListener('load', () => {
             const cfg = { dark: localStorage.getItem('cfg_dark') === 'true', bot: localStorage.getItem('cfg_bot') !== 'false' };
             document.body.classList.toggle('dark-mode', cfg.dark);
-            document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+            if (document.getElementById('checkDark')) document.getElementById('checkDark').checked = cfg.dark;
+            if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
+            if (document.getElementById('fabBotIcon')) document.getElementById('fabBotIcon').classList.toggle('hidden', !cfg.bot);
+
             const savedName = localStorage.getItem('usrName') || "Afiliado STM";
             document.getElementById('usrDisplayName').innerText = savedName;
             const h = new Date().getHours();
@@ -956,3 +983,5 @@
 </body>
 
 </html>
+
+
