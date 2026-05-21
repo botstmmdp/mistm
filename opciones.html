@@ -156,19 +156,19 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             /* DOS COLUMNAS */
-            gap: 15px;
+            gap: 12px;
         }
 
         .action-card {
             background: white;
-            border-radius: 25px;
-            padding: 22px 15px;
+            border-radius: 20px;
+            padding: 18px 12px;
             display: flex;
             flex-direction: column;
             /* ICONO ARRIBA, TEXTO ABAJO */
             align-items: center;
             text-align: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
             color: inherit;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -349,13 +349,13 @@
         }
 
         .ico-box {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             color: white;
             flex-shrink: 0;
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
@@ -363,14 +363,14 @@
 
         .card-info h3 {
             margin: 0;
-            font-size: 1.05rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--text-dark);
         }
 
         .card-info p {
             margin: 2px 0 0;
-            font-size: 0.78rem;
+            font-size: 0.65rem;
             color: #64748b;
         }
 
@@ -405,6 +405,10 @@
 
         .g-8 {
             background: linear-gradient(135deg, #f43f5e, #e11d48);
+        }
+
+        .g-diversity {
+            background: linear-gradient(135deg, #db2777, #f59e0b, #3b82f6, #10b981);
         }
 
         /* --- FAB WRAPPER & ANIMATIONS --- */
@@ -938,9 +942,13 @@
             color: white;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             text-decoration: none;
             box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+            width: calc(100% - 32px);
+            box-sizing: border-box;
+            height: 140px;
+            /* Altura fija definitiva para que NADA se mueva abajo */
         }
 
         .news-shortcut-info h4 {
@@ -1005,6 +1013,35 @@
 
         .blink-act {
             animation: blink-soft 2s infinite ease-in-out;
+        }
+
+        /* --- NUEVO: PARPADEO LLAMATIVO PARA NOVEDADES --- */
+        @keyframes attention-blink {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 20px rgba(79, 70, 229, 0.2);
+                filter: brightness(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 10px 35px rgba(79, 70, 229, 0.6);
+                filter: brightness(1.15);
+            }
+        }
+
+        .calling-attention {
+            animation: attention-blink 1.5s infinite ease-in-out !important;
+        }
+
+        #tickerNov {
+            transition: all 0.5s ease;
+            display: inline-block;
+            font-weight: 400 !important;
+            max-width: 100%;
+            line-height: 1.3;
         }
 
         @keyframes fadeIn {
@@ -1175,37 +1212,24 @@
     </a>
 
     <!-- ATAJO A NOVEDADES -->
-    <a href="novedades.html" id="shortcutNov" class="news-shortcut animate__animated animate__fadeIn"
-        style="background: linear-gradient(135deg, #6366f1, #4f46e5); margin-bottom: 12px;">
+    <div id="shortcutNov" class="news-shortcut animate__animated animate__fadeIn calling-attention"
+        style="background: linear-gradient(135deg, #3b82f6, #2563eb); margin-bottom: 12px; cursor: pointer;"
+        onclick="openCurrentNews()">
         <div class="news-shortcut-info">
             <h4>Últimas noticias</h4>
-            <h2>🗞️ Novedades STM</h2>
+            <h2 id="tickerNov">🗞️ Novedades</h2>
         </div>
-        <div class="news-shortcut-ico pulse-icon" style="background: rgba(255,255,255,0.25);">
-            <i class="fa-solid fa-newspaper"></i>
-        </div>
-    </a>
+    </div>
 
-    <!-- ATAJO A GÉNERO Y DIVERSIDAD -->
-    <a href="generoydiversidad.html" id="shortcutGen" class="news-shortcut animate__animated animate__fadeIn pulse-card"
-        style="background: linear-gradient(135deg, #db2777, #9d174d); margin-bottom: 12px;">
-        <div class="news-shortcut-info">
-            <h4>Bienestar Integral</h4>
-            <h2>Género y Diversidad</h2>
-        </div>
-        <div class="news-shortcut-ico pulse-icon"
-            style="background: rgba(255,255,255,0.3); box-shadow: 0 0 15px rgba(255,255,255,0.4);">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-    </a>
+
 
     <main class="main-grid" id="mainMenu">
         <!-- 1. Secretarías -->
         <a href="autoridades.html" class="action-card">
             <div class="ico-box g-1"><i class="fa-solid fa-users-gear"></i></div>
             <div class="card-info">
-                <h3>Secretarías</h3>
-                <p>Comisión Directiva</p>
+                <h3>Secretarías y áreas</h3>
+                <p>Contactos</p>
             </div>
         </a>
 
@@ -1218,14 +1242,6 @@
             </div>
         </a>
 
-        <!-- 3. Contactos -->
-        <a href="contactos.html" class="action-card">
-            <div class="ico-box g-2"><i class="fa-solid fa-phone-volume"></i></div>
-            <div class="card-info">
-                <h3>Contacto</h3>
-                <p>Ayuda 24/7</p>
-            </div>
-        </a>
 
         <!-- 4. Convenios -->
         <a href="convenios.html" class="action-card">
@@ -1249,7 +1265,7 @@
         <a href="judicial.html" class="action-card">
             <div class="ico-box g-5"><i class="fa-solid fa-gavel"></i></div>
             <div class="card-info">
-                <h3>Presentación Judicial</h3>
+                <h3>Presentaciones Judiciales</h3>
                 <p>Trámites y Reclamos</p>
             </div>
         </a>
@@ -1276,12 +1292,21 @@
         <a href="deporte.html" class="action-card">
             <div class="ico-box g-6"><i class="fa-solid fa-person-running"></i></div>
             <div class="card-info">
-                <h3>Departamento de deporte, cultura y recreación</h3>
+                <h3>Deporte, Recreación y Cultura</h3>
                 <p>Actividades y Talleres</p>
             </div>
         </a>
 
-        <!-- 11. Paritarias -->
+        <!-- 11. Previsión -->
+        <a href="prevision.html" class="action-card">
+            <div class="ico-box g-3"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <div class="card-info">
+                <h3>Previsión</h3>
+                <p>Jubilados</p>
+            </div>
+        </a>
+
+        <!-- 12. Paritarias -->
         <a href="paritarias.html" class="action-card">
             <div class="ico-box g-5"><i class="fa-solid fa-comments-dollar"></i></div>
             <div class="card-info">
@@ -1308,12 +1333,30 @@
             </div>
         </a>
 
-        <!-- 12. Proveeduría -->
+        <!-- 12. Panteón -->
+        <a href="panteon.html" class="action-card">
+            <div class="ico-box g-8"><i class="fa-solid fa-dove"></i></div>
+            <div class="card-info">
+                <h3>Panteón</h3>
+                <p>Comunitario STM</p>
+            </div>
+        </a>
+
+        <!-- 13. Proveeduría -->
         <a href="proveduria.html" class="action-card">
             <div class="ico-box g-2"><i class="fa-solid fa-basket-shopping"></i></div>
             <div class="card-info">
                 <h3>Proveeduría</h3>
                 <p>Beneficios y Convenios</p>
+            </div>
+        </a>
+
+        <!-- 14. Género y Diversidad -->
+        <a href="generoydiversidad.html" class="action-card">
+            <div class="ico-box g-diversity"><i class="fa-solid fa-rainbow"></i></div>
+            <div class="card-info">
+                <h3>Género y Diversidad</h3>
+                <p>Bienestar Integral</p>
             </div>
         </a>
     </main>
@@ -1369,6 +1412,17 @@
     </div>
     </div>
 
+    <!-- MODAL DETALLE NOTICIA ACTUAL DEL TICKER -->
+    <div class="search-modal" id="modalNoticiaActual" style="display:none;"
+        onclick="if(event.target==this) cerrarNoticiaModal()">
+        <div class="search-content"
+            style="opacity:0; transform:scale(0.5); transition:0.4s cubic-bezier(0.175,0.885,0.32,1.275); text-align:center; max-height:90vh; overflow-y:auto;">
+            <div id="noticiaActualContent"></div>
+            <button onclick="cerrarNoticiaModal()"
+                style="margin-top:22px; width:100%; padding:18px; border-radius:18px; border:none; background:linear-gradient(135deg,#3b82f6,#2563eb); color:white; font-weight:800; font-family:inherit; font-size:1rem; cursor:pointer; box-shadow:0 10px 25px rgba(59,130,246,0.35);">¡Entendido!</button>
+        </div>
+    </div>
+
     <nav class="bottom-nav">
         <a href="opciones.html" class="nav-btn active" onclick="location.reload()"><i class="fa-solid fa-house"></i></a>
         <a href="contactos.html" class="nav-btn"><i class="fa-solid fa-phone"></i></a>
@@ -1409,12 +1463,7 @@
                     <input type="checkbox" id="checkCred" onchange="applyConfig('cred', this.checked)"
                         style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
                 </div>
-                <!-- GENERO Y DIVERSIDAD -->
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
-                    <span style="font-weight: 600;">Ver género y diversidad</span>
-                    <input type="checkbox" id="checkGen" onchange="applyConfig('gen', this.checked)"
-                        style="width: 20px; height: 20px; accent-color: var(--stm-primary);">
-                </div>
+
                 <!-- MARCADOR TELEFONICO -->
                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 5px;">
                     <span style="font-weight: 600;">Ver marcador telefónico</span>
@@ -1764,6 +1813,7 @@
             { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
             { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
             { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
+            { t: "Panteón", d: "Panteón Comunitario STM", f: "panteon.html", tags: "panteon cementerio muerte nichos urnarios paz", ico: "fa-dove" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
@@ -1811,7 +1861,32 @@
 
                 // Verificar si mostramos el botón de alerta en el header
                 checkHeaderAlerts();
+                // Iniciar rotador de noticias en el botón
+                startNewsTicker();
             } catch (e) { console.warn("Bot: no se pudieron cargar novedades", e); }
+        }
+
+        let newsIndex = 0;
+        function startNewsTicker() {
+            const ticker = document.getElementById('tickerNov');
+            if (!ticker || !allNews || allNews.length === 0) return;
+
+            // Mostramos la primera de inmediato
+            ticker.innerHTML = `🗞️ ${allNews[0].titulo}`;
+
+            setInterval(() => {
+                if (allNews.length <= 1) return;
+                newsIndex = (newsIndex + 1) % allNews.length;
+
+                ticker.style.opacity = '0';
+                ticker.style.transform = 'translateY(-5px)';
+
+                setTimeout(() => {
+                    ticker.innerHTML = `🗞️ ${allNews[newsIndex].titulo}`;
+                    ticker.style.opacity = '1';
+                    ticker.style.transform = 'translateY(0)';
+                }, 500);
+            }, 4000);
         }
 
         function checkHeaderAlerts() {
@@ -2127,10 +2202,7 @@
             localStorage.setItem('cfg_' + type, value);
             if (type === 'dark') document.body.classList.toggle('dark-mode', value);
             if (type === 'bot') document.getElementById('fabBotIcon').classList.toggle('hidden', !value);
-            if (type === 'gen') {
-                const gen = document.getElementById('shortcutGen');
-                if (gen) gen.classList.toggle('hidden', !value);
-            }
+
             if (type === 'act') {
                 const act = document.getElementById('shortcutAct');
                 if (act) act.classList.toggle('hidden', !value);
@@ -2173,13 +2245,11 @@
             if (bot) bot.classList.toggle('hidden', !cfg.bot);
             if (document.getElementById('checkBot')) document.getElementById('checkBot').checked = cfg.bot;
 
-            const gen = document.getElementById('shortcutGen');
-            if (gen) {
-                gen.classList.toggle('hidden', !cfg.gen);
-                if (document.getElementById('checkGen')) document.getElementById('checkGen').checked = cfg.gen;
-            }
-
-            const act = document.getElementById('shortcutAct');
+            const nov = document.getElementById('shortcutNov');
+            if (nov) {
+                nov.classList.toggle('hidden', !cfg.nov);
+                if (document.getElementById('checkNov')) document.getElementById('checkNov').checked = cfg.nov;
+            } const act = document.getElementById('shortcutAct');
             if (act) {
                 act.classList.toggle('hidden', !cfg.act);
                 if (document.getElementById('checkAct')) document.getElementById('checkAct').checked = cfg.act;
@@ -2197,11 +2267,7 @@
                 if (document.getElementById('checkCred')) document.getElementById('checkCred').checked = cfg.cred;
             }
 
-            const nov = document.getElementById('shortcutNov');
-            if (nov) {
-                nov.classList.toggle('hidden', !cfg.nov);
-                if (document.getElementById('checkNov')) document.getElementById('checkNov').checked = cfg.nov;
-            }
+
 
             const phone = document.getElementById('fabPhone');
             if (phone) {
@@ -2459,6 +2525,53 @@
                     }, 300);
                 }
             }, 600);
+        }
+
+        function openCurrentNews() {
+            if (!allNews || allNews.length === 0) {
+                window.location.href = 'novedades.html';
+                return;
+            }
+            const n = allNews[newsIndex] || allNews[0];
+            const modal = document.getElementById('modalNoticiaActual');
+            const inner = modal.querySelector('.search-content');
+            const content = document.getElementById('noticiaActualContent');
+
+            let fechaStr = '';
+            try {
+                const d = getRawDate(n.fecha);
+                if (d && d.getTime() !== 0) {
+                    fechaStr = new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: 'long', year: 'numeric' })
+                        .format(d).replace(/\./g, '').trim();
+                } else { fechaStr = n.fecha; }
+            } catch (e) { fechaStr = n.fecha; }
+
+            content.innerHTML = `
+                <div style="width:70px;height:70px;background:rgba(59,130,246,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">
+                    <i class="fa-solid fa-newspaper" style="font-size:1.8rem;color:#3b82f6;"></i>
+                </div>
+                <span style="font-size:0.75rem;color:#3b82f6;font-weight:800;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:8px;">${fechaStr}</span>
+                <h2 style="margin:0 0 16px;font-weight:900;font-size:1.35rem;line-height:1.2;color:var(--text-dark);">${n.titulo}</h2>
+                <div style="background:#f8fafc;padding:18px;border-radius:20px;border:1px solid #e2e8f0;text-align:left;">
+                    <p style="font-size:0.95rem;color:#475569;line-height:1.65;margin:0;">${n.desc.replace(/\n/g, '<br>')}</p>
+                </div>
+            `;
+
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');   // necesario para opacity:1
+                inner.style.transform = 'scale(1)';
+                inner.style.opacity = '1';
+            }, 50);
+        }
+
+        function cerrarNoticiaModal() {
+            const modal = document.getElementById('modalNoticiaActual');
+            const inner = modal.querySelector('.search-content');
+            modal.classList.remove('active');
+            inner.style.transform = 'scale(0.5)';
+            inner.style.opacity = '0';
+            setTimeout(() => { modal.style.display = 'none'; }, 400);
         }
 
         window.addEventListener('load', () => {

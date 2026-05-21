@@ -744,13 +744,15 @@
             { name: "Adm. y Actas", ref: "M. de los Angeles IRAZABAL", ext: "133" },
             { name: "Acción Social", ref: "Fernando N. SALOME", ext: "137" },
             { name: "Previsión Social", ref: "Sebastián G. MENDEZ", ext: "120" },
-            { name: "Prensa", ref: "Nicolas A. LOZZI", ext: "125" },
-            { name: "Relac. Públicas", ref: "Ricardo A. PIGNATARO", ext: "128" },
+            { name: "Prensa", ref: "Nicolas ALVAREZ LOZZI", ext: "131" },
+            { name: "Relac. Públicas", ref: "Ricardo A. PIGNATARO", ext: "" },
             { name: "Mujer", ref: "Cecilia M. GAUDIOSO", ext: "131" },
             { name: "Docente", ref: "Alejandra S. AYEK", ext: "122" },
             { name: "Jerárquico", ref: "Claudio J. CAMBARERI", ext: "132" },
             { name: "Higiene", ref: "María V. MAIO", ext: "118" },
-            { name: "Profesional", ref: "María Laura VILLALBA", ext: "132" }
+            { name: "Profesional", ref: "María Laura VILLALBA", ext: "132" },
+            { name: "Derechos Humanos", ref: "Andres LANDI", ext: "133" },
+            { name: "Deportes, Recr. y Cultura", ref: "Patricia AIZPUN", ext: "126" }
         ];
 
         function render(list, containerId, isBot = false) {
@@ -764,7 +766,7 @@
                             <h3>${c.name}</h3>
                             <p>${c.ref}</p>
                         </div>
-                        <div class="ext-badge">${c.ext}</div>
+                        ${c.ext ? `<div class="ext-badge">${c.ext}</div>` : ''}
                     </a>
                 `;
             });
@@ -797,7 +799,7 @@
             { t: "Nacimiento y Casamiento", d: "Subsidios y acompañamiento", f: "beneficios.html?id=subsidios", tags: "casamiento nacimiento subsidio ajuar luna miel", ico: "fa-gift" },
             { t: "Legal y Asesoría", d: "Asesoría legal para afiliados", f: "beneficios.html?id=asesoria", tags: "legal abogados asesoría", ico: "fa-briefcase-medical" },
             { t: "Convenios Especiales", d: "Descuentos en comercios y salud", f: "convenios.html", tags: "descuentos convenios beneficios automotor salud veterinaria recreacion comercios", ico: "fa-handshake" },
-            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción", ico: "fa-users-gear" },
+            { t: "Secretarías", d: "Cuerpo directivo y secretarías", f: "autoridades.html", tags: "quien mando jefe directiva secretario conducción derechos humanos landi", ico: "fa-users-gear" },
             { t: "Paritarias", d: "Acuerdos salariales y actas", f: "paritarias.html", tags: "paritarias sueldo salario aumento paritaria acuerdos actas gremio", ico: "fa-comments-dollar" },
             { t: "Memoria y Balance", d: "Informes anuales y estados contables", f: "memoria.html", tags: "memoria balance contable informe anual finanzas transparencia balance", ico: "fa-chart-pie" },
             { t: "Afiliación Online", d: "Inicia tu trámite para sumarte al sindicato", f: "afiliacion.html", tags: "alta inscripción socio sindicato ficha nueva sumarse", ico: "fa-user-plus" },
@@ -819,6 +821,7 @@
             { t: "Disponibilidad de Quincho", d: "Ver fechas libres y turnos", f: "turno_quincho.html", tags: "turnos quincho reserva libre ocupado fecha", ico: "fa-calendar-days" },
             { t: "Reserva de Quincho", d: "Reuniones familiares y reservas", f: "quincho.html", tags: "quincho reserva fiesta sabado domingo asado familia alquiler turno", ico: "fa-house-user" },
             { t: "Proveeduría Sindical", d: "Beneficios en productos y financiación", f: "proveduria.html", tags: "proveeduría productos alimentos hogar financiación beneficios farmacia librería", ico: "fa-basket-shopping" },
+            { t: "Panteón", d: "Panteón Comunitario STM", f: "panteon.html", tags: "panteon cementerio muerte nichos urnarios paz", ico: "fa-dove" },
             { t: "Inicio", d: "Panel principal de opciones", f: "opciones.html", tags: "inicio dashboard panel principal volver", ico: "fa-house" }
         ];
 
